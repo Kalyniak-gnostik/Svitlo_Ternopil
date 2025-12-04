@@ -342,7 +342,7 @@
     }
 
     // === ГРАФІКИ ===
-function renderFullChart(dayKey) {
+    function renderFullChart(dayKey) {
         const c = document.getElementById('fullChart'); c.innerHTML='';
         const titleEl = document.getElementById('chartTitle');
 
@@ -369,8 +369,6 @@ function renderFullChart(dayKey) {
         // 2. Просто виводимо текст
         titleEl.innerText = `Загальний графік на ${dateString} (${dayName})`;
         // --- КІНЕЦЬ БЛОКУ ЗАГОЛОВКА ---
-
-
 
         const data = dataObj.data;
         Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true})).forEach(grp => {
@@ -611,7 +609,3 @@ function renderFullChart(dayKey) {
 
 </body>
 </html>
-
-
-
-
