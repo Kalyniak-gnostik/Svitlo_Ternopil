@@ -43,7 +43,7 @@
         }
         .full-chart-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 0.95rem; }
         
-        /* Стилі для рядків графіка (оновлені для інтерактивності) */
+        /* Стилі для рядків графіка */
         .chart-row { 
             display: flex; height: 30px; margin-bottom: 6px; align-items: stretch; 
             cursor: pointer; transition: transform 0.1s, background-color 0.1s; border-radius: 6px;
@@ -188,7 +188,7 @@
     </header>
 
     <div class="full-chart-section">
-        <div class="full-chart-title" id="chartTitle">Загальний графік (Сьогодні)</div>
+        <div class="full-chart-title" id="chartTitle">Загальний графік</div>
         <div style="text-align:center; font-size:0.75rem; color:#888; margin-bottom:8px;">
             (Натисніть на рядок з групою, щоб побачити деталі)
         </div>
@@ -222,7 +222,7 @@
             <div class="wiz-step active" id="step1">
                 <label>🏙 Населений пункт</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpCity" placeholder="Почніть писати (напр. Тернопіль)...">
+                    <input type="text" class="wiz-input" id="inpCity" placeholder="Почніть писати...">
                     <button class="btn-check" onclick="forceSearch(1)">🔍</button>
                 </div>
                 <div class="results-list" id="listCity"></div>
@@ -262,7 +262,7 @@
     let gAddr = null;
     let myGroup = localStorage.getItem('myGroup');
     
-    // Поточна обрана група (для перегляду), може відрізнятись від збереженої
+    // Поточна обрана група
     let viewingGroup = myGroup; 
 
     // Стан відображення таблиці (сьогодні/завтра)
@@ -283,11 +283,9 @@
                 gData = await dRes.json();
                 document.getElementById('globalUpdate').innerText = `Оновлено: ${gData.updated_at}`;
                 
-                // Рендеримо таблицю (за замовчуванням сьогодні)
                 renderFullChart('today'); 
                 checkTomorrowButton();
 
-                // Якщо є збережена група, показуємо її
                 if(myGroup) {
                     renderPersonalCards(myGroup);
                 }
@@ -328,11 +326,9 @@
             btn.classList.remove('active');
         }
         
-        // Перемалювати підсвітку поточної групи
         if(viewingGroup) setActiveGroupVisuals(viewingGroup);
     }
 
-    // === КЛІК НА ГРАФІК (ОНОВЛЕНО) ===
     function selectGroup(group) {
         viewingGroup = group;
         renderPersonalCards(group);
@@ -340,10 +336,7 @@
     }
 
     function setActiveGroupVisuals(group) {
-        // Знімаємо підсвітку з усіх
         document.querySelectorAll('.grp-lbl').forEach(el => el.classList.remove('highlight'));
-        
-        // Шукаємо потрібний рядок і підсвічуємо
         const target = Array.from(document.querySelectorAll('.grp-lbl')).find(el => el.innerText.trim() === group);
         if(target) target.classList.add('highlight');
     }
@@ -360,15 +353,21 @@
 
         const dataObj = gData[dayKey];
         const dayName = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
-        titleEl.innerText = `Загальний графік (${dataObj.date}) (${dayName})`;
+        let dateDisplay = dataObj.date;
+
+        // === ВИПРАВЛЕНО: ЛОГІКА ЗАГОЛОВКА ===
+        // Якщо дата і так містить слово "Сьогодні"/"Завтра", не дублюємо його
+        if (dateDisplay.toLowerCase().includes(dayName.toLowerCase())) {
+             titleEl.innerText = `Загальний графік (${dateDisplay})`;
+        } else {
+             titleEl.innerText = `Загальний графік ${dateDisplay} (${dayName})`;
+        }
 
         const data = dataObj.data;
-        // Сортування груп: 1.1, 1.2 ... 6.2
         Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true})).forEach(grp => {
             const row = document.createElement('div'); 
             row.className='chart-row';
             
-            // Додаємо клік
             row.onclick = () => selectGroup(grp);
 
             const isMine = (grp === viewingGroup) ? 'highlight' : '';
@@ -432,9 +431,9 @@
             container.appendChild(card);
         });
 
-        // Плавна прокрутка до карток
+        // Плавна прокрутка
         setTimeout(() => {
-            const yOffset = -20; // Трохи вище
+            const yOffset = -20; 
             const y = container.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({top: y, behavior: 'smooth'});
         }, 100);
@@ -447,18 +446,15 @@
         
         times.forEach((t, index) => {
             const status = scheduleObj[t];
-            // Початок відключення (червоне або жовте)
             if ((status === 'off' || status === 'maybe') && !start) {
                 start = t;
             }
-            // Кінець відключення (зелене)
             if ((status === 'on') && start) {
                 ranges.push({ start: start, end: t, duration: getDuration(start, t) });
                 start = null;
             }
         });
 
-        // Якщо відключення триває до кінця доби (24:00)
         if (start) {
             ranges.push({ start: start, end: "24:00", duration: getDuration(start, "24:00") });
         }
@@ -468,7 +464,7 @@
     function getDuration(start, end) {
         const [h1, m1] = start.split(':').map(Number);
         let [h2, m2] = end.split(':').map(Number);
-        if(h2 === 0 && end !== "00:00") h2 = 24; // Handle wrap around if needed, mostly for logic check
+        if(h2 === 0 && end !== "00:00") h2 = 24;
         
         let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
         const hrs = Math.floor(diff / 60);
@@ -585,8 +581,7 @@
         myGroup = g; 
         localStorage.setItem('myGroup', g);
         closeWiz();
-        selectGroup(g); // Використовуємо нову функцію
-        alert(`Ваша група: ${g}`);
+        selectGroup(g); // Одразу показуємо результат без alert
     }
 
     function openWiz() { 
