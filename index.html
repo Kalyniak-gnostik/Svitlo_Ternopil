@@ -10,15 +10,12 @@
         :root {
             --bg: #f8f9fa;
             --text-main: #2c3e50;
-            /* Основний фіолетовий колір */
             --accent: #8e44ad; 
             --accent-hover: #9b59b6;
-            
             --red: #c0392b;
             --green: #27ae60;
             --yellow: #f1c40f;
             --white: #ffffff;
-            --gray-light: #ecf0f1;
         }
 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text-main); }
@@ -28,7 +25,7 @@
         h1 { margin: 0; font-size: 1.8rem; color: var(--text-main); }
         .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 5px; }
 
-        /* Кнопка пошуку (Header) */
+        /* Кнопка відкриття пошуку */
         .btn-search {
             background: var(--accent); color: white; border: none; padding: 10px 25px;
             border-radius: 50px; font-size: 15px; font-weight: bold; cursor: pointer;
@@ -37,7 +34,7 @@
         }
         .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
 
-        /* === ПОВНА ТАБЛИЦЯ (ТЕПЕР ЗВЕРХУ) === */
+        /* === ТАБЛИЦЯ (ЗВЕРХУ) === */
         .full-chart-section { 
             background: white; border-radius: 16px; padding: 20px; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px;
@@ -50,26 +47,23 @@
             display: flex; align-items: center; justify-content: center; 
             font-size: 0.85rem; font-weight: bold; border-radius: 6px 0 0 6px; 
         }
-        /* Підсвітка своєї групи в таблиці */
         .grp-lbl.highlight { background: var(--accent); box-shadow: 0 0 8px var(--accent); z-index: 2; }
 
         .bar { flex: 1; display: flex; border-radius: 0 6px 6px 0; overflow: hidden; }
         .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
         
-        /* Шкала часу */
         .time-scale { display: flex; margin-left: 45px; margin-bottom: 5px; font-size: 0.7rem; color: #999; }
         .tm { flex: 1; text-align: left; border-left: 1px solid #ddd; padding-left: 2px; }
 
-        /* Кольори статусів */
         .bg-on { background: var(--green); }
         .bg-off { background: var(--red); }
         .bg-maybe { background: var(--yellow); }
         .bg-u { background: #e0e0e0; }
 
-        /* === ПЕРСОНАЛЬНІ КАРТКИ (ТЕПЕР ЗНИЗУ) === */
+        /* === КАРТКИ (ЗНИЗУ) === */
         .personal-schedule-container {
             display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
-            margin-top: 20px; display: none; /* Ховаємо до пошуку */
+            margin-top: 20px; display: none; 
         }
 
         .p-card {
@@ -79,7 +73,6 @@
         }
 
         .p-header { text-align: center; font-weight: bold; color: #95a5a6; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-        
         .p-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         
         .p-date { background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; display: inline-block; }
@@ -92,10 +85,8 @@
             box-shadow: 0 4px 10px rgba(142, 68, 173, 0.4);
         }
         .p-group-label { font-weight: bold; font-size: 0.8rem; text-align: center; color: var(--accent); }
-
         .p-list-title { font-weight: bold; font-size: 1rem; margin-bottom: 10px; color: #34495e; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
-        /* Смужка відключення */
         .outage-row {
             background: #fff0f3; color: var(--red); border: 1px solid #ffccd5; border-radius: 8px;
             display: flex; justify-content: space-between; align-items: center;
@@ -106,7 +97,6 @@
             background: var(--red); color: white; padding: 3px 8px; border-radius: 4px; 
             font-size: 0.75rem; min-width: 50px; text-align: center;
         }
-
         .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: #e8f8f5; border-radius: 10px; }
 
         /* === WIZARD (ПОШУК) === */
@@ -122,14 +112,17 @@
         input:focus { border-color: var(--accent); outline: none; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
         
-        /* Кнопка в Wizard */
-        .btn-wiz-action {
-            width: 100%; padding: 15px; border: none; border-radius: 10px;
-            background: var(--accent); color: white; font-size: 16px; font-weight: bold;
-            cursor: pointer; margin-top: 10px;
+        /* Кнопка-іконка в Wizard */
+        .input-group { display: flex; gap: 10px; align-items: center; }
+        .input-group input { margin-bottom: 0; }
+        .btn-icon-ok { 
+            background: var(--accent); color: white; border: none; border-radius: 10px;
+            width: 54px; height: 54px; flex-shrink: 0; font-size: 24px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
-        .btn-wiz-action:hover { background: var(--accent-hover); }
-        .btn-wiz-back { text-align:center; color:#999; margin-top:15px; cursor:pointer; font-size: 0.9rem; }
+        .btn-icon-ok:hover { background: var(--accent-hover); transform: scale(1.05); }
+
+        .btn-wiz-back { text-align:center; color:#999; margin-top:20px; cursor:pointer; font-size: 0.9rem; }
 
     </style>
 </head>
@@ -144,15 +137,12 @@
 
     <div class="full-chart-section">
         <div class="full-chart-title">Загальна картина (Сьогодні)</div>
-        
         <div class="time-scale">
             <div class="tm">00</div><div class="tm">03</div><div class="tm">06</div>
             <div class="tm">09</div><div class="tm">12</div><div class="tm">15</div>
             <div class="tm">18</div><div class="tm">21</div><div class="tm">24</div>
         </div>
-        
         <div id="fullChart"></div>
-        
         <div style="display:flex; justify-content:center; gap:15px; margin-top:15px; font-size:0.8rem;">
             <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>Є</div>
             <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:var(--red)"></div>Немає</div>
@@ -160,8 +150,7 @@
         </div>
     </div>
 
-    <div id="personalContainer" class="personal-schedule-container">
-        </div>
+    <div id="personalContainer" class="personal-schedule-container"></div>
 </div>
 
 <div class="wiz-overlay" id="wiz">
@@ -170,23 +159,25 @@
         
         <div class="wiz-step active" id="st1">
             <label>🏙 Населений пункт</label>
-            <input list="lCities" id="iCity" placeholder="Почніть писати назву..." onchange="selCity()">
+            <input list="lCities" id="iCity" placeholder="Назва міста..." onchange="selCity()">
             <datalist id="lCities"></datalist>
+            <div style="font-size:0.8rem; color:#aaa; margin-top:5px">Натисніть Enter для вибору</div>
         </div>
 
         <div class="wiz-step" id="st2">
             <label>🛣 Вулиця</label>
-            <input list="lStreets" id="iStreet" placeholder="Оберіть вулицю..." onchange="selStreet()">
+            <input list="lStreets" id="iStreet" placeholder="Назва вулиці..." onchange="selStreet()">
             <datalist id="lStreets"></datalist>
             <div class="btn-wiz-back" onclick="goStep(1)">🔙 Назад</div>
         </div>
 
         <div class="wiz-step" id="st3">
             <label>🏠 Будинок</label>
-            <input list="lHouses" id="iHouse" placeholder="Оберіть номер...">
+            <div class="input-group">
+                <input list="lHouses" id="iHouse" placeholder="Номер...">
+                <button class="btn-icon-ok" onclick="selHouse()" title="Пошук">🔎</button>
+            </div>
             <datalist id="lHouses"></datalist>
-            
-            <button class="btn-wiz-action" onclick="selHouse()">Показати графік 🚀</button>
             
             <div class="btn-wiz-back" onclick="goStep(2)">🔙 Назад</div>
         </div>
@@ -194,7 +185,7 @@
 </div>
 
 <script>
-    // 🔥 ВАШІ НАЛАШТУВАННЯ
+    // 🔥 НАЛАШТУВАННЯ
     const GITHUB_USER = 'kalyniak-gnostik'; 
     const REPO_NAME = 'Svitlo_Ternopil';
     const DATA_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
@@ -213,15 +204,28 @@
             if(dRes.ok) {
                 gData = await dRes.json();
                 document.getElementById('globalUpdate').innerText = `Оновлено: ${gData.updated_at}`;
-                renderFullChart(); // Малюємо таблицю зверху
-                
-                if(myGroup) {
-                    renderPersonalCards(myGroup);
-                }
+                renderFullChart(); 
+                if(myGroup) renderPersonalCards(myGroup);
             }
             if(aRes.ok) gAddr = await aRes.json();
+            
+            // Додаємо обробку Enter
+            setupEnterKeys();
 
         } catch(e) { console.error(e); }
+    }
+
+    function setupEnterKeys() {
+        // Дозволяє натискати Enter замість кліку
+        document.getElementById('iCity').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") { event.preventDefault(); selCity(); }
+        });
+        document.getElementById('iStreet').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") { event.preventDefault(); selStreet(); }
+        });
+        document.getElementById('iHouse').addEventListener("keypress", function(event) {
+            if (event.key === "Enter") { event.preventDefault(); selHouse(); }
+        });
     }
 
     function renderFullChart() {
@@ -229,19 +233,11 @@
         if(!gData.today) return;
         
         const data = gData.today.data;
-        const groups = Object.keys(data).sort(); // 1.1, 1.2...
-
-        groups.forEach(grp => {
-            const row = document.createElement('div'); 
-            row.className='chart-row';
-            
-            // Підсвітка, якщо це моя група
+        Object.keys(data).sort().forEach(grp => {
+            const row = document.createElement('div'); row.className='chart-row';
             const isMine = (grp === myGroup) ? 'highlight' : '';
-            
             let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
-            
-            const times = Object.keys(data[grp]).sort();
-            times.forEach(t => {
+            Object.keys(data[grp]).sort().forEach(t => {
                 let cls = 'bg-u';
                 const s = data[grp][t];
                 if(s==='on') cls='bg-on';
@@ -259,9 +255,7 @@
         const container = document.getElementById('personalContainer');
         container.innerHTML = '';
         container.style.display = 'flex';
-        
-        // Перемалюємо велику таблицю, щоб оновити підсвітку
-        renderFullChart();
+        renderFullChart(); // Оновити підсвітку
 
         ['today', 'tomorrow'].forEach(dayKey => {
             if(!gData[dayKey]) return;
@@ -289,7 +283,6 @@
             }
 
             const updateTime = dayKey === 'today' ? gData.updated_at.split(' ')[1] : '00:00';
-
             card.innerHTML = `
                 <div class="p-header">Ваш графік</div>
                 <div class="p-top-row">
@@ -308,30 +301,22 @@
             container.appendChild(card);
         });
         
-        // Плавний скрол до карток
-        setTimeout(() => {
-            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+        setTimeout(() => { container.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
     }
 
     function calculateOutages(scheduleObj) {
         const times = Object.keys(scheduleObj).sort();
         let ranges = [];
         let start = null;
-
         times.forEach((t) => {
             const status = scheduleObj[t];
-            if ((status === 'off' || status === 'maybe') && !start) {
-                start = t;
-            }
+            if ((status === 'off' || status === 'maybe') && !start) start = t;
             if ((status === 'on') && start) {
                 ranges.push({ start: start, end: t, duration: getDuration(start, t) });
                 start = null;
             }
         });
-        if (start) {
-            ranges.push({ start: start, end: "00:00", duration: getDuration(start, "24:00") });
-        }
+        if (start) ranges.push({ start: start, end: "00:00", duration: getDuration(start, "24:00") });
         return ranges;
     }
 
@@ -375,7 +360,6 @@
         const houses = gAddr.filter(i=>i.c===c && i.s===s);
         const grps = [...new Set(houses.map(h=>h.g))];
         if(grps.length===1) { saveGroup(grps[0]); return; }
-        
         fillDL('lHouses', houses.map(h=>h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})));
         document.getElementById('iHouse').value=''; 
         goStep(3);
@@ -384,16 +368,10 @@
         const c = document.getElementById('iCity').value;
         const s = document.getElementById('iStreet').value;
         const h = document.getElementById('iHouse').value;
-        
-        // Якщо поле пусте - нічого не робимо
         if(!h) return;
-
         const f = gAddr.find(i=>i.c===c && i.s===s && i.h===h);
-        if(f) {
-            saveGroup(f.g);
-        } else {
-            alert("Такого будинку не знайдено :(");
-        }
+        if(f) saveGroup(f.g);
+        else alert("Такого будинку не знайдено :(");
     }
     function saveGroup(g) {
         myGroup = g; localStorage.setItem('myGroup', g);
