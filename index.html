@@ -342,7 +342,7 @@
     }
 
     // === ГРАФІКИ ===
-    function renderFullChart(dayKey) {
+function renderFullChart(dayKey) {
         const c = document.getElementById('fullChart'); c.innerHTML='';
         const titleEl = document.getElementById('chartTitle');
 
@@ -352,15 +352,23 @@
         }
 
         const dataObj = gData[dayKey];
+        
+        // --- ЧИСТИЙ КОД ДЛЯ ЗАГОЛОВКА ---
         const isTom = (dayKey === 'tomorrow');
         const dayName = isTom ? 'Завтра' : 'Сьогодні';
+
+        // 1. Обчислюємо дату
         const d = new Date();
         if (isTom) d.setDate(d.getDate() + 1);
+        
         const dd = String(d.getDate()).padStart(2, '0');
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const yyyy = d.getFullYear();
         const dateString = `${dd}.${mm}.${yyyy}`;
+
+        // 2. Просто виводимо текст
         titleEl.innerText = `Загальний графік на ${dateString} (${dayName})`;
+        // --- КІНЕЦЬ БЛОКУ ЗАГОЛОВКА ---
 
 
 
@@ -603,6 +611,7 @@
 
 </body>
 </html>
+
 
 
 
