@@ -352,8 +352,15 @@
         }
 
         const dataObj = gData[dayKey];
-        const dayName = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
-        let dateDisplay = dataObj.date;
+        const isTom = (dayKey === 'tomorrow');
+        const dayName = isTom ? 'Завтра' : 'Сьогодні';
+        const d = new Date();
+        if (isTom) d.setDate(d.getDate() + 1);
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const yyyy = d.getFullYear();
+        const dateString = `${dd}.${mm}.${yyyy}`;
+        titleEl.innerText = `Загальний графік на ${dateString} (${dayName})`;
 
         // === ВИПРАВЛЕНО: ЛОГІКА ЗАГОЛОВКА ===
         // Якщо дата і так містить слово "Сьогодні"/"Завтра", не дублюємо його
@@ -602,4 +609,5 @@
 
 </body>
 </html>
+
 
