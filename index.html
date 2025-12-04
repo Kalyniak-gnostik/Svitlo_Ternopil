@@ -3,88 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Графік відключення світла Тернопіль</title>
+    <title>Світло Тернопіль</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+    
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333;
-            --green: #2ecc71;
-            --red: #e74c3c;
-            --yellow: #f1c40f;
-            --gray: #95a5a6;
+            --bg: #f4f7f6;
+            --text-main: #2c3e50;
+            --orange: #ff6b00;
+            --red: #d60045;
+            --white: #ffffff;
+            --gray-light: #ecf0f1;
         }
 
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        
-        /* HEADER */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: var(--text-main); }
+        .container { max-width: 900px; margin: 0 auto; }
+
         header { text-align: center; margin-bottom: 30px; }
-        h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
-        .subtitle { font-size: 0.9rem; color: #7f8c8d; margin-top: 5px; }
+        h1 { margin: 0; font-size: 1.8rem; }
+        .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 5px; }
 
-        /* CONTROLS */
-        .controls { background: var(--card-bg); padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
-        
-        select { width: 100%; max-width: 300px; padding: 12px; border: 2px solid #eee; border-radius: 8px; font-size: 16px; background: white; cursor: pointer; margin-bottom: 15px; }
-        select:focus { border-color: var(--accent); outline: none; }
-
-        .btn-find {
-            background: var(--accent); color: white; border: none; padding: 12px 24px; 
-            border-radius: 8px; font-size: 16px; cursor: pointer; transition: 0.2s; width: 100%; max-width: 300px;
+        /* Кнопка пошуку */
+        .btn-search {
+            background: #3498db; color: white; border: none; padding: 12px 30px;
+            border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3); transition: 0.2s;
+            display: block; margin: 20px auto;
         }
-        .btn-find:hover { background: #2980b9; }
+        .btn-search:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4); }
 
-        /* WIZARD (SEARCH) */
-        .wizard-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;
+        /* Контейнер для карток "Персональний графік" */
+        .personal-schedule-container {
+            display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px;
+            display: none; /* Приховано за замовчуванням */
         }
-        .wizard-content {
-            background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px;
-            position: relative; animation: slideUp 0.3s ease;
+
+        /* Стиль картки (як на фото) */
+        .p-card {
+            background: white; border-radius: 16px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 400px;
+            position: relative;
         }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        .wizard-step { display: none; }
-        .wizard-step.active { display: block; }
-        .wizard-header { font-weight: bold; margin-bottom: 15px; font-size: 1.1rem; }
-        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa; }
-        
-        .wiz-btn { width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px; border: 1px solid #ddd; background: white; text-align: left; cursor: pointer; }
-        .wiz-btn:hover { background: #f0f0f0; }
 
-        /* SCHEDULE VISUALIZATION */
-        .schedule-card {
-            background: var(--card-bg); padding: 20px; border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;
-            display: none; /* Приховано поки не обрана група */
+        .p-header { text-align: center; font-weight: bold; color: #555; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .p-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        
+        .p-date-block { display: flex; flex-direction: column; gap: 5px; }
+        .p-date { background: var(--orange); color: white; padding: 5px 10px; border-radius: 6px; font-weight: bold; font-size: 1.2rem; display: inline-block; }
+        .p-update-time { font-size: 0.8rem; color: #777; }
+
+        .p-group-block { text-align: center; }
+        .p-group-box { 
+            background: var(--orange); color: white; width: 80px; height: 80px; 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; font-weight: bold; margin-bottom: 5px;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .card-title { font-weight: bold; font-size: 1.2rem; }
-        .date-badge { background: #eee; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; color: #555; }
+        .p-group-label { font-weight: bold; font-size: 0.9rem; }
 
-        /* TIMELINE BAR */
-        .timeline-wrapper { position: relative; margin-top: 20px; margin-bottom: 10px; }
-        .timeline { display: flex; height: 35px; border-radius: 8px; overflow: hidden; }
-        .hour-block { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
-        .hour-block:last-child { border-right: none; }
+        .p-list-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
         
-        /* COLORS */
-        .bg-on { background: var(--green); }
-        .bg-off { background: var(--red); }
-        .bg-maybe { background: var(--yellow); }
-        .bg-unknown { background: var(--gray); }
+        /* Смужка відключення */
+        .outage-row {
+            background: var(--red); color: white; border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 15px; margin-bottom: 10px; font-weight: bold; font-size: 1.1rem;
+        }
+        .outage-divider { height: 2px; width: 30px; background: rgba(255,255,255,0.5); }
+        .outage-duration { 
+            background: white; color: var(--red); padding: 4px 8px; border-radius: 4px; 
+            font-size: 0.8rem; min-width: 50px; text-align: center; line-height: 1.2;
+        }
 
-        /* LABELS */
-        .time-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; margin-top: 5px; padding: 0 2px; }
+        .no-outages { text-align: center; color: var(--orange); font-weight: bold; padding: 20px; border: 2px dashed var(--orange); border-radius: 10px; }
 
-        /* LEGEND */
-        .legend { display: flex; gap: 15px; justify-content: center; margin-top: 15px; font-size: 0.8rem; }
-        .legend-item { display: flex; align-items: center; gap: 5px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        /* Повна таблиця знизу */
+        .full-chart-section { margin-top: 50px; border-top: 2px solid #eee; padding-top: 30px; }
+        .full-chart-title { text-align: center; font-size: 1.2rem; color: #aaa; margin-bottom: 20px; }
+        
+        /* Таблиця (стара логіка для загального огляду) */
+        .chart-row { display: flex; height: 25px; margin-bottom: 5px; }
+        .grp-lbl { width: 40px; background: #333; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border-radius: 4px 0 0 4px; }
+        .bar { flex: 1; display: flex; border-radius: 0 4px 4px 0; overflow: hidden; }
+        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); }
+        
+        .bg-on { background: #2ecc71; }
+        .bg-off { background: #e74c3c; }
+        .bg-maybe { background: #f1c40f; }
+        .bg-u { background: #ddd; }
+
+        /* WIZARD (ПОШУК) */
+        .wiz-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; }
+        .wiz-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 450px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; }
+        .wiz-close { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #aaa; }
+        .wiz-step { display: none; }
+        .wiz-step.active { display: block; animation: slideUp 0.3s; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+        
+        input[list] { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 10px; }
+        input:focus { border-color: var(--orange); outline: none; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
 
     </style>
 </head>
@@ -92,247 +110,243 @@
 
 <div class="container">
     <header>
-        <h1>Графік відключення світла<br>Тернопіль</h1>
-        <div class="subtitle" id="lastUpdated">Завантаження даних...</div>
+        <h1>Svitlo_Ternopil</h1>
+        <div class="sub-header" id="globalUpdate">Завантаження даних...</div>
+        <button class="btn-search" onclick="openWiz()">🔍 Знайти свою групу</button>
     </header>
 
-    <div class="controls">
-        <label for="mainGroupSelect" style="display:block; margin-bottom:10px; color:#555;">Ваша черга:</label>
-        <select id="mainGroupSelect" onchange="renderAll(this.value)">
-            <option value="" disabled selected>Оберіть чергу</option>
-            <option value="1.1">1.1</option>
-            <option value="1.2">1.2</option>
-            <option value="2.1">2.1</option>
-            <option value="2.2">2.2</option>
-            <option value="3.1">3.1</option>
-            <option value="3.2">3.2</option>
-            <option value="4.1">4.1</option>
-            <option value="4.2">4.2</option>
-            <option value="5.1">5.1</option>
-            <option value="5.2">5.2</option>
-            <option value="6.1">6.1</option>
-            <option value="6.2">6.2</option>
-        </select>
-        
-        <button class="btn-find" onclick="openWizard()">🔍 Знайти свою групу</button>
-    </div>
+    <div id="personalContainer" class="personal-schedule-container">
+        </div>
 
-    <div id="cardToday" class="schedule-card">
-        <div class="card-header">
-            <span class="card-title">Сьогодні</span>
-            <span class="date-badge" id="dateToday">--.--</span>
-        </div>
-        <div id="vizToday"></div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot" style="background:var(--green)"></div>Є</div>
-            <div class="legend-item"><div class="dot" style="background:var(--red)"></div>Немає</div>
-            <div class="legend-item"><div class="dot" style="background:var(--yellow)"></div>Можливо</div>
-        </div>
-    </div>
-
-    <div id="cardTomorrow" class="schedule-card">
-        <div class="card-header">
-            <span class="card-title">Завтра</span>
-            <span class="date-badge" id="dateTomorrow">--.--</span>
-        </div>
-        <div id="vizTomorrow"></div>
-        <div class="legend">
-            <div class="legend-item"><div class="dot" style="background:var(--green)"></div>Є</div>
-            <div class="legend-item"><div class="dot" style="background:var(--red)"></div>Немає</div>
-            <div class="legend-item"><div class="dot" style="background:var(--yellow)"></div>Можливо</div>
-        </div>
+    <div class="full-chart-section">
+        <div class="full-chart-title">Загальна картина по всіх групах (Сьогодні)</div>
+        <div id="fullChart"></div>
     </div>
 </div>
 
-<div class="wizard-modal" id="wizard">
-    <div class="wizard-content">
-        <span class="close-btn" onclick="closeWizard()">&times;</span>
+<div class="wiz-overlay" id="wiz">
+    <div class="wiz-box">
+        <span class="wiz-close" onclick="closeWiz()">&times;</span>
         
-        <div class="wizard-step active" id="step1">
-            <div class="wizard-header">🏙 Крок 1: Оберіть населений пункт</div>
-            <select id="wizCity" onchange="wizNextStep(1)"></select>
+        <div class="wiz-step active" id="st1">
+            <label>🏙 Населений пункт</label>
+            <input list="lCities" id="iCity" placeholder="Введіть назву..." onchange="selCity()">
+            <datalist id="lCities"></datalist>
         </div>
-
-        <div class="wizard-step" id="step2">
-            <div class="wizard-header">🛣 Крок 2: Оберіть вулицю</div>
-            <select id="wizStreet" onchange="wizNextStep(2)"></select>
-            <div style="margin-top:10px; font-size:0.8rem; color:#888; text-align:center" onclick="stepBack(2)">🔙 Назад</div>
+        <div class="wiz-step" id="st2">
+            <label>🛣 Вулиця</label>
+            <input list="lStreets" id="iStreet" placeholder="Введіть вулицю..." onchange="selStreet()">
+            <datalist id="lStreets"></datalist>
+            <div style="text-align:center; color:#999; margin-top:10px; cursor:pointer" onclick="goStep(1)">Назад</div>
         </div>
-
-        <div class="wizard-step" id="step3">
-            <div class="wizard-header">🏠 Крок 3: Номер будинку</div>
-            <select id="wizHouse" onchange="wizFinish()"></select>
-            <div style="margin-top:10px; font-size:0.8rem; color:#888; text-align:center" onclick="stepBack(3)">🔙 Назад</div>
+        <div class="wiz-step" id="st3">
+            <label>🏠 Будинок</label>
+            <input list="lHouses" id="iHouse" placeholder="Номер..." onchange="selHouse()">
+            <datalist id="lHouses"></datalist>
+            <div style="text-align:center; color:#999; margin-top:10px; cursor:pointer" onclick="goStep(2)">Назад</div>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔥 НАЛАШТУВАННЯ (Ваші дані вже вписані)
+    // 🔥 НАЛАШТУВАННЯ
     const GITHUB_USER = 'kalyniak-gnostik'; 
     const REPO_NAME = 'Svitlo_Ternopil';
-    
     const DATA_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
 
-    let globalSchedule = null;
-    let globalAddressDB = null;
+    let gData = null;
+    let gAddr = null;
+    let myGroup = localStorage.getItem('myGroup');
 
     async function init() {
         try {
-            // Завантажуємо графік
-            const sRes = await fetch(`${DATA_URL}/schedule.json`);
-            if(sRes.ok) {
-                globalSchedule = await sRes.json();
-                document.getElementById('lastUpdated').innerText = `Оновлено: ${globalSchedule.updated_at}`;
-                
-                // Перевіряємо, чи є збережена група, щоб одразу показати
-                const savedGroup = localStorage.getItem('myGroup');
-                if(savedGroup) {
-                    document.getElementById('mainGroupSelect').value = savedGroup;
-                    renderAll(savedGroup);
-                }
-            } else {
-                document.getElementById('lastUpdated').innerText = "Графік поки недоступний";
-            }
-
-            // Завантажуємо адреси (для пошуку)
-            const aRes = await fetch(`${DATA_URL}/addresses.json`);
-            if(aRes.ok) {
-                globalAddressDB = await aRes.json();
-            }
-
-        } catch(e) {
-            console.error(e);
-            document.getElementById('lastUpdated').innerText = "Помилка з'єднання (GitHub Raw)";
-        }
-    }
-
-    // --- РЕНДЕРИНГ ГРАФІКІВ ---
-    function renderAll(group) {
-        if (!group || !globalSchedule) return;
-        localStorage.setItem('myGroup', group); // Зберігаємо вибір
-
-        renderDay(group, 'today', 'cardToday', 'vizToday', 'dateToday');
-        renderDay(group, 'tomorrow', 'cardTomorrow', 'vizTomorrow', 'dateTomorrow');
-    }
-
-    function renderDay(group, dayKey, cardId, vizId, dateId) {
-        const card = document.getElementById(cardId);
-        
-        // Перевірка наявності даних
-        if (!globalSchedule[dayKey] || !globalSchedule[dayKey].data || !globalSchedule[dayKey].data[group]) {
-            card.style.display = 'none';
-            return;
-        }
-
-        const dayData = globalSchedule[dayKey];
-        card.style.display = 'block';
-        document.getElementById(dateId).innerText = dayData.date;
-        
-        const schedule = dayData.data[group];
-        const vizContainer = document.getElementById(vizId);
-        
-        // Генеруємо смужку
-        let html = '<div class="timeline-wrapper"><div class="timeline">';
-        
-        // Сортуємо ключі часу (00:00, 00:30, ...)
-        const times = Object.keys(schedule).sort();
-        
-        times.forEach(time => {
-            const status = schedule[time];
-            let colorClass = 'bg-unknown';
-            if(status === 'on') colorClass = 'bg-on';
-            if(status === 'off') colorClass = 'bg-off';
-            if(status === 'maybe') colorClass = 'bg-maybe';
+            const [dRes, aRes] = await Promise.all([
+                fetch(`${DATA_URL}/schedule.json`),
+                fetch(`${DATA_URL}/addresses.json`)
+            ]);
             
-            html += `<div class="hour-block ${colorClass}" title="${time}: ${status}"></div>`;
+            if(dRes.ok) {
+                gData = await dRes.json();
+                document.getElementById('globalUpdate').innerText = `Дані оновлено: ${gData.updated_at}`;
+                renderFullChart(); // Малюємо повну таблицю знизу
+                
+                if(myGroup) {
+                    renderPersonalCards(myGroup);
+                }
+            }
+            if(aRes.ok) gAddr = await aRes.json();
+
+        } catch(e) { console.error(e); }
+    }
+
+    // === ГЕНЕРАЦІЯ КАРТОК (ГОЛОВНА ФІШКА) ===
+    function renderPersonalCards(group) {
+        const container = document.getElementById('personalContainer');
+        container.innerHTML = '';
+        container.style.display = 'flex';
+
+        // Робимо дві картки: Сьогодні і Завтра
+        ['today', 'tomorrow'].forEach(dayKey => {
+            if(!gData[dayKey]) return;
+            
+            const dayInfo = gData[dayKey];
+            const schedule = dayInfo.data[group];
+            if(!schedule) return;
+
+            // 1. Розраховуємо інтервали відключень
+            const ranges = calculateOutages(schedule);
+
+            // 2. Створюємо HTML картки
+            const card = document.createElement('div');
+            card.className = 'p-card';
+            
+            let outagesHTML = '';
+            if(ranges.length === 0) {
+                outagesHTML = '<div class="no-outages">✅ Відключень не планується</div>';
+            } else {
+                ranges.forEach(r => {
+                    outagesHTML += `
+                    <div class="outage-row">
+                        <span>${r.start}</span>
+                        <div class="outage-divider"></div>
+                        <span>${r.end}</span>
+                        <div class="outage-duration">${r.duration}<br><span style="font-size:0.7em">год</span></div>
+                    </div>`;
+                });
+            }
+
+            const updateTime = dayKey === 'today' ? gData.updated_at.split(' ')[1] : '00:00';
+
+            card.innerHTML = `
+                <div class="p-header">Графік погодинних відключень</div>
+                <div class="p-top-row">
+                    <div class="p-date-block">
+                        <div class="p-date">${dayInfo.date}</div>
+                        <div class="p-update-time">Станом на ${updateTime}</div>
+                    </div>
+                    <div class="p-group-block">
+                        <div class="p-group-box">${group}</div>
+                        <div class="p-group-label">Підчерга</div>
+                    </div>
+                </div>
+                <div class="p-list-title">Відключення</div>
+                ${outagesHTML}
+                <div style="text-align:center; font-size:0.7rem; color:#ccc; margin-top:15px">Svitlo Ternopil Bot</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // === ЛОГІКА РОЗРАХУНКУ ІНТЕРВАЛІВ ===
+    function calculateOutages(scheduleObj) {
+        // scheduleObj = { "00:00": "off", "00:30": "on" ... }
+        const times = Object.keys(scheduleObj).sort();
+        let ranges = [];
+        let start = null;
+
+        times.forEach((t, i) => {
+            const status = scheduleObj[t];
+            // Якщо почалось відключення (off або maybe)
+            if ((status === 'off' || status === 'maybe') && !start) {
+                start = t;
+            }
+            // Якщо відключення закінчилось
+            if ((status === 'on') && start) {
+                ranges.push({ start: start, end: t, duration: getDuration(start, t) });
+                start = null;
+            }
         });
         
-        html += '</div><div class="time-labels">';
-        html += '<span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:30</span>';
-        html += '</div></div>';
-
-        vizContainer.innerHTML = html;
-    }
-
-    // --- ЛОГІКА ПОШУКУ (WIZARD) ---
-    function openWizard() {
-        if(!globalAddressDB) { alert("База адрес ще завантажується, спробуйте через 5 секунд..."); return; }
-        document.getElementById('wizard').style.display = 'flex';
-        populateCity();
-        showStep(1);
-    }
-
-    function closeWizard() {
-        document.getElementById('wizard').style.display = 'none';
-    }
-
-    function showStep(n) {
-        [1,2,3].forEach(i => document.getElementById(`step${i}`).classList.remove('active'));
-        document.getElementById(`step${n}`).classList.add('active');
-    }
-
-    function stepBack(curr) {
-        showStep(curr - 1);
-    }
-
-    function populateCity() {
-        // Унікальні міста, сортовані
-        const cities = [...new Set(globalAddressDB.map(i => i.c))].sort();
-        const sel = document.getElementById('wizCity');
-        sel.innerHTML = '<option value="">Оберіть...</option>';
-        cities.forEach(c => sel.add(new Option(c, c)));
-    }
-
-    function wizNextStep(step) {
-        if (step === 1) {
-            const city = document.getElementById('wizCity').value;
-            if(!city) return;
-            
-            const streets = [...new Set(globalAddressDB.filter(i => i.c === city).map(i => i.s))].sort();
-            const sel = document.getElementById('wizStreet');
-            sel.innerHTML = '<option value="">Оберіть...</option>';
-            streets.forEach(s => sel.add(new Option(s, s)));
-            showStep(2);
+        // Якщо закінчується опівночі
+        if (start) {
+            ranges.push({ start: start, end: "00:00", duration: getDuration(start, "24:00") });
         }
-        if (step === 2) {
-            const city = document.getElementById('wizCity').value;
-            const street = document.getElementById('wizStreet').value;
-            if(!street) return;
-
-            const houses = globalAddressDB.filter(i => i.c === city && i.s === street);
-            const sel = document.getElementById('wizHouse');
-            
-            // Якщо для всієї вулиці одна група
-            const uniqueGroups = [...new Set(houses.map(h => h.g))];
-            if(uniqueGroups.length === 1) {
-                // Автоматично завершуємо, якщо група одна на всю вулицю
-                finishSearch(uniqueGroups[0]);
-                return;
-            }
-
-            sel.innerHTML = '<option value="">Оберіть...</option>';
-            // Сортування номерів будинків (намагаємось як числа)
-            houses.sort((a,b) => a.h.localeCompare(b.h, undefined, {numeric: true}))
-                  .forEach(h => sel.add(new Option(h.h, h.g)));
-            showStep(3);
-        }
+        return ranges;
     }
 
-    function wizFinish() {
-        const group = document.getElementById('wizHouse').value;
-        finishSearch(group);
+    function getDuration(start, end) {
+        // start "17:30", end "19:30" -> "2 год"
+        const [h1, m1] = start.split(':').map(Number);
+        let [h2, m2] = end.split(':').map(Number);
+        if(h2===0 && end==="00:00") h2=24; // Fix midnight
+
+        let diffMins = (h2 * 60 + m2) - (h1 * 60 + m1);
+        const hrs = Math.floor(diffMins / 60);
+        const mins = diffMins % 60;
+        
+        if(hrs > 0 && mins > 0) return `${hrs} год ${mins} хв`;
+        if(hrs > 0) return `${hrs} год`;
+        return `${mins} хв`;
     }
 
-    function finishSearch(group) {
-        if(!group) return;
-        closeWizard();
-        document.getElementById('mainGroupSelect').value = group;
-        renderAll(group);
-        alert(`Вашу адресу знайдено! Це черга ${group}`);
+    // === WIZARD (ПОШУК) ===
+    function openWiz() { 
+        if(!gAddr) { alert('База завантажується...'); return; }
+        document.getElementById('wiz').style.display = 'flex';
+        fillDL('lCities', [...new Set(gAddr.map(i=>i.c))].sort());
+        goStep(1);
+    }
+    function closeWiz() { document.getElementById('wiz').style.display = 'none'; }
+    function goStep(n) {
+        [1,2,3].forEach(i=>document.getElementById(`st${i}`).classList.remove('active'));
+        document.getElementById(`st${n}`).classList.add('active');
+    }
+    function fillDL(id, arr) {
+        const dl = document.getElementById(id); dl.innerHTML='';
+        arr.forEach(v=> dl.appendChild(new Option(v)));
+    }
+    
+    function selCity() {
+        const v = document.getElementById('iCity').value;
+        const streets = [...new Set(gAddr.filter(i=>i.c===v).map(i=>i.s))].sort();
+        if(streets.length){ fillDL('lStreets', streets); document.getElementById('iStreet').value=''; goStep(2); }
+    }
+    function selStreet() {
+        const c = document.getElementById('iCity').value;
+        const s = document.getElementById('iStreet').value;
+        const houses = gAddr.filter(i=>i.c===c && i.s===s);
+        
+        const grps = [...new Set(houses.map(h=>h.g))];
+        if(grps.length===1) { saveGroup(grps[0]); return; }
+        
+        fillDL('lHouses', houses.map(h=>h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})));
+        document.getElementById('iHouse').value=''; 
+        goStep(3);
+    }
+    function selHouse() {
+        const c = document.getElementById('iCity').value;
+        const s = document.getElementById('iStreet').value;
+        const h = document.getElementById('iHouse').value;
+        const f = gAddr.find(i=>i.c===c && i.s===s && i.h===h);
+        if(f) saveGroup(f.g);
+    }
+    function saveGroup(g) {
+        myGroup = g; localStorage.setItem('myGroup', g);
+        closeWiz();
+        renderPersonalCards(g);
     }
 
-    // Запуск
+    // === ПОВНА ТАБЛИЦЯ (ФОНОВА) ===
+    function renderFullChart() {
+        const c = document.getElementById('fullChart'); c.innerHTML='';
+        if(!gData.today) return;
+        const data = gData.today.data;
+        Object.keys(data).sort().forEach(grp => {
+            const row = document.createElement('div'); row.className='chart-row';
+            let html = `<div class="grp-lbl">${grp}</div><div class="bar">`;
+            Object.keys(data[grp]).sort().forEach(t => {
+                let cls = 'bg-u';
+                if(data[grp][t]==='on') cls='bg-on';
+                if(data[grp][t]==='off') cls='bg-off';
+                if(data[grp][t]==='maybe') cls='bg-maybe';
+                html += `<div class="h-blk ${cls}" title="${t}"></div>`;
+            });
+            html += '</div>';
+            row.innerHTML = html;
+            c.appendChild(row);
+        });
+    }
+
     init();
 </script>
 
