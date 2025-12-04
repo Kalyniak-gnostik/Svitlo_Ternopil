@@ -362,13 +362,7 @@
         const dateString = `${dd}.${mm}.${yyyy}`;
         titleEl.innerText = `Загальний графік на ${dateString} (${dayName})`;
 
-        // === ВИПРАВЛЕНО: ЛОГІКА ЗАГОЛОВКА ===
-        // Якщо дата і так містить слово "Сьогодні"/"Завтра", не дублюємо його
-        if (dateDisplay.toLowerCase().includes(dayName.toLowerCase())) {
-             titleEl.innerText = `Загальний графік на ${dateDisplay}`;
-        } else {
-             titleEl.innerText = `Загальний графік на ${dateDisplay} (${dayName})`;
-        }
+
 
         const data = dataObj.data;
         Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true})).forEach(grp => {
@@ -609,5 +603,6 @@
 
 </body>
 </html>
+
 
 
