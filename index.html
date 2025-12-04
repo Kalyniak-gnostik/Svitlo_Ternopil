@@ -358,9 +358,9 @@
         // === ВИПРАВЛЕНО: ЛОГІКА ЗАГОЛОВКА ===
         // Якщо дата і так містить слово "Сьогодні"/"Завтра", не дублюємо його
         if (dateDisplay.toLowerCase().includes(dayName.toLowerCase())) {
-             titleEl.innerText = `Загальний графік (${dateDisplay})`;
+             titleEl.innerText = `Загальний графік на ${dateDisplay}`;
         } else {
-             titleEl.innerText = `Загальний графік ${dateDisplay} (${dayName})`;
+             titleEl.innerText = `Загальний графік на ${dateDisplay} (${dayName})`;
         }
 
         const data = dataObj.data;
@@ -602,3 +602,4 @@
 
 </body>
 </html>
+
