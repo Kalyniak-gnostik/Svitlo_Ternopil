@@ -98,8 +98,22 @@
         .bar { flex: 1; display: flex; border-radius: 0 6px 6px 0; overflow: hidden; }
         .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
         
-        .time-scale { display: flex; margin-left: 45px; margin-bottom: 5px; font-size: 0.7rem; color: #999; }
-        .tm { flex: 1; text-align: left; border-left: 1px solid #ddd; padding-left: 2px; }
+        /* === ВИПРАВЛЕНА ШКАЛА ЧАСУ === */
+        .time-scale { 
+            display: flex; 
+            margin-left: 45px; /* Відступ під ширину лейблу групи */
+            margin-bottom: 5px; 
+            font-size: 0.75rem; 
+            color: #999; 
+            /* Щоб цифри чітко стояли над початком своїх блоків */
+        }
+        .ts-item { 
+            flex: 1; /* Рівномірний розподіл */
+            text-align: left; 
+            border-left: 1px solid #ddd; /* Риска */
+            padding-left: 3px; 
+            position: relative;
+        }
 
         .bg-on { background: var(--green); }
         .bg-off { background: var(--red); }
@@ -233,7 +247,7 @@
             </div>
             <div class="tg-text">
                 <div class="tg-title">🇺🇦 Світло Тернопіль: Графіки та Черги</div>
-                <div class="tg-desc">Самі актуальні графіки, сповіщення про зміни.</div>
+                <div class="tg-desc">Найшвидший моніторинг із Тернопільобленерго. Пошук групи.</div>
             </div>
         </a>
 
@@ -246,9 +260,18 @@
         <div style="text-align:center; font-size:0.75rem; color:#888; margin-bottom:8px;">
             (Натисніть на рядок з групою, щоб побачити деталі)
         </div>
+        
         <div class="time-scale">
-            <div class="tm">00</div><div class="tm">06</div><div class="tm">12</div><div class="tm">18</div><div class="tm">24</div>
+            <div class="ts-item">00</div>
+            <div class="ts-item">03</div>
+            <div class="ts-item">06</div>
+            <div class="ts-item">09</div>
+            <div class="ts-item">12</div>
+            <div class="ts-item">15</div>
+            <div class="ts-item">18</div>
+            <div class="ts-item">21</div>
         </div>
+        
         <div id="fullChart"></div>
     </div>
 
@@ -669,4 +692,3 @@
 
 </body>
 </html>
-
