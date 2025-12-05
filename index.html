@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <title>Графік відключення світла Тернопіль — Ваш розклад та група</title>
-    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області. Знайдіть свою чергу за адресою. Оновлюється автоматично з сайту Тернопільобленерго.">
-    <meta name="keywords" content="графік відключення світла тернопіль, світло тернопіль, тернопільобленерго, яка група, черги відключення, розклад світла 2025">
+    <title>Графік відключення світла Тернопіль та область</title>
+    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області. Знайдіть свою чергу за адресою.">
     
-    <meta property="og:title" content="Графік відключення світла Тернопіль">
-    <meta property="og:description" content="Дізнайтесь, коли включать світло. Зручний пошук своєї групи за адресою.">
+    <meta property="og:title" content="Графік відключення світла Тернопіль та область">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://grafik-svitla-ternopil.pp.ua/">
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
     
@@ -21,6 +18,8 @@
             --text-main: #2c3e50;
             --accent: #8e44ad; 
             --accent-hover: #9b59b6;
+            --tg-color: #229ED9; /* Telegram Blue */
+            --tg-hover: #1b8dbf;
             --red: #c0392b;
             --green: #27ae60;
             --yellow: #f1c40f;
@@ -31,9 +30,37 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
         .container { max-width: 1000px; margin: 0 auto; width: 100%; flex: 1; }
 
-        header { text-align: center; margin-bottom: 20px; }
-        h1 { margin: 0; font-size: 1.6rem; color: var(--text-main); line-height: 1.3; }
-        .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 5px; }
+        header { text-align: center; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
+        h1 { margin: 0 0 15px 0; font-size: 1.5rem; color: var(--text-main); line-height: 1.3; max-width: 800px; }
+        .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 10px; }
+
+        /* === КНОПКА TELEGRAM === */
+        .btn-telegram {
+            background: var(--tg-color);
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
+            transition: transform 0.2s, background 0.2s;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 10px;
+            text-align: left;
+            border: none;
+        }
+        .btn-telegram:hover { transform: translateY(-2px); background: var(--tg-hover); }
+        .btn-telegram:active { transform: scale(0.98); }
+        
+        .tg-icon svg { width: 32px; height: 32px; fill: white; display: block; }
+        
+        .tg-text { display: flex; flex-direction: column; }
+        .tg-title { font-weight: bold; font-size: 1rem; margin-bottom: 2px; }
+        .tg-desc { font-size: 0.75rem; opacity: 0.9; line-height: 1.2; }
 
         /* Кнопка відкриття пошуку */
         .btn-search {
@@ -66,7 +93,6 @@
             font-size: 0.85rem; font-weight: bold; border-radius: 6px 0 0 6px; flex-shrink: 0;
             transition: background 0.3s;
         }
-        /* Клас активної групи */
         .grp-lbl.highlight { background: var(--accent) !important; box-shadow: 0 0 8px var(--accent); z-index: 2; position: relative; }
 
         .bar { flex: 1; display: flex; border-radius: 0 6px 6px 0; overflow: hidden; }
@@ -197,7 +223,20 @@
 
 <div class="container">
     <header>
-        <h1>Графік відключення світла Тернопіль</h1>
+        <h1>Графік відключення світла Тернопіль та Тернопільська область</h1>
+        
+        <a href="https://t.me/Grafik_Tern_bot" target="_blank" class="btn-telegram">
+            <div class="tg-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.47-.81-.27-1.44-.41-1.38-.87.03-.24.38-.49 1.03-.75 4.06-1.77 6.77-2.94 8.13-3.51 3.87-1.63 4.67-1.91 5.2-1.91.11 0 .37.03.54.17.14.12.18.28.2.4.02.12.03.36.03.44z"/>
+                </svg>
+            </div>
+            <div class="tg-text">
+                <div class="tg-title">🇺🇦 Світло Тернопіль: Графіки та Черги</div>
+                <div class="tg-desc">Найшвидший моніторинг із Тернопільобленерго. Пошук групи.</div>
+            </div>
+        </a>
+
         <div class="sub-header" id="globalUpdate">Оновлення даних...</div>
         <button class="btn-search" onclick="openWiz()">🔍 Знайти свою групу</button>
     </header>
