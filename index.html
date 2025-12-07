@@ -7,15 +7,18 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
 
-    <title>Світло Тернопіль</title>
+    <title>Графік відключення світла Тернопіль та область</title>
+    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області. Знайдіть свою чергу за адресою.">
     
+    <meta property="og:title" content="Графік відключення світла Тернопіль та область">
+    <meta property="og:type" content="website">
+
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
     
     <style>
+        /* ВАШІ ОРИГІНАЛЬНІ СТИЛІ (index_old) */
         :root {
             --bg: #f8f9fa;
             --text-main: #2c3e50;
@@ -26,25 +29,16 @@
             --red: #c0392b;
             --green: #27ae60;
             --yellow: #f1c40f;
-            
-            /* Стилі з картинки */
-            --row-bg: #fff0f3;       /* Світло-рожевий фон рядка */
-            --row-border: #ffccd5;   /* Рожева рамка */
-            --text-red: #b92b27;     /* Темно-червоний текст */
-            --badge-bg: #c0392b;     /* Червоний фон для годин */
+            --white: #ffffff;
+            --light-border: #e0e0e0;
         }
 
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--bg); margin: 0; padding: 15px; 
-            color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; 
-        }
-        .container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; width: 100%; flex: 1; }
 
-        /* HEADER */
         header { text-align: center; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
-        h1 { margin: 0 0 10px 0; font-size: 1.4rem; color: var(--text-main); }
-        .sub-header { color: #7f8c8d; font-size: 0.85rem; margin-top: 5px; font-weight: 500; }
+        h1 { margin: 0 0 15px 0; font-size: 1.5rem; color: var(--text-main); line-height: 1.3; max-width: 800px; }
+        .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 10px; }
 
         /* КНОПКА TELEGRAM */
         .btn-telegram {
@@ -52,122 +46,102 @@
             display: inline-flex; align-items: center; justify-content: center; gap: 12px;
             padding: 12px 20px; border-radius: 12px;
             box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
-            transition: transform 0.2s; width: 100%; max-width: 500px;
-            margin-bottom: 10px; border: none; text-align: left;
+            transition: transform 0.2s, background 0.2s; width: 100%; max-width: 500px;
+            margin-bottom: 10px; text-align: left; border: none;
         }
-        .btn-telegram:active { transform: scale(0.97); }
-        .tg-icon svg { width: 30px; height: 30px; fill: white; display: block; }
+        .btn-telegram:hover { transform: translateY(-2px); background: var(--tg-hover); }
+        .btn-telegram:active { transform: scale(0.98); }
+        
+        .tg-icon svg { width: 32px; height: 32px; fill: white; display: block; }
         .tg-text { display: flex; flex-direction: column; }
-        .tg-title { font-weight: bold; font-size: 1rem; }
-        .tg-desc { font-size: 0.75rem; opacity: 0.9; }
+        .tg-title { font-weight: bold; font-size: 1rem; margin-bottom: 2px; }
+        .tg-desc { font-size: 0.75rem; opacity: 0.9; line-height: 1.2; }
 
-        /* КНОПКА ПОШУКУ */
+        /* Кнопка пошуку */
         .btn-search {
             background: var(--accent); color: white; border: none; padding: 12px 30px;
             border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); margin-top: 15px;
-            display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); transition: 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
         }
-        .btn-search:active { transform: scale(0.95); }
+        .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
 
-        /* ЗАГАЛЬНА ТАБЛИЦЯ (мінімалізм) */
+        /* ТАБЛИЦЯ */
         .full-chart-section { 
             background: white; border-radius: 16px; padding: 15px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; overflow: hidden;
         }
-        .full-chart-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; }
+        .full-chart-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 0.95rem; }
+        
         .chart-row { 
-            display: flex; height: 30px; margin-bottom: 4px; align-items: stretch; cursor: pointer; 
+            display: flex; height: 35px; margin-bottom: 6px; align-items: stretch; 
+            cursor: pointer; transition: transform 0.1s, background-color 0.1s; border-radius: 6px;
         }
+        .chart-row:hover { background-color: rgba(142, 68, 173, 0.1); transform: scale(1.01); }
+        .chart-row:active { transform: scale(0.99); }
+
         .grp-lbl { 
-            width: 40px; background: #34495e; color: white; display: flex; 
-            align-items: center; justify-content: center; font-size: 0.8rem; 
-            font-weight: bold; border-radius: 4px 0 0 4px; 
+            width: 50px; background: #34495e; color: white; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 0.9rem; font-weight: bold; border-radius: 6px 0 0 6px; flex-shrink: 0;
+            transition: background 0.3s;
         }
-        .grp-lbl.highlight { background: var(--accent); box-shadow: 0 0 5px var(--accent); z-index: 2; }
-        .bar { flex: 1; display: flex; border-radius: 0 4px 4px 0; overflow: hidden; }
-        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); }
+        .grp-lbl.highlight { background: var(--accent) !important; box-shadow: 0 0 8px var(--accent); z-index: 2; position: relative; }
+
+        .bar { flex: 1; display: flex; border-radius: 0 6px 6px 0; overflow: hidden; }
+        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
+        
+        .time-scale { display: flex; margin-left: 50px; margin-bottom: 5px; font-size: 0.75rem; color: #999; }
+        .ts-item { flex: 1; text-align: left; border-left: 1px solid #ddd; padding-left: 3px; position: relative; }
+
         .bg-on { background: var(--green); }
         .bg-off { background: var(--red); }
         .bg-maybe { background: var(--yellow); }
         .bg-u { background: #e0e0e0; }
 
-        /* ПЕРЕМИКАЧ ЗАВТРА */
-        .tomorrow-control { text-align: center; margin-bottom: 20px; }
+        .tomorrow-control { text-align: center; margin-bottom: 30px; }
         .btn-tomorrow {
             background: white; border: 2px solid var(--accent); color: var(--accent);
-            padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;
+            padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
-        .btn-tomorrow.active { background: var(--accent); color: white; }
+        .btn-tomorrow:hover, .btn-tomorrow.active { background: var(--accent); color: white; }
+        .msg-no-data { color: #e74c3c; font-style: italic; font-weight: bold; font-size: 0.9rem; }
 
-        /* 🔥 НОВИЙ СТИЛЬ КАРТОК (як на картинці) */
-        .personal-schedule-container { display: none; flex-direction: column; gap: 20px; animation: slideUp 0.4s ease-out; }
-        .personal-schedule-container.show { display: flex; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* КАРТКИ */
+        .personal-schedule-container {
+            display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
+            margin-top: 20px; display: none; opacity: 0; transition: opacity 0.5s;
+        }
+        .personal-schedule-container.show { display: flex; opacity: 1; }
 
         .p-card {
-            background: white; border-radius: 12px; padding: 15px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08); width: 100%; box-sizing: border-box;
+            background: white; border-radius: 16px; padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 400px;
+            position: relative; border-top: 4px solid var(--accent);
+            animation: slideUp 0.4s ease-out;
         }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .p-header-row {
+        .p-header { text-align: center; font-weight: bold; color: #95a5a6; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .p-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .p-date { background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; display: inline-block; }
+        .p-update-time { font-size: 0.8rem; color: #bdc3c7; margin-top: 4px; }
+        .p-group-box { 
+            background: var(--accent); color: white; width: 60px; height: 60px; 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: bold; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(142,68,173,0.3);
+        }
+        
+        .outage-row {
+            background: #fff0f3; color: var(--red); border: 1px solid #ffccd5; border-radius: 8px;
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;
+            padding: 10px 15px; margin-bottom: 8px; font-weight: bold; font-size: 1.1rem;
         }
-        .p-date-badge { 
-            background: #eee; color: #555; padding: 4px 10px; 
-            border-radius: 8px; font-weight: bold; font-size: 0.9rem; 
-        }
-        .p-group-badge {
-            background: var(--accent); color: white; padding: 4px 10px;
-            border-radius: 8px; font-weight: bold;
-        }
+        .outage-divider { height: 2px; width: 20px; background: var(--red); opacity: 0.3; }
+        .outage-duration { background: var(--red); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; min-width: 50px; text-align: center; }
+        .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: #e8f8f5; border-radius: 10px; }
 
-        /* Стиль рядка відключення (PINK STYLE) */
-        .outage-row-new {
-            background-color: var(--row-bg);
-            border: 1px solid var(--row-border);
-            border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .time-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--text-red);
-            font-size: 1.2rem;
-            font-weight: 800; /* Дуже жирний шрифт як на фото */
-        }
-
-        .time-divider {
-            width: 20px;
-            height: 2px;
-            background-color: #e6b0aa;
-        }
-
-        .duration-badge {
-            background-color: var(--badge-bg);
-            color: white;
-            font-weight: bold;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            min-width: 60px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.3);
-        }
-
-        .no-outages-msg {
-            text-align: center; color: var(--green); 
-            font-weight: bold; padding: 15px; background: #e8f8f5; border-radius: 10px;
-        }
-
-        /* WIZARD (Стилі пошуку) */
+        /* WIZARD */
         .wiz-overlay { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
             background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 2000; 
@@ -175,60 +149,85 @@
         }
         .wiz-box { 
             background: white; width: 95%; max-width: 450px; height: 85vh; max-height: 600px;
-            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; 
+            border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
-        .wiz-header { padding: 15px; background: #f4f4f4; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .wiz-close { font-size: 24px; cursor: pointer; padding: 0 10px; }
+        .wiz-header { padding: 15px 20px; background: #f4f4f4; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #555; }
+        .wiz-close { font-size: 24px; cursor: pointer; color: #aaa; padding: 0 10px; }
         .wiz-body { padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
         .wiz-step { display: none; flex-direction: column; height: 100%; }
-        .wiz-step.active { display: flex; }
+        .wiz-step.active { display: flex; animation: fadeIn 0.2s; }
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
         .input-wrapper { display: flex; gap: 8px; margin-bottom: 15px; }
-        .wiz-input { flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; outline: none; }
+        .wiz-input { flex: 1; padding: 12px; border: 2px solid var(--light-border); border-radius: 10px; font-size: 16px; outline: none; transition: 0.2s; }
         .wiz-input:focus { border-color: var(--accent); }
-        .results-list { flex: 1; overflow-y: auto; display: none; border: 1px solid #eee; border-radius: 10px; }
+        .btn-check { background: var(--accent); color: white; border: none; border-radius: 10px; width: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .results-list { flex: 1; overflow-y: auto; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px; display: none; }
         .results-list.show { display: block; }
-        .res-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; }
-        .res-item:active { background: #f0edff; }
-        .wiz-footer { margin-top: auto; padding-top: 10px; }
-        .btn-back { color: #888; cursor: pointer; padding: 5px; display: inline-block; }
+        .res-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 15px; color: #333; transition: 0.1s; }
+        .res-item:last-child { border-bottom: none; }
+        .res-item:active { background: #f0edff; color: var(--accent); }
+        .wiz-footer { text-align: center; margin-top: auto; }
+        .btn-back { color: #999; padding: 10px; cursor: pointer; font-size: 0.9rem; }
+        label { font-weight: bold; margin-bottom: 8px; display: block; color: var(--text-main); }
+        
+        .seo-footer { margin-top: 30px; padding: 20px; border-top: 1px solid #e0e0e0; color: #7f8c8d; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Світло: Тернопіль та область</h1>
+        <h1>Графік відключення світла Тернопіль та Тернопільська область</h1>
         
         <a href="https://t.me/Grafik_Tern_bot" target="_blank" class="btn-telegram">
             <div class="tg-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.47-.81-.27-1.44-.41-1.38-.87.03-.24.38-.49 1.03-.75 4.06-1.77 6.77-2.94 8.13-3.51 3.87-1.63 4.67-1.91 5.2-1.91.11 0 .37.03.54.17.14.12.18.28.2.4.02.12.03.36.03.44z"/></svg>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.47-.81-.27-1.44-.41-1.38-.87.03-.24.38-.49 1.03-.75 4.06-1.77 6.77-2.94 8.13-3.51 3.87-1.63 4.67-1.91 5.2-1.91.11 0 .37.03.54.17.14.12.18.28.2.4.02.12.03.36.03.44z"/>
+                </svg>
             </div>
             <div class="tg-text">
-                <div class="tg-title">🇺🇦 Telegram Бот</div>
-                <div class="tg-desc">Оповіщення про відключення</div>
+                <div class="tg-title">🇺🇦 Світло Тернопіль: Графіки та Черги</div>
+                <div class="tg-desc">Самі актуальні графіки відключень. Пошук групи.</div>
             </div>
         </a>
 
-        <div class="sub-header" id="globalUpdate">Завантаження...</div>
+        <div class="sub-header" id="globalUpdate">Оновлення даних...</div>
         <button class="btn-search" onclick="openWiz()">🔍 Знайти свою групу</button>
     </header>
 
     <div class="full-chart-section">
         <div class="full-chart-title" id="chartTitle">Загальний графік</div>
+        <div style="text-align:center; font-size:0.75rem; color:#888; margin-bottom:8px;">
+            (Натисніть на рядок з групою, щоб побачити деталі)
+        </div>
+        
+        <div class="time-scale">
+            <div class="ts-item">00</div><div class="ts-item">03</div>
+            <div class="ts-item">06</div><div class="ts-item">09</div>
+            <div class="ts-item">12</div><div class="ts-item">15</div>
+            <div class="ts-item">18</div><div class="ts-item">21</div>
+        </div>
+        
         <div id="fullChart"></div>
     </div>
 
     <div class="tomorrow-control">
         <button id="btnTomorrow" class="btn-tomorrow" onclick="toggleTomorrow()" style="display:none;">
-            Показати графік на завтра
+            Загальний графік на завтра
         </button>
-        <div id="msgNoTomorrow" style="font-size:0.8rem; color:#999; display:none;">
-            Дані на завтра ще не опубліковані
+        <div id="msgNoTomorrow" class="msg-no-data" style="display:none;">
+            Графік на завтра ще не опубліковано
         </div>
     </div>
 
     <div id="personalContainer" class="personal-schedule-container"></div>
 </div>
+
+<footer class="seo-footer">
+    <h2>Інформація про відключення</h2>
+    <p>Цей сервіс надає актуальний <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для міста <strong>Тернопіль</strong> та області.</p>
+</footer>
 
 <div class="wiz-overlay" id="wiz">
     <div class="wiz-box">
@@ -238,34 +237,37 @@
         </div>
         <div class="wiz-body">
             <div class="wiz-step active" id="step1">
-                <label><b>Населений пункт:</b></label>
+                <label>🏙 Населений пункт</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpCity" placeholder="Введіть назву..." autocomplete="off">
+                    <input type="text" class="wiz-input" id="inpCity" placeholder="Почніть писати...">
+                    <button class="btn-check" onclick="forceSearch(1)">🔍</button>
                 </div>
                 <div class="results-list" id="listCity"></div>
             </div>
             <div class="wiz-step" id="step2">
-                <label><b>Вулиця:</b></label>
+                <label>🛣 Вулиця</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Назва вулиці..." autocomplete="off">
+                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Назва вулиці...">
+                    <button class="btn-check" onclick="forceSearch(2)">🔍</button>
                 </div>
                 <div class="results-list" id="listStreet"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">⬅️ Назад до міст</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">🔙 Назад</div></div>
             </div>
             <div class="wiz-step" id="step3">
-                <label><b>Номер будинку:</b></label>
+                <label>🏠 Будинок</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpHouse" placeholder="Номер..." autocomplete="off">
+                    <input type="text" class="wiz-input" id="inpHouse" placeholder="Номер...">
+                    <button class="btn-check" onclick="forceSearch(3)">✅</button>
                 </div>
                 <div class="results-list" id="listHouse"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">⬅️ Назад до вулиць</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">🔙 Назад</div></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // --- КОНФІГУРАЦІЯ ---
+    // 🔥 НАЛАШТУВАННЯ
     const GITHUB_USER = 'kalyniak-gnostik'; 
     const REPO_NAME = 'Svitlo_Ternopil';
     const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
@@ -275,64 +277,54 @@
     let myGroup = localStorage.getItem('myGroup');
     let viewingGroup = myGroup; 
     let isShowingTomorrow = false; 
-    let lastFetchTime = 0;
+    let lastFetchTime = 0; // 🔥 Для контролю оновлення
 
-    // Змінні пошуку
+    // Дані для пошуку
     let selectedCity = "";
     let selectedStreet = "";
 
-    // --- ГОЛОВНА ФУНКЦІЯ ---
     async function init() {
-        // Перевірка URL param
+        // Обробка URL (?group=3.2)
         const params = new URLSearchParams(window.location.search);
         const urlGroup = params.get('group');
         if(urlGroup) {
             myGroup = urlGroup;
             viewingGroup = urlGroup;
-            localStorage.setItem('myGroup', urlGroup);
         }
 
-        // 🔥 Унікальний timestamp для кожного запиту, щоб уникнути кешування
+        // 🔥 МІТКА ЧАСУ
         const ts = Date.now();
         lastFetchTime = ts;
 
-        document.getElementById('globalUpdate').innerText = "Оновлення даних...";
-
         try {
+            // 🔥 ВАЖЛИВО: додаємо ?v=Date.now() щоб уникнути кешування
             const [dRes, aRes] = await Promise.all([
                 fetch(`${RAW_URL}/schedule.json?v=${ts}`),
-                fetch(`${RAW_URL}/addresses.json?v=${ts}`)
+                fetch(`${RAW_URL}/addresses.json?v=${ts}`) 
             ]);
             
             if(dRes.ok) {
                 gData = await dRes.json();
-                const updatedTime = new Date().toLocaleTimeString('uk-UA', {hour:'2-digit', minute:'2-digit'});
-                document.getElementById('globalUpdate').innerText = `Оновлено: ${gData.updated_at || updatedTime}`;
-                
+                document.getElementById('globalUpdate').innerText = `Оновлено: ${gData.updated_at}`;
                 renderFullChart('today'); 
                 checkTomorrowButton();
                 if(viewingGroup) renderPersonalCards(viewingGroup);
-            } else {
-                document.getElementById('globalUpdate').innerText = "Помилка завантаження";
             }
-            
             if(aRes.ok) {
                 gAddr = await aRes.json();
+            } else {
+                console.warn("Addresses.json not found. Search wizard may not work.");
             }
-
+            
             setupLiveSearch();
-
-        } catch(e) { 
-            console.error(e); 
-            document.getElementById('globalUpdate').innerText = "Немає зв'язку";
-        }
+        } catch(e) { console.error(e); }
     }
 
-    // 🔥 PWA AUTO-REFRESH: Оновлюємось при поверненні в додаток
+    // 🔥 PWA AUTO-REFRESH
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") {
             const now = Date.now();
-            // Якщо пройшло більше 1 хвилини з останнього оновлення - оновлюємо
+            // Якщо пройшло більше 60 сек, оновлюємо
             if (now - lastFetchTime > 60000) {
                 console.log("App visible: refreshing data...");
                 init();
@@ -340,134 +332,7 @@
         }
     });
 
-    // --- ЛОГІКА ВІДОБРАЖЕННЯ (НОВИЙ ДИЗАЙН) ---
-    function renderPersonalCards(group) {
-        const container = document.getElementById('personalContainer');
-        container.innerHTML = '';
-        container.classList.add('show');
-        
-        ['today', 'tomorrow'].forEach(dayKey => {
-            if(!gData || !gData[dayKey]) return;
-            
-            const dayInfo = gData[dayKey];
-            const schedule = dayInfo.data[group];
-            if(!schedule) return;
-
-            const ranges = calculateOutages(schedule);
-            const dayLabel = (dayKey === 'today') ? 'Сьогодні' : 'Завтра';
-            
-            // Створення картки
-            const card = document.createElement('div');
-            card.className = 'p-card';
-            
-            let contentHTML = `
-                <div class="p-header-row">
-                    <div class="p-date-badge">${dayLabel}, ${dayInfo.date}</div>
-                    <div class="p-group-badge">Група ${group}</div>
-                </div>
-            `;
-
-            if(ranges.length === 0) {
-                contentHTML += `<div class="no-outages-msg">✅ Відключень не планується</div>`;
-            } else {
-                ranges.forEach(r => {
-                    // 🔥 HTML структура згідно скріншоту
-                    contentHTML += `
-                    <div class="outage-row-new">
-                        <div class="time-group">
-                            <span>${r.start}</span>
-                            <div class="time-divider"></div>
-                            <span>${r.end}</span>
-                        </div>
-                        <div class="duration-badge">${r.duration}</div>
-                    </div>`;
-                });
-            }
-
-            card.innerHTML = contentHTML;
-            container.appendChild(card);
-        });
-    }
-
-    // Калькулятор інтервалів (як і раніше, але точніше)
-    function calculateOutages(scheduleObj) {
-        const times = Object.keys(scheduleObj).sort();
-        let ranges = [];
-        let start = null;
-        
-        times.forEach(t => {
-            const status = scheduleObj[t];
-            // Вважаємо 'maybe' теж як потенційне відключення
-            if ((status === 'off' || status === 'maybe') && !start) start = t;
-            if (status === 'on' && start) {
-                ranges.push({ start, end: t, duration: getDuration(start, t) });
-                start = null;
-            }
-        });
-        if (start) ranges.push({ start, end: "24:00", duration: getDuration(start, "24:00") });
-        return ranges;
-    }
-
-    function getDuration(start, end) {
-        const [h1, m1] = start.split(':').map(Number);
-        let [h2, m2] = end.split(':').map(Number);
-        if(h2 === 0 && end !== "00:00") h2 = 24;
-        
-        let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
-        const hrs = Math.floor(diff / 60);
-        // const mins = diff % 60; // Якщо потрібні хвилини
-        
-        return `${hrs} год`; // Формат з картинки
-    }
-
-    // --- ЗАГАЛЬНИЙ ГРАФІК (Full Chart) ---
-    function renderFullChart(dayKey) {
-        const c = document.getElementById('fullChart'); 
-        c.innerHTML='';
-        const titleEl = document.getElementById('chartTitle');
-
-        if(!gData[dayKey]) { titleEl.innerText = "Дані відсутні"; return; }
-
-        const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
-        titleEl.innerText = `${dayName} (${gData[dayKey].date})`;
-
-        const data = gData[dayKey].data;
-        const groups = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
-
-        groups.forEach(grp => {
-            const row = document.createElement('div'); row.className='chart-row';
-            row.onclick = () => selectGroup(grp);
-
-            const isMine = (grp === viewingGroup) ? 'highlight' : '';
-            let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
-            
-            Object.keys(data[grp]).sort().forEach(t => {
-                let cls = 'bg-u';
-                const s = data[grp][t];
-                if(s==='on') cls='bg-on'; if(s==='off') cls='bg-off'; if(s==='maybe') cls='bg-maybe';
-                html += `<div class="h-blk ${cls}"></div>`;
-            });
-            html += '</div>';
-            row.innerHTML = html;
-            c.appendChild(row);
-        });
-    }
-
-    function selectGroup(group) {
-        viewingGroup = group;
-        localStorage.setItem('myGroup', group);
-        
-        // Оновлюємо URL без перезавантаження
-        const newUrl = `${window.location.pathname}?group=${group}`;
-        window.history.pushState({path: newUrl}, '', newUrl);
-
-        renderPersonalCards(group);
-        // Підсвітка в загальній таблиці
-        document.querySelectorAll('.grp-lbl').forEach(el => el.classList.remove('highlight'));
-        const target = Array.from(document.querySelectorAll('.grp-lbl')).find(el => el.innerText.trim() === group);
-        if(target) target.classList.add('highlight');
-    }
-
+    // === КЕРУВАННЯ ===
     function checkTomorrowButton() {
         const btn = document.getElementById('btnTomorrow');
         const msg = document.getElementById('msgNoTomorrow');
@@ -485,20 +350,145 @@
         const btn = document.getElementById('btnTomorrow');
         if (isShowingTomorrow) {
             renderFullChart('tomorrow');
-            btn.innerText = "Повернутись на сьогодні";
+            btn.innerText = "Повернутись до графіка на сьогодні";
             btn.classList.add('active');
         } else {
             renderFullChart('today');
-            btn.innerText = "Показати графік на завтра";
+            btn.innerText = "Загальний графік на завтра";
             btn.classList.remove('active');
         }
+        if(viewingGroup) setActiveGroupVisuals(viewingGroup);
     }
 
-    // --- WIZARD (ПОШУК) ---
+    function selectGroup(group) {
+        viewingGroup = group;
+        localStorage.setItem('myGroup', group);
+        
+        // Оновлюємо URL
+        const newUrl = `${window.location.pathname}?group=${group}`;
+        window.history.pushState({path: newUrl}, '', newUrl);
+
+        renderPersonalCards(group);
+        setActiveGroupVisuals(group);
+    }
+
+    function setActiveGroupVisuals(group) {
+        document.querySelectorAll('.grp-lbl').forEach(el => el.classList.remove('highlight'));
+        const target = Array.from(document.querySelectorAll('.grp-lbl')).find(el => el.innerText.trim() === group);
+        if(target) target.classList.add('highlight');
+    }
+
+    // === ГРАФІК ЗАГАЛЬНИЙ ===
+    function renderFullChart(dayKey) {
+        const c = document.getElementById('fullChart'); c.innerHTML='';
+        const titleEl = document.getElementById('chartTitle');
+
+        if(!gData[dayKey]) { titleEl.innerText = "Дані відсутні"; return; }
+
+        const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
+        const dateStr = gData[dayKey].date;
+        titleEl.innerText = `Загальний графік на ${dateStr} (${dayName})`;
+
+        const data = gData[dayKey].data;
+        const groups = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+
+        groups.forEach(grp => {
+            const row = document.createElement('div'); row.className='chart-row';
+            row.onclick = () => selectGroup(grp);
+
+            const isMine = (grp === viewingGroup) ? 'highlight' : '';
+            let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
+            
+            // Сортування часу
+            Object.keys(data[grp]).sort().forEach(t => {
+                let cls = 'bg-u';
+                const s = data[grp][t];
+                if(s==='on') cls='bg-on'; if(s==='off') cls='bg-off'; if(s==='maybe') cls='bg-maybe';
+                html += `<div class="h-blk ${cls}" title="${t}"></div>`;
+            });
+            html += '</div>';
+            row.innerHTML = html;
+            c.appendChild(row);
+        });
+    }
+
+    // === ПЕРСОНАЛЬНІ КАРТКИ ===
+    function renderPersonalCards(group) {
+        const container = document.getElementById('personalContainer');
+        container.innerHTML = '';
+        container.classList.add('show');
+        
+        ['today', 'tomorrow'].forEach(dayKey => {
+            if(!gData[dayKey]) return;
+            const dayInfo = gData[dayKey];
+            const schedule = dayInfo.data[group];
+            if(!schedule) return;
+
+            const ranges = calculateOutages(schedule);
+            const card = document.createElement('div');
+            card.className = 'p-card';
+            
+            let outagesHTML = '';
+            if(ranges.length === 0) {
+                outagesHTML = '<div class="no-outages">✅ Відключень не планується</div>';
+            } else {
+                ranges.forEach(r => {
+                    outagesHTML += `
+                    <div class="outage-row">
+                        <span>${r.start}</span><div class="outage-divider"></div><span>${r.end}</span>
+                        <div class="outage-duration">${r.duration}</div>
+                    </div>`;
+                });
+            }
+
+            card.innerHTML = `
+                <div class="p-header">Графік (${dayKey === 'today' ? 'Сьогодні' : 'Завтра'})</div>
+                <div class="p-top-row">
+                    <div class="p-date-block"><div class="p-date">${dayInfo.date}</div></div>
+                    <div class="p-group-block"><div class="p-group-box">${group}</div></div>
+                </div>
+                ${outagesHTML}
+            `;
+            container.appendChild(card);
+        });
+        
+        // Скрол
+        if(window.scrollY < 100) container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function calculateOutages(scheduleObj) {
+        const times = Object.keys(scheduleObj).sort();
+        let ranges = [];
+        let start = null;
+        
+        times.forEach(t => {
+            const status = scheduleObj[t];
+            if ((status === 'off' || status === 'maybe') && !start) start = t;
+            if (status === 'on' && start) {
+                ranges.push({ start, end: t, duration: getDuration(start, t) });
+                start = null;
+            }
+        });
+        if (start) ranges.push({ start, end: "24:00", duration: getDuration(start, "24:00") });
+        return ranges;
+    }
+
+    function getDuration(start, end) {
+        const [h1, m1] = start.split(':').map(Number);
+        let [h2, m2] = end.split(':').map(Number);
+        if(h2 === 0 && end !== "00:00") h2 = 24;
+        let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+        const hrs = Math.floor(diff / 60);
+        const mins = diff % 60;
+        if(hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
+        if(hrs > 0) return `${hrs} год`;
+        return `${mins} хв`;
+    }
+
+    // === WIZARD ПОШУК ===
     function setupLiveSearch() {
         if(!gAddr) return;
         
-        // Крок 1: Місто
         const inpCity = document.getElementById('inpCity');
         inpCity.addEventListener('input', () => {
             const val = inpCity.value.toLowerCase();
@@ -507,7 +497,6 @@
             renderList('listCity', matches, (item) => chooseCity(item));
         });
 
-        // Крок 2: Вулиця
         const inpStreet = document.getElementById('inpStreet');
         inpStreet.addEventListener('input', () => {
             if(!selectedCity) return;
@@ -517,14 +506,12 @@
             renderList('listStreet', matches, (item) => chooseStreet(item));
         });
 
-        // Крок 3: Будинок
         const inpHouse = document.getElementById('inpHouse');
         inpHouse.addEventListener('input', () => {
             if(!selectedCity || !selectedStreet) return;
             const val = inpHouse.value.toLowerCase();
             const houses = gAddr.filter(i => i.c === selectedCity && i.s === selectedStreet);
-            const matches = houses.filter(h => h.h.toLowerCase().includes(val)).map(h => h.h)
-                .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+            const matches = houses.filter(h => h.h.toLowerCase().includes(val)).map(h => h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
             renderList('listHouse', matches, (item) => chooseHouse(item));
         });
     }
@@ -534,9 +521,7 @@
         el.innerHTML = '';
         if(items.length === 0) { el.classList.remove('show'); return; }
         el.classList.add('show');
-        
-        // Обмежуємо кількість результатів для швидкодії
-        items.slice(0, 100).forEach(item => {
+        items.slice(0, 50).forEach(item => {
             const div = document.createElement('div');
             div.className = 'res-item';
             div.innerText = item;
@@ -548,11 +533,6 @@
     function chooseCity(name) {
         selectedCity = name;
         document.getElementById('inpCity').value = name;
-        // Очистити наступні кроки
-        document.getElementById('inpStreet').value = '';
-        document.getElementById('inpHouse').value = '';
-        
-        // Підготувати вулиці
         const streets = [...new Set(gAddr.filter(i => i.c === name).map(i => i.s))].sort();
         renderList('listStreet', streets, (item) => chooseStreet(item));
         goStep(2);
@@ -561,17 +541,9 @@
     function chooseStreet(name) {
         selectedStreet = name;
         document.getElementById('inpStreet').value = name;
-        document.getElementById('inpHouse').value = '';
-
         const houses = gAddr.filter(i => i.c === selectedCity && i.s === name);
         const grps = [...new Set(houses.map(h => h.g))];
-        
-        // Якщо на вулиці лише одна група - одразу вибираємо
-        if(grps.length === 1) { 
-            saveGroup(grps[0]); 
-            return; 
-        }
-        
+        if(grps.length === 1) { saveGroup(grps[0]); return; }
         const hList = houses.map(h => h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
         renderList('listHouse', hList, (item) => chooseHouse(item));
         goStep(3);
@@ -581,35 +553,36 @@
         document.getElementById('inpHouse').value = name;
         const found = gAddr.find(i => i.c === selectedCity && i.s === selectedStreet && i.h === name);
         if(found) saveGroup(found.g);
-        else alert("Групу не знайдено");
+        else alert("Такого будинку не знайдено :(");
+    }
+
+    function forceSearch(step) {
+        // Простий fallback
+        alert("Використовуйте підказки зі списку");
     }
 
     function saveGroup(g) {
-        selectGroup(g);
+        myGroup = g; localStorage.setItem('myGroup', g);
         closeWiz();
+        selectGroup(g);
     }
 
     function openWiz() { 
         document.getElementById('wiz').style.display = 'flex';
-        if(gAddr && document.getElementById('listCity').children.length === 0) {
+        if(gAddr) {
              const cities = [...new Set(gAddr.map(i => i.c))].sort();
              renderList('listCity', cities, (i)=>chooseCity(i));
         }
         goStep(1);
     }
     function closeWiz() { document.getElementById('wiz').style.display = 'none'; }
-    
     function goStep(n) {
-        [1,2,3].forEach(i => document.getElementById(`step${i}`).classList.remove('active'));
+        [1,2,3].forEach(i=>document.getElementById(`step${i}`).classList.remove('active'));
         document.getElementById(`step${n}`).classList.add('active');
-        
-        const titles = {1: "Крок 1: Місто", 2: "Крок 2: Вулиця", 3: "Крок 3: Будинок"};
-        document.getElementById('wizTitle').innerText = titles[n];
+        document.getElementById('wizTitle').innerText = n===1?'Оберіть місто':(n===2?'Оберіть вулицю':'Оберіть будинок');
     }
 
-    // Запуск
     init();
-
 </script>
 
 </body>
