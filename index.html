@@ -255,7 +255,7 @@
             .p-group-square { background: #2c2c2c; }
         }
 
-        /* === ОНОВЛЕНІ СТИЛІ СПИСКУ (Всі стани) === */
+        /* === СТИЛІ СПИСКУ (Всі стани) === */
         .outages-list { display: flex; flex-direction: column; gap: 10px; }
         
         .schedule-row {
@@ -285,7 +285,6 @@
 
         @media (prefers-color-scheme: dark) {
             .type-maybe { background: #3e3818; color: #f1c40f; }
-            /* Зелений/червоний вже адаптовані через змінні */
         }
 
         .schedule-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.15; margin: 0 15px; border-radius: 2px; }
@@ -657,17 +656,14 @@
         }
 
         const dataObj = gData[dayKey];
-        const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
-        const dateStr = dataObj.date;
+        const isTomorrow = (dayKey === 'tomorrow');
+        
+        // Вираховуємо дату:
+        const dayLabel = isTomorrow ? 'ЗАВТРА' : 'СЬОГОДНІ';
+        const dateStr = getCalcDate(isTomorrow);
 
-        // === Fix Date Duplication ===
-        let titleHtml = '';
-        if (dateStr.toLowerCase().includes(dayName.toLowerCase())) {
-            titleHtml = `📅 ГРАФІК: ${dateStr.toUpperCase()}`;
-        } else {
-            titleHtml = `📅 ${dateStr} <span style="opacity:0.6; font-weight:400;">(${dayName})</span>`;
-        }
-        els.chartTitle.innerHTML = titleHtml;
+        // Формуємо заголовок без дублювання
+        els.chartTitle.innerHTML = `📅 ГРАФІК: ${dayLabel} <span style="opacity:0.6; font-weight:400;">(${dateStr})</span>`;
 
         const scheduleData = dataObj.data;
         const groups = Object.keys(scheduleData).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
@@ -711,7 +707,7 @@
             
             if (!schedule) return;
 
-            // Use new calculator for full list
+            // Full range calculation (Green/Red/Yellow)
             const ranges = calculateRanges(schedule);
             
             const card = document.createElement('div');
@@ -751,8 +747,9 @@
             
             listHTML += '</div>';
 
-            const dayLabel = dayKey === 'today' ? 'СЬОГОДНІ' : 'ЗАВТРА';
-            const dateStr = dayInfo.date;
+            const isTomorrow = (dayKey === 'tomorrow');
+            const dayLabel = isTomorrow ? 'ЗАВТРА' : 'СЬОГОДНІ';
+            const dateStr = getCalcDate(isTomorrow);
 
             card.innerHTML = `
                 <div class="p-top-label">РОЗКЛАД ДЛЯ ВАШОЇ ЧЕРГИ</div>
@@ -835,6 +832,19 @@
         if (hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
         if (hrs > 0) return `${hrs} год`;
         return `${mins} хв`;
+    }
+
+    // === Helper: Date Calculator (dd.mm.yyyy) ===
+    function getCalcDate(isTomorrow) {
+        const d = new Date();
+        if (isTomorrow) {
+            d.setDate(d.getDate() + 1);
+        }
+        return d.toLocaleDateString('uk-UA', { 
+            day: '2-digit', 
+            month: '2-digit',
+            year: 'numeric'
+        });
     }
 
     function shareGroup() {
