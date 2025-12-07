@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <title>Графік відключення світла Тернопіль (ГПВ)</title>
-    <meta name="description" content="Актуальний графік погодинних відключень світла в Тернополі та області. Оновлення в реальному часі.">
+    <title>Графік відключення світла Тернопіль (ГПВ) | Оновлення наживо</title>
+    <meta name="description" content="Актуальний графік погодинних відключень електроенергії (ГПВ) в Тернополі та області. Пошук черги за адресою. Прогноз на сьогодні та завтра.">
+    <meta name="keywords" content="світло тернопіль, графік відключень, гпв тернопіль, коли буде світло, тернопільобленерго графік, черги відключення">
     <meta name="robots" content="index, follow">
+    <meta name="author" content="Svitlo Ternopil">
     
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://svitlo-ternopil.ue">
+    <meta property="og:title" content="Графік світла Тернопіль">
+    <meta property="og:description" content="Дізнайся свою чергу та графік відключень за 1 хвилину. Актуальні дані.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main/og-image.png">
+    
+    <meta name="theme-color" content="#f4f7f6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Світло ТРН">
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -19,8 +28,25 @@
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Графік відключення світла Тернопіль",
+      "description": "Сервіс для перевірки графіку погодинних відключень електроенергії у місті Тернопіль та області.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "UAH"
+      }
+    }
+    </script>
     
     <style>
+        /* === GLOBAL CSS VARIABLES === */
         :root {
             --bg: #f4f7f6;
             --card-bg: #ffffff;
@@ -30,20 +56,26 @@
             --input-bg: #ffffff;
             
             --accent: #8e44ad; 
-            --accent-hover: #9b59b6;
+            --accent-hover: #7d3c98;
             --accent-light: rgba(142, 68, 173, 0.1);
             
             --tg-color: #229ED9;
             
             --red: #e74c3c;
-            --red-bg: #fff0f3;
+            --red-bg: #fdf0f0;
             --red-text: #c0392b;
             
             --green: #27ae60;
+            --green-bg: #eafaf1;
+            --green-text: #219150;
+
             --yellow: #f1c40f;
             --gray-u: #ecf0f1;
             
-            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow: 0 8px 24px rgba(0,0,0,0.08);
+            --radius-main: 18px;
+            --radius-sm: 12px;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -56,262 +88,358 @@
                 --input-bg: #2c2c2c;
                 
                 --accent: #9b59b6;
+                --accent-hover: #af7ac5;
                 --accent-light: rgba(155, 89, 182, 0.2);
                 
                 --red-bg: #3e1818;
                 --red-text: #ff6b6b;
+                
+                --green-bg: #183e28;
+                --green-text: #2ecc71;
+
                 --gray-u: #34495e;
                 
-                --shadow: 0 4px 20px rgba(0,0,0,0.4);
+                --shadow: 0 8px 24px rgba(0,0,0,0.4);
             }
         }
 
+        /* === RESET & BASE === */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--bg); margin: 0; padding: 15px; 
-            color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh;
+            font-family: var(--font-main); 
+            background: var(--bg); margin: 0; padding: 20px 15px; 
+            color: var(--text-main); 
+            display: flex; flex-direction: column; min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
         
-        .container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
+        .container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
 
-        /* HEADER */
-        header { text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; }
-        h1 { margin: 10px 0 15px 0; font-size: 1.5rem; font-weight: 800; line-height: 1.3; }
-        .sub-header { color: var(--text-sub); font-size: 0.85rem; margin-top: 5px; display: flex; align-items: center; gap: 6px; }
+        /* === HEADER SECTION === */
+        header { text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center; }
+        h1 { margin: 10px 0 15px 0; font-size: 1.6rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; }
+        
+        .sub-header { color: var(--text-sub); font-size: 0.85rem; margin-top: 5px; display: flex; align-items: center; gap: 8px; background: var(--card-bg); padding: 6px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(39, 174, 96, 0); } 100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); } }
+        .status-error { background: var(--red); animation: none; }
 
-        /* BUTTONS */
+        /* === TELEGRAM BUTTON === */
         .btn-telegram {
             background: var(--tg-color); color: white; text-decoration: none;
-            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            padding: 12px 20px; border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
-            width: 100%; max-width: 450px; border: none; margin-bottom: 10px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+            padding: 14px 24px; border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(34, 158, 217, 0.3);
+            width: 100%; max-width: 450px; border: none; margin-bottom: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .btn-telegram:active { transform: scale(0.97); }
-        .tg-icon svg { width: 30px; height: 30px; fill: white; display: block; }
+        .btn-telegram:hover { box-shadow: 0 10px 25px rgba(34, 158, 217, 0.4); }
+        .tg-icon svg { width: 32px; height: 32px; fill: white; display: block; }
         .tg-text { display: flex; flex-direction: column; text-align: left; }
-        .tg-title { font-weight: bold; font-size: 1rem; }
-        .tg-desc { font-size: 0.75rem; opacity: 0.9; }
+        .tg-title { font-weight: 800; font-size: 1.05rem; }
+        .tg-desc { font-size: 0.8rem; opacity: 0.9; font-weight: 500; }
 
+        /* === SEARCH BUTTON === */
         .btn-search {
-            background: var(--accent); color: white; border: none; padding: 12px 30px;
-            border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer;
+            background: var(--accent); color: white; border: none; padding: 14px 35px;
+            border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer;
             box-shadow: 0 4px 15px var(--accent-light); transition: 0.2s;
-            display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
+            display: inline-flex; align-items: center; gap: 10px; margin-top: 15px;
         }
-        .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
+        .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); box-shadow: 0 6px 20px var(--accent-light); }
+        .btn-search:active { transform: translateY(0); }
 
-        /* CHART */
+        /* === MAIN CHART SECTION === */
         .full-chart-section { 
-            background: var(--card-bg); border-radius: 18px; padding: 15px; 
-            box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden;
+            background: var(--card-bg); border-radius: var(--radius-main); padding: 20px; 
+            box-shadow: var(--shadow); margin-bottom: 30px; overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
-        .full-chart-title { text-align: center; font-weight: 700; color: var(--text-sub); margin-bottom: 12px; font-size: 0.95rem; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .full-chart-title { 
+            text-align: center; font-weight: 700; color: var(--text-sub); 
+            margin-bottom: 15px; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px;
+        }
 
         .chart-row { 
-            display: flex; height: 34px; margin-bottom: 6px; align-items: stretch; 
-            cursor: pointer; transition: transform 0.1s; border-radius: 8px; overflow: hidden;
+            display: flex; height: 38px; margin-bottom: 8px; align-items: stretch; 
+            cursor: pointer; transition: transform 0.15s; border-radius: 8px; overflow: hidden;
+            position: relative;
         }
         .chart-row:active { transform: scale(0.98); }
+        .chart-row:last-child { margin-bottom: 0; }
 
         .grp-lbl { 
             width: 45px; background: #34495e; color: white; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 0.9rem; font-weight: 700; flex-shrink: 0;
+            font-size: 0.95rem; font-weight: 700; flex-shrink: 0;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
-        .grp-lbl.highlight { background: var(--accent) !important; box-shadow: 0 0 10px var(--accent); z-index: 2; }
+        .grp-lbl.highlight { 
+            background: var(--accent) !important; 
+            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);
+            position: relative; z-index: 2;
+        }
 
-        .bar { flex: 1; display: flex; }
-        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.1); }
+        .bar { flex: 1; display: flex; background: var(--gray-u); }
+        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.05); transition: background 0.3s; }
         
-        .time-scale { display: flex; margin-left: 45px; margin-bottom: 5px; font-size: 0.7rem; color: var(--text-sub); }
-        .ts-item { flex: 1; text-align: left; border-left: 1px solid var(--border); padding-left: 2px; }
+        /* Time Labels */
+        .time-scale { display: flex; margin-left: 45px; margin-bottom: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
+        .ts-item { flex: 1; text-align: left; border-left: 1px solid var(--border); padding-left: 4px; position: relative; }
+        .ts-item::after { content:''; position: absolute; bottom: -5px; left: 0; height: 4px; width: 1px; background: var(--border); }
 
+        /* Status Colors */
         .bg-on { background: var(--green); }
         .bg-off { background: var(--red); }
         .bg-maybe { background: var(--yellow); }
         .bg-u { background: var(--gray-u); }
 
+        /* === TOMORROW CONTROL === */
         .tomorrow-control { text-align: center; margin-bottom: 30px; }
         .btn-tomorrow {
             background: transparent; border: 2px solid var(--accent); color: var(--accent);
-            padding: 10px 24px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s;
+            padding: 12px 28px; border-radius: 25px; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.25s;
         }
-        .btn-tomorrow.active { background: var(--accent); color: white; }
-        .msg-no-data { color: var(--red-text); font-style: italic; font-weight: 600; }
+        .btn-tomorrow:hover { background: var(--accent-light); }
+        .btn-tomorrow.active { background: var(--accent); color: white; box-shadow: 0 4px 15px var(--accent-light); }
+        .msg-no-data { color: var(--text-sub); font-style: italic; font-weight: 500; background: var(--card-bg); padding: 10px 20px; border-radius: 50px; display: inline-block; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 
-        /* === PERSONAL CARDS (FIXED) === */
+        /* === PERSONAL CARDS === */
         .personal-schedule-container {
-            display: flex; flex-direction: column; gap: 20px; align-items: center; 
+            display: flex; flex-direction: column; gap: 25px; align-items: center; 
             margin-top: 10px; display: none; opacity: 0; transition: opacity 0.4s;
         }
         .personal-schedule-container.show { display: flex; opacity: 1; }
 
         .p-card {
             background: var(--card-bg); 
-            border-radius: 20px; padding: 20px;
+            border-radius: 24px; padding: 25px;
             box-shadow: var(--shadow); 
-            width: 100%; max-width: 450px;
+            width: 100%; max-width: 500px;
             position: relative; 
-            border-top: 5px solid var(--accent);
-            animation: slideUp 0.3s ease-out;
-            box-sizing: border-box;
+            border-top: 6px solid var(--accent);
+            animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Верхній заголовок картки */
         .p-top-label { 
-            text-align: center; font-size: 0.75rem; color: var(--text-sub); 
-            font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; 
+            text-align: center; font-size: 0.8rem; color: var(--text-sub); 
+            font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; 
         }
         
-        .p-header-row { display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 20px; gap: 12px; }
+        .p-header-row { display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 25px; gap: 15px; }
         
-        /* Стиль фіолетової плашки */
         .p-day-badge { 
-            background: var(--accent); color: white; 
-            padding: 10px 18px; border-radius: 14px; 
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%); 
+            color: white; 
+            padding: 15px 20px; border-radius: 18px; 
             flex: 1; display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 5px 15px var(--accent-light);
         }
-        .p-day-title { font-size: 1.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
-        .p-day-sub { font-size: 0.75rem; opacity: 0.85; font-weight: 500; }
+        .p-day-title { font-size: 1.4rem; font-weight: 800; line-height: 1.1; margin-bottom: 5px; }
+        .p-day-sub { font-size: 0.85rem; opacity: 0.9; font-weight: 500; }
 
         .p-group-square { 
-            background: var(--accent); color: white; width: 60px;
-            border-radius: 14px; font-weight: 800; font-size: 1.6rem;
+            background: white; color: var(--accent); width: 70px;
+            border-radius: 18px; font-weight: 900; font-size: 2rem;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px var(--accent-light);
+            border: 2px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        @media (prefers-color-scheme: dark) {
+            .p-group-square { background: #2c2c2c; }
         }
 
+        .outages-list { display: flex; flex-direction: column; gap: 10px; }
         .outage-row {
             background: var(--red-bg); color: var(--red-text); 
-            border: 1px solid var(--red-bg);
-            border-radius: 12px;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+            border-radius: 16px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 18px; margin-bottom: 10px; 
-            font-weight: 700; font-size: 1.1rem;
+            padding: 14px 20px; 
+            font-weight: 700; font-size: 1.2rem;
         }
-        .outage-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.2; margin: 0 15px; }
-        .outage-duration { font-size: 0.8rem; opacity: 0.9; background: rgba(0,0,0,0.05); padding: 4px 8px; border-radius: 6px; }
+        .outage-row.is-maybe {
+            background: #fffcf0; color: #b7950b; border-color: rgba(241, 196, 15, 0.2);
+        }
+        @media (prefers-color-scheme: dark) {
+            .outage-row.is-maybe { background: #3e3818; color: #f1c40f; }
+        }
 
-        .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: var(--bg); border-radius: 12px; border: 1px dashed var(--green); }
+        .outage-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.15; margin: 0 15px; border-radius: 2px; }
+        .outage-duration { 
+            font-size: 0.85rem; opacity: 1; 
+            background: rgba(0,0,0,0.06); padding: 5px 10px; 
+            border-radius: 8px; font-weight: 600;
+        }
+
+        .no-outages { 
+            text-align: center; color: var(--green-text); background: var(--green-bg);
+            font-weight: 700; padding: 30px; border-radius: 18px; 
+            border: 2px dashed rgba(39, 174, 96, 0.3);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
 
         .btn-share {
-            margin-top: 15px; width: 100%; padding: 14px; 
+            margin-top: 20px; width: 100%; padding: 16px; 
             border: 2px dashed var(--accent); 
             color: var(--accent); background: var(--accent-light);
-            border-radius: 14px; cursor: pointer; 
+            border-radius: 16px; cursor: pointer; 
             font-size: 1rem; font-weight: 700;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: 0.2s; box-sizing: border-box;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: 0.2s;
         }
         .btn-share:hover { background: var(--accent); color: white; border-style: solid; }
-        .btn-share:active { transform: scale(0.98); }
-
-        /* WIZARD */
+        
+        /* === WIZARD MODAL === */
         .wiz-overlay { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 2000; 
             align-items: center; justify-content: center; 
+            animation: fadeInOverlay 0.3s forwards;
         }
-        .wiz-box { 
-            background: var(--card-bg); width: 95%; max-width: 480px; height: 85vh; max-height: 650px;
-            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
-        }
-        .wiz-header {
-            padding: 18px 20px; background: var(--bg); border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; 
-            font-weight: bold; font-size: 1.1rem; color: var(--text-main);
-        }
-        .wiz-close { font-size: 28px; cursor: pointer; color: var(--text-sub); padding: 0 10px; }
-        .wiz-body { padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
-        .wiz-step { display: none; flex-direction: column; height: 100%; }
-        .wiz-step.active { display: flex; animation: fadeIn 0.25s; }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
 
-        .input-wrapper { display: flex; gap: 10px; margin-bottom: 15px; }
+        .wiz-box { 
+            background: var(--card-bg); width: 95%; max-width: 500px; height: 85vh; max-height: 700px;
+            border-radius: 28px; box-shadow: 0 25px 80px rgba(0,0,0,0.5); 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+            transform: scale(0.95); animation: popIn 0.3s forwards;
+        }
+        @keyframes popIn { from { transform: scale(0.95); opacity:0; } to { transform: scale(1); opacity:1; } }
+
+        .wiz-header {
+            padding: 20px 25px; background: var(--card-bg); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; 
+            font-weight: 800; font-size: 1.2rem; color: var(--text-main);
+            z-index: 10;
+        }
+        .wiz-close { font-size: 32px; cursor: pointer; color: var(--text-sub); line-height: 0.8; transition: color 0.2s; }
+        .wiz-close:hover { color: var(--red); }
+
+        .wiz-body { padding: 25px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        
+        .wiz-step { display: none; flex-direction: column; height: 100%; }
+        .wiz-step.active { display: flex; animation: slideRight 0.3s; }
+        @keyframes slideRight { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
+
+        .wiz-label { display: block; margin-bottom: 12px; font-weight: 600; color: var(--text-sub); font-size: 0.9rem; }
+
+        .input-wrapper { display: flex; gap: 10px; margin-bottom: 20px; }
         .wiz-input { 
-            flex: 1; padding: 14px; background: var(--input-bg); color: var(--text-main);
-            border: 2px solid var(--border); border-radius: 14px; font-size: 16px; outline: none; transition: 0.2s;
+            flex: 1; padding: 16px; background: var(--input-bg); color: var(--text-main);
+            border: 2px solid var(--border); border-radius: 16px; font-size: 1.1rem; outline: none; transition: 0.2s;
+            -webkit-appearance: none;
         }
-        .wiz-input:focus { border-color: var(--accent); }
+        .wiz-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-light); }
+        
         .btn-check {
-            background: var(--accent); color: white; border: none; border-radius: 14px;
-            width: 54px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            background: var(--accent); color: white; border: none; border-radius: 16px;
+            width: 58px; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s;
         }
-        .results-list { flex: 1; overflow-y: auto; border-radius: 12px; margin-bottom: 10px; display: none; }
+        .btn-check:active { transform: scale(0.95); }
+
+        .results-list { flex: 1; overflow-y: auto; border-radius: 16px; margin-bottom: 10px; display: none; }
         .results-list.show { display: block; border: 1px solid var(--border); }
+        
         .res-item { 
-            padding: 14px 15px; border-bottom: 1px solid var(--border); cursor: pointer; 
-            font-size: 16px; color: var(--text-main); 
+            padding: 16px 20px; border-bottom: 1px solid var(--border); cursor: pointer; 
+            font-size: 1rem; color: var(--text-main); font-weight: 500;
         }
         .res-item:last-child { border-bottom: none; }
-        .wiz-footer { margin-top: auto; padding-top: 10px; }
-        .btn-back { color: var(--text-sub); padding: 12px; cursor: pointer; font-size: 0.95rem; text-align: center; width: 100%; background: var(--bg); border-radius: 10px; }
+        .res-item:hover { background: var(--bg); }
+        .res-item:active { background: var(--accent-light); color: var(--accent); }
+
+        .wiz-footer { margin-top: auto; padding-top: 15px; }
+        .btn-back { 
+            color: var(--text-sub); padding: 15px; cursor: pointer; font-size: 1rem; font-weight: 600;
+            text-align: center; width: 100%; background: var(--bg); border-radius: 14px; 
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: var(--border); color: var(--text-main); }
         
-        .seo-footer { margin-top: 40px; padding: 25px; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 0.75rem; text-align: center; }
+        /* === FOOTER === */
+        .seo-footer { margin-top: 60px; padding: 30px 20px; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 0.8rem; text-align: center; line-height: 1.6; }
+        .seo-footer h2 { font-size: 1rem; margin-bottom: 10px; color: var(--text-main); }
+        .seo-footer strong { color: var(--text-main); }
+
+        /* Loader */
+        .loader-spinner {
+            border: 4px solid rgba(0,0,0,0.1); border-left-color: var(--accent);
+            border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Графік відключення світла<br>Тернопіль та область</h1>
+        <h1>Графік відключення світла<br>Тернопіль</h1>
         
-        <a href="https://t.me/Grafik_Tern_bot" target="_blank" class="btn-telegram">
+        <a href="https://t.me/Grafik_Tern_bot" target="_blank" class="btn-telegram" aria-label="Відкрити чат-бот у Telegram">
             <div class="tg-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.47-.81-.27-1.44-.41-1.38-.87.03-.24.38-.49 1.03-.75 4.06-1.77 6.77-2.94 8.13-3.51 3.87-1.63 4.67-1.91 5.2-1.91.11 0 .37.03.54.17.14.12.18.28.2.4.02.12.03.36.03.44z"/>
                 </svg>
             </div>
             <div class="tg-text">
-                <div class="tg-title">🇺🇦 Світло Тернопіль: Бот</div>
-                <div class="tg-desc">Миттєві сповіщення у Telegram</div>
+                <div class="tg-title">Офіційний Бот</div>
+                <div class="tg-desc">Отримуйте сповіщення миттєво</div>
             </div>
         </a>
 
         <div class="sub-header">
-            <span class="status-dot"></span>
+            <span class="status-dot" id="statusDot"></span>
             <span id="globalUpdate">Оновлення даних...</span>
+            <div class="loader-spinner" id="mainLoader"></div>
         </div>
+        
         <button class="btn-search" onclick="openWiz()">🔍 Знайти свою чергу</button>
     </header>
 
-    <div class="full-chart-section">
-        <div class="full-chart-title" id="chartTitle">Загальний графік</div>
-        
-        <div class="time-scale">
-            <div class="ts-item">00</div><div class="ts-item">03</div>
-            <div class="ts-item">06</div><div class="ts-item">09</div>
-            <div class="ts-item">12</div><div class="ts-item">15</div>
-            <div class="ts-item">18</div><div class="ts-item">21</div>
-        </div>
-        
-        <div id="fullChart"></div>
-        <div style="text-align:center; font-size:0.75rem; color:var(--text-sub); margin-top:10px;">
-            (Натисніть на рядок, щоб відкрити деталі)
-        </div>
-    </div>
+    <main>
+        <section class="full-chart-section">
+            <div class="full-chart-title" id="chartTitle">Завантаження графіка...</div>
+            
+            <div class="time-scale">
+                <div class="ts-item">00</div><div class="ts-item">03</div>
+                <div class="ts-item">06</div><div class="ts-item">09</div>
+                <div class="ts-item">12</div><div class="ts-item">15</div>
+                <div class="ts-item">18</div><div class="ts-item">21</div>
+            </div>
+            
+            <div id="fullChart">
+                </div>
+            <div style="text-align:center; font-size:0.75rem; color:var(--text-sub); margin-top:15px; opacity:0.8;">
+                👆 Натисніть на рядок, щоб відкрити детальний розклад
+            </div>
+        </section>
 
-    <div class="tomorrow-control">
-        <button id="btnTomorrow" class="btn-tomorrow" onclick="toggleTomorrow()" style="display:none;">
-            Показати графік на завтра
-        </button>
-        <div id="msgNoTomorrow" class="msg-no-data" style="display:none;">
-            Графік на завтра ще не опубліковано
+        <div class="tomorrow-control">
+            <button id="btnTomorrow" class="btn-tomorrow" onclick="toggleTomorrow()" style="display:none;">
+                Показати графік на завтра
+            </button>
+            <div id="msgNoTomorrow" class="msg-no-data" style="display:none;">
+                💤 Графік на завтра ще не опубліковано
+            </div>
         </div>
-    </div>
 
-    <div id="personalContainer" class="personal-schedule-container"></div>
+        <div id="personalContainer" class="personal-schedule-container">
+            </div>
+    </main>
 </div>
 
 <footer class="seo-footer">
-    <h2>Інформація</h2>
-    <p>Цей сервіс надає актуальний <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для міста <strong>Тернопіль</strong> та області. Дані автоматично синхронізуються з офіційними джерелами ВАТ "Тернопільобленерго".</p>
+    <h2>Про сервіс</h2>
+    <p>Цей веб-сайт надає найактуальніший <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для споживачів ВАТ "Тернопільобленерго". Дані автоматично синхронізуються з офіційними джерелами та оновлюються в режимі реального часу. Перевіряйте свою чергу за адресою (місто, вулиця, будинок) та плануйте свій день.</p>
+    <p>&copy; 2025 Svitlo Ternopil. Дані мають інформаційний характер.</p>
 </footer>
 
 <div class="wiz-overlay" id="wiz">
@@ -323,339 +451,575 @@
         
         <div class="wiz-body">
             <div class="wiz-step active" id="step1">
-                <label>🏙 Оберіть населений пункт</label>
+                <label class="wiz-label">🏙 Оберіть населений пункт</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpCity" placeholder="Введіть назву..." autocomplete="off">
+                    <input type="text" class="wiz-input" id="inpCity" placeholder="Наприклад: Тернопіль" autocomplete="off">
                     <button class="btn-check" onclick="forceSearch(1)">🔍</button>
                 </div>
                 <div class="results-list" id="listCity"></div>
             </div>
+            
             <div class="wiz-step" id="step2">
-                <label>🛣 Назва вулиці</label>
+                <label class="wiz-label">🛣 Назва вулиці</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Почніть писати..." autocomplete="off">
+                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Почніть писати назву..." autocomplete="off">
                     <button class="btn-check" onclick="forceSearch(2)">🔍</button>
                 </div>
                 <div class="results-list" id="listStreet"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">🔙 Назад до міст</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">🔙 Назад до вибору міста</div></div>
             </div>
+            
             <div class="wiz-step" id="step3">
-                <label>🏠 Номер будинку</label>
+                <label class="wiz-label">🏠 Номер будинку</label>
                 <div class="input-wrapper">
                     <input type="text" class="wiz-input" id="inpHouse" placeholder="Номер..." autocomplete="off">
                     <button class="btn-check" onclick="forceSearch(3)">🔍</button>
                 </div>
                 <div class="results-list" id="listHouse"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">🔙 Назад до вулиць</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">🔙 Назад до вибору вулиці</div></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    /**
+     * Svitlo Ternopil Client Logic
+     * Repository: https://github.com/kalyniak-gnostik/Svitlo_Ternopil
+     */
+    
+    // Configuration
     const GITHUB_USER = 'kalyniak-gnostik'; 
     const REPO_NAME = 'Svitlo_Ternopil';
-    const DATA_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
-    const DEFAULT_CITIES = ['Тернопіль', 'Чортків', 'Кременець', 'Бережани'];
+    const BRANCH = 'main';
+    const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/${BRANCH}`;
+    const CACHE_BUST = `?v=${Date.now()}`; // Prevent caching of JSON files
+    
+    // Defaults for empty search
+    const DEFAULT_CITIES = ['Тернопіль', 'Чортків', 'Кременець', 'Бережани', 'Збараж', 'Теребовля'];
 
-    let gData = null;
-    let gAddr = null;
+    // State Variables
+    let gData = null;       // Schedule data
+    let gAddr = null;       // Addresses database
+    
+    // Get group from URL or LocalStorage
     let myGroup = new URLSearchParams(window.location.search).get('group') || localStorage.getItem('myGroup');
     let viewingGroup = myGroup; 
+    
     let isShowingTomorrow = false; 
     let selectedCity = "";
     let selectedStreet = "";
     let globalUpdateTimeStr = "";
 
+    // DOM Elements References
+    const els = {
+        globalUpdate: document.getElementById('globalUpdate'),
+        statusDot: document.getElementById('statusDot'),
+        mainLoader: document.getElementById('mainLoader'),
+        chartTitle: document.getElementById('chartTitle'),
+        fullChart: document.getElementById('fullChart'),
+        btnTomorrow: document.getElementById('btnTomorrow'),
+        msgNoTomorrow: document.getElementById('msgNoTomorrow'),
+        personalContainer: document.getElementById('personalContainer'),
+        wiz: document.getElementById('wiz'),
+        inpCity: document.getElementById('inpCity'),
+        inpStreet: document.getElementById('inpStreet'),
+        inpHouse: document.getElementById('inpHouse')
+    };
+
+    /**
+     * Initialization Sequence
+     */
+    document.addEventListener('DOMContentLoaded', init);
+
     async function init() {
+        els.mainLoader.style.display = 'inline-block';
+        els.statusDot.style.display = 'none';
+
         try {
-            const ts = Date.now();
-            const [dRes, aRes] = await Promise.all([
-                fetch(`${DATA_URL}/schedule.json?v=${ts}`),
-                fetch(`${DATA_URL}/addresses.json?v=${ts}`).catch(e => null)
-            ]);
+            // 1. Fetch Schedule (Critical)
+            const scheduleResponse = await fetch(`${BASE_URL}/schedule.json${CACHE_BUST}`);
+            if (!scheduleResponse.ok) throw new Error("Schedule fetch failed");
             
-            if(dRes.ok) {
-                gData = await dRes.json();
-                const d = new Date(gData.updated_at);
-                globalUpdateTimeStr = d.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
-                document.getElementById('globalUpdate').innerText = `Оновлено: ${globalUpdateTimeStr}`;
-                
-                renderFullChart('today'); 
-                checkTomorrowButton();
+            gData = await scheduleResponse.json();
+            
+            // Process Date & Time
+            const d = new Date(gData.updated_at);
+            globalUpdateTimeStr = d.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+            els.globalUpdate.innerText = `Оновлено: ${globalUpdateTimeStr}`;
+            els.statusDot.style.display = 'inline-block';
+            els.mainLoader.style.display = 'none';
 
-                if(viewingGroup) selectGroup(viewingGroup, false);
-            } else {
-                document.getElementById('globalUpdate').innerText = "Помилка даних";
-                document.getElementById('globalUpdate').style.color = "var(--red)";
+            // Initial Render
+            renderFullChart('today');
+            checkTomorrowButton();
+
+            // If user has a group selected/saved, show it
+            if (viewingGroup) {
+                selectGroup(viewingGroup, false);
             }
-            if(aRes && aRes.ok) gAddr = await aRes.json();
-            setupLiveSearch();
 
-        } catch(e) { console.error(e); }
+            // 2. Fetch Addresses (Lazy/Non-blocking)
+            fetchAddresses();
+
+        } catch (e) {
+            console.error("Critical Error:", e);
+            els.globalUpdate.innerText = "Помилка зв'язку з сервером";
+            els.globalUpdate.style.color = "var(--red)";
+            els.statusDot.className = "status-dot status-error";
+            els.statusDot.style.display = 'inline-block';
+            els.mainLoader.style.display = 'none';
+        }
     }
 
-    // === UI LOGIC ===
+    async function fetchAddresses() {
+        try {
+            const res = await fetch(`${BASE_URL}/addresses.json${CACHE_BUST}`);
+            if (res.ok) {
+                gAddr = await res.json();
+                console.log(`Addresses loaded: ${gAddr.length} entries`);
+                setupLiveSearch(); // Enable wizard logic
+            }
+        } catch (e) {
+            console.warn("Address DB failed to load", e);
+        }
+    }
+
+    // === UI LOGIC: Chart & Groups ===
+
     function checkTomorrowButton() {
         if (gData && gData.tomorrow) {
-            document.getElementById('btnTomorrow').style.display = 'inline-block';
-            document.getElementById('msgNoTomorrow').style.display = 'none';
+            els.btnTomorrow.style.display = 'inline-block';
+            els.msgNoTomorrow.style.display = 'none';
         } else {
-            document.getElementById('btnTomorrow').style.display = 'none';
-            document.getElementById('msgNoTomorrow').style.display = 'block';
+            els.btnTomorrow.style.display = 'none';
+            els.msgNoTomorrow.style.display = 'block';
         }
     }
 
     function toggleTomorrow() {
         isShowingTomorrow = !isShowingTomorrow;
-        const btn = document.getElementById('btnTomorrow');
+        
         if (isShowingTomorrow) {
             renderFullChart('tomorrow');
-            btn.innerText = "Повернутись до графіка на сьогодні";
-            btn.classList.add('active');
+            els.btnTomorrow.innerText = "🔙 Повернутись до графіка на сьогодні";
+            els.btnTomorrow.classList.add('active');
         } else {
             renderFullChart('today');
-            btn.innerText = "Показати графік на завтра";
-            btn.classList.remove('active');
+            els.btnTomorrow.innerText = "Показати графік на завтра 📅";
+            els.btnTomorrow.classList.remove('active');
         }
-        if(viewingGroup) setActiveGroupVisuals(viewingGroup);
+        
+        // Refresh highlight on the chart
+        if (viewingGroup) setActiveGroupVisuals(viewingGroup);
     }
 
     function selectGroup(group, doScroll = true) {
+        if (!group) return;
+        
         viewingGroup = group;
         localStorage.setItem('myGroup', group);
+        
+        // Update URL without reload
         const newUrl = `${window.location.pathname}?group=${group}`;
         window.history.pushState({path: newUrl}, '', newUrl);
 
         renderPersonalCards(group);
         setActiveGroupVisuals(group);
         
-        if(doScroll) {
+        if (doScroll) {
             setTimeout(() => {
-                const el = document.getElementById('personalContainer');
-                const offsetPosition = el.getBoundingClientRect().top + window.pageYOffset - 20;
-                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-            }, 100);
+                const offset = els.personalContainer.getBoundingClientRect().top + window.pageYOffset - 80;
+                window.scrollTo({ top: offset, behavior: "smooth" });
+            }, 150);
         }
     }
 
     function setActiveGroupVisuals(group) {
+        // Remove highlight from all
         document.querySelectorAll('.grp-lbl').forEach(el => el.classList.remove('highlight'));
-        const target = Array.from(document.querySelectorAll('.grp-lbl')).find(el => el.innerText.trim() === group);
-        if(target) target.classList.add('highlight');
+        
+        // Add highlight to current
+        // We find the specific row label that matches the text
+        const labels = Array.from(document.querySelectorAll('.grp-lbl'));
+        const target = labels.find(el => el.innerText.trim() === group);
+        if (target) target.classList.add('highlight');
     }
 
-    // === CHARTS & RENDER ===
+    // === RENDERERS ===
+
     function renderFullChart(dayKey) {
-        const c = document.getElementById('fullChart'); c.innerHTML='';
-        const titleEl = document.getElementById('chartTitle');
-        if(!gData[dayKey]) { titleEl.innerText = "Дані відсутні"; return; }
+        els.fullChart.innerHTML = '';
+        
+        if (!gData || !gData[dayKey]) { 
+            els.chartTitle.innerText = "Дані відсутні"; 
+            return; 
+        }
 
         const dataObj = gData[dayKey];
         const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
         const dateStr = dataObj.date; 
 
-        // ВИПРАВЛЕННЯ 1: Формат "Дата (Сьогодні)"
-        titleEl.innerText = `Загальний графік: ${dateStr} (${dayName})`;
+        els.chartTitle.innerText = `ЗАГАЛЬНИЙ ГРАФІК: ${dateStr} (${dayName.toUpperCase()})`;
 
-        const data = dataObj.data;
-        Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true})).forEach(grp => {
+        const scheduleData = dataObj.data;
+        // Sort groups numerically: "1.1", "1.2" ...
+        const groups = Object.keys(scheduleData).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+
+        groups.forEach(grp => {
             const row = document.createElement('div'); 
-            row.className='chart-row';
+            row.className = 'chart-row';
+            row.title = `Натисніть, щоб обрати чергу ${grp}`;
             row.onclick = () => selectGroup(grp);
+            
             const isMine = (grp === viewingGroup) ? 'highlight' : '';
+            
             let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
-            Object.keys(data[grp]).sort().forEach(t => {
+            
+            // Generate hours 00:00 to 23:00
+            const hours = Object.keys(scheduleData[grp]).sort();
+            
+            hours.forEach(t => {
                 let cls = 'bg-u';
-                const s = data[grp][t];
-                if(s==='on') cls='bg-on'; if(s==='off') cls='bg-off'; if(s==='maybe') cls='bg-maybe';
-                html += `<div class="h-blk ${cls}" title="${t}"></div>`;
+                const status = scheduleData[grp][t];
+                if (status === 'on') cls = 'bg-on'; 
+                else if (status === 'off') cls = 'bg-off'; 
+                else if (status === 'maybe') cls = 'bg-maybe';
+                
+                html += `<div class="h-blk ${cls}"></div>`;
             });
             html += '</div>';
+            
             row.innerHTML = html;
-            c.appendChild(row);
+            els.fullChart.appendChild(row);
         });
     }
 
     function renderPersonalCards(group) {
-        const container = document.getElementById('personalContainer');
-        container.innerHTML = '';
-        container.classList.add('show');
+        els.personalContainer.innerHTML = '';
+        els.personalContainer.classList.add('show');
         
         ['today', 'tomorrow'].forEach(dayKey => {
-            if(!gData[dayKey]) return;
+            if (!gData[dayKey]) return; // Skip if no data for tomorrow
+            
             const dayInfo = gData[dayKey];
             const schedule = dayInfo.data[group];
-            if(!schedule) return;
+            
+            if (!schedule) return;
 
             const ranges = calculateOutages(schedule);
+            
             const card = document.createElement('div');
             card.className = 'p-card';
             
-            let outagesHTML = '';
-            if(ranges.length === 0) {
-                outagesHTML = '<div class="no-outages">✅ Відключень не планується</div>';
+            let outagesHTML = '<div class="outages-list">';
+            if (ranges.length === 0) {
+                outagesHTML += `
+                    <div class="no-outages">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span>Відключень не планується</span>
+                    </div>`;
             } else {
                 ranges.forEach(r => {
+                    // Check if it is a "maybe" outage
+                    const isMaybe = r.type === 'maybe';
+                    const cssClass = isMaybe ? 'outage-row is-maybe' : 'outage-row';
+                    const icon = isMaybe ? '⚠️' : '⚡️';
+                    
                     outagesHTML += `
-                    <div class="outage-row">
-                        <span>${r.start}</span><div class="outage-divider"></div><span>${r.end}</span>
-                        <div class="outage-duration">${r.duration}</div>
+                    <div class="${cssClass}">
+                        <span>${r.start}</span>
+                        <div class="outage-divider"></div>
+                        <span>${r.end}</span>
+                        <div class="outage-duration">${icon} ${r.duration}</div>
                     </div>`;
                 });
             }
+            outagesHTML += '</div>';
 
-            const dayLabel = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
+            const dayLabel = dayKey === 'today' ? 'СЬОГОДНІ' : 'ЗАВТРА';
             const dateStr = dayInfo.date;
 
-            // ВИПРАВЛЕННЯ 2: Заголовок "ГРАФІК (Дата)"
-            // ВИПРАВЛЕННЯ 3: Дрібний текст без дублювання слова "Сьогодні"
             card.innerHTML = `
-                <div class="p-top-label">ГРАФІК (${dateStr})</div>
+                <div class="p-top-label">РОЗКЛАД ДЛЯ ВАШОЇ ЧЕРГИ</div>
                 <div class="p-header-row">
                     <div class="p-day-badge">
                         <div class="p-day-title">${dayLabel}</div>
-                        <div class="p-day-sub">${dateStr} • Оновлено ${globalUpdateTimeStr}</div>
+                        <div class="p-day-sub">${dateStr}</div>
                     </div>
                     <div class="p-group-square">${group}</div>
                 </div>
                 ${outagesHTML}
-                <button class="btn-share" onclick="shareGroup()">🔗 Поділитися графіком</button>
+                <button class="btn-share" onclick="shareGroup()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    Поділитися
+                </button>
             `;
-            container.appendChild(card);
+            els.personalContainer.appendChild(card);
         });
     }
 
+    // === LOGIC: Time Calculation ===
+
     function calculateOutages(scheduleObj) {
-        const times = Object.keys(scheduleObj).sort();
+        const times = Object.keys(scheduleObj).sort(); // 00:00, 01:00 ...
         let ranges = [];
+        
+        let currentType = null; // 'off' or 'maybe'
         let start = null;
-        times.forEach(t => {
+
+        for (let i = 0; i < times.length; i++) {
+            const t = times[i];
             const status = scheduleObj[t];
-            if ((status === 'off' || status === 'maybe') && !start) start = t;
-            if (status === 'on' && start) {
-                ranges.push({ start, end: t, duration: getDuration(start, t) });
-                start = null;
+            
+            // Determining the type of current block
+            let type = null;
+            if (status === 'off') type = 'off';
+            if (status === 'maybe') type = 'maybe';
+
+            if (type !== currentType) {
+                // Status changed
+                if (currentType !== null) {
+                    // Close previous block
+                    ranges.push({ 
+                        start: start, 
+                        end: t, 
+                        type: currentType,
+                        duration: getDuration(start, t) 
+                    });
+                }
+                
+                // Start new block if it's an outage
+                if (type !== null) {
+                    start = t;
+                }
+                currentType = type;
             }
-        });
-        if (start) ranges.push({ start, end: "24:00", duration: getDuration(start, "24:00") });
+        }
+
+        // Handle the end of the day (24:00)
+        if (currentType !== null) {
+            ranges.push({ 
+                start: start, 
+                end: "24:00", 
+                type: currentType,
+                duration: getDuration(start, "24:00") 
+            });
+        }
+
         return ranges;
     }
 
     function getDuration(start, end) {
         const [h1, m1] = start.split(':').map(Number);
         let [h2, m2] = end.split(':').map(Number);
-        if(h2 === 0 && end !== "00:00") h2 = 24;
-        let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
-        const hrs = Math.floor(diff / 60);
-        const mins = diff % 60;
-        if(hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
-        if(hrs > 0) return `${hrs} год`;
+        
+        // Handle 24:00 case
+        if (h2 === 0 && end !== "00:00") h2 = 24;
+        
+        let diffMinutes = (h2 * 60 + m2) - (h1 * 60 + m1);
+        
+        const hrs = Math.floor(diffMinutes / 60);
+        const mins = diffMinutes % 60;
+        
+        if (hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
+        if (hrs > 0) return `${hrs} год`;
         return `${mins} хв`;
     }
 
     function shareGroup() {
-        if(!viewingGroup) return;
+        if (!viewingGroup) return;
         const url = window.location.href; 
         const shareData = {
-            title: `Графік світла: Черга ${viewingGroup}`,
-            text: `Мій графік відключень (Черга ${viewingGroup}).`,
+            title: `Світло Тернопіль: Черга ${viewingGroup}`,
+            text: `Мій графік відключень (Черга ${viewingGroup}). Перевір свій тут:`,
             url: url
         };
-        if (navigator.share) { navigator.share(shareData).catch(err=>{}); } 
-        else { navigator.clipboard.writeText(url).then(() => alert("Посилання скопійовано!")); }
+        
+        if (navigator.share) { 
+            navigator.share(shareData).catch(err => console.log('Share dismissed')); 
+        } else { 
+            navigator.clipboard.writeText(url).then(() => alert("Посилання скопійовано в буфер обміну!")); 
+        }
     }
 
-    // === WIZARD ===
+    // === WIZARD LOGIC (Search) ===
+
     function setupLiveSearch() {
-        const inpCity = document.getElementById('inpCity');
-        inpCity.addEventListener('input', () => {
-            const val = inpCity.value.toLowerCase();
-            if(val.length === 0) { renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); return; }
+        // Step 1: City
+        els.inpCity.addEventListener('input', () => {
+            const val = els.inpCity.value.toLowerCase().trim();
+            if (val.length === 0) { 
+                renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); 
+                return; 
+            }
+            
+            // Extract unique cities
             const cities = [...new Set(gAddr.map(i => i.c))].sort();
-            renderList('listCity', cities.filter(c => c.toLowerCase().includes(val)), (i) => chooseCity(i));
+            const filtered = cities.filter(c => c.toLowerCase().includes(val));
+            renderList('listCity', filtered, (i) => chooseCity(i));
         });
-        inpCity.addEventListener('focus', () => { if(inpCity.value==='') renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); });
-        inpCity.addEventListener('keypress', (e) => { if(e.key==='Enter') forceSearch(1); });
-
-        const inpStreet = document.getElementById('inpStreet');
-        inpStreet.addEventListener('input', () => {
-            if(!selectedCity) return;
-            const val = inpStreet.value.toLowerCase();
-            const streets = [...new Set(gAddr.filter(i => i.c === selectedCity).map(i => i.s))].sort();
-            renderList('listStreet', streets.filter(s => s.toLowerCase().includes(val)), (i) => chooseStreet(i));
+        
+        // Show defaults on focus
+        els.inpCity.addEventListener('focus', () => { 
+            if(els.inpCity.value === '') renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); 
         });
-        inpStreet.addEventListener('keypress', (e) => { if(e.key==='Enter') forceSearch(2); });
+        
+        // Enter key support
+        els.inpCity.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(1); });
 
-        const inpHouse = document.getElementById('inpHouse');
-        inpHouse.addEventListener('input', () => {
-            if(!selectedCity || !selectedStreet) return;
-            const val = inpHouse.value.toLowerCase();
+        // Step 2: Street
+        els.inpStreet.addEventListener('input', () => {
+            if (!selectedCity) return;
+            const val = els.inpStreet.value.toLowerCase().trim();
+            
+            // Filter streets for selected city
+            const cityAddresses = gAddr.filter(i => i.c === selectedCity);
+            const streets = [...new Set(cityAddresses.map(i => i.s))].sort();
+            
+            const filtered = streets.filter(s => s.toLowerCase().includes(val));
+            renderList('listStreet', filtered, (i) => chooseStreet(i));
+        });
+        els.inpStreet.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(2); });
+
+        // Step 3: House
+        els.inpHouse.addEventListener('input', () => {
+            if (!selectedCity || !selectedStreet) return;
+            const val = els.inpHouse.value.toLowerCase().trim();
+            
             const houses = gAddr.filter(i => i.c === selectedCity && i.s === selectedStreet);
-            renderList('listHouse', houses.filter(h => h.h.toLowerCase().includes(val)).map(h=>h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})), (i) => chooseHouse(i));
+            // Numeric sort for houses (1, 2, 10 instead of 1, 10, 2)
+            const sortedHouses = houses.map(h => h.h).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+            
+            const filtered = sortedHouses.filter(h => h.toLowerCase().includes(val));
+            renderList('listHouse', filtered, (i) => chooseHouse(i));
         });
-        inpHouse.addEventListener('keypress', (e) => { if(e.key==='Enter') forceSearch(3); });
+        els.inpHouse.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(3); });
     }
 
     function renderList(elId, items, cb) {
-        const el = document.getElementById(elId); el.innerHTML = '';
-        if(items.length === 0) { el.classList.remove('show'); return; }
+        const el = document.getElementById(elId); 
+        el.innerHTML = '';
+        
+        if (items.length === 0) { 
+            el.classList.remove('show'); 
+            return; 
+        }
+        
         el.classList.add('show');
-        items.slice(0, 40).forEach(item => {
+        
+        // Limit rendering to 50 items for performance
+        items.slice(0, 50).forEach(item => {
             const div = document.createElement('div');
-            div.className = 'res-item'; div.innerText = item;
-            div.onclick = () => cb(item); el.appendChild(div);
+            div.className = 'res-item'; 
+            div.innerText = item;
+            div.onclick = () => cb(item); 
+            el.appendChild(div);
         });
     }
 
-    function chooseCity(n) { selectedCity = n; document.getElementById('inpCity').value = n; renderList('listStreet', [...new Set(gAddr.filter(i => i.c === n).map(i => i.s))].sort(), (i)=>chooseStreet(i)); goStep(2); }
-    function chooseStreet(n) { 
-        selectedStreet = n; document.getElementById('inpStreet').value = n; 
-        const houses = gAddr.filter(i => i.c === selectedCity && i.s === n);
-        const grps = [...new Set(houses.map(h => h.g))];
-        if(grps.length === 1) { saveGroup(grps[0]); return; }
-        renderList('listHouse', houses.map(h => h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})), (i)=>chooseHouse(i));
+    // Search Flow Transitions
+    function chooseCity(name) { 
+        selectedCity = name; 
+        els.inpCity.value = name; 
+        
+        // Pre-render streets logic
+        const cityAddresses = gAddr.filter(i => i.c === name);
+        const streets = [...new Set(cityAddresses.map(i => i.s))].sort();
+        renderList('listStreet', streets, (i) => chooseStreet(i));
+        
+        goStep(2); 
+    }
+
+    function chooseStreet(name) { 
+        selectedStreet = name; 
+        els.inpStreet.value = name; 
+        
+        const houses = gAddr.filter(i => i.c === selectedCity && i.s === name);
+        const uniqueGroups = [...new Set(houses.map(h => h.g))];
+        
+        // If all houses on this street have the same group, skip house selection
+        if (uniqueGroups.length === 1) { 
+            saveAndClose(uniqueGroups[0]); 
+            return; 
+        }
+        
+        const houseList = houses.map(h => h.h).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+        renderList('listHouse', houseList, (i) => chooseHouse(i));
         goStep(3);
     }
-    function chooseHouse(n) { 
-        document.getElementById('inpHouse').value = n;
-        const found = gAddr.find(i => i.c === selectedCity && i.s === selectedStreet && i.h === n);
-        if(found) saveGroup(found.g); else alert("Не знайдено");
+
+    function chooseHouse(name) { 
+        els.inpHouse.value = name;
+        const found = gAddr.find(i => i.c === selectedCity && i.s === selectedStreet && i.h === name);
+        if (found) {
+            saveAndClose(found.g);
+        } else {
+            alert("На жаль, адресу не знайдено в базі.");
+        }
     }
 
     function forceSearch(step) {
-        if(step===1) {
-            const v = document.getElementById('inpCity').value;
-            const found = [...new Set(gAddr.map(i=>i.c))].find(c=>c.toLowerCase()===v.toLowerCase());
-            if(found) chooseCity(found); else alert("Місто не знайдено");
+        if (step === 1) {
+            const v = els.inpCity.value.trim();
+            const found = [...new Set(gAddr.map(i=>i.c))].find(c => c.toLowerCase() === v.toLowerCase());
+            if(found) chooseCity(found); 
+            else alert("Місто не знайдено. Спробуйте вибрати зі списку.");
         }
-        if(step===2) {
-            const v = document.getElementById('inpStreet').value;
+        if (step === 2) {
+            const v = els.inpStreet.value.trim();
             const streets = [...new Set(gAddr.filter(i => i.c === selectedCity).map(i => i.s))];
             const found = streets.find(s => s.toLowerCase() === v.toLowerCase());
-            if(found) chooseStreet(found); else alert("Вулицю не знайдено");
+            if(found) chooseStreet(found); 
+            else alert("Вулицю не знайдено.");
         }
-        if(step===3) {
-            const v = document.getElementById('inpHouse').value;
-            chooseHouse(v);
+        if (step === 3) {
+            chooseHouse(els.inpHouse.value.trim());
         }
     }
 
-    function saveGroup(g) { closeWiz(); selectGroup(g, true); }
+    function saveAndClose(group) { 
+        closeWiz(); 
+        selectGroup(group, true); 
+    }
+
+    // Modal Controls
     function openWiz() { 
-        if(!gAddr) { alert('Завантаження бази адрес...'); return; }
-        document.getElementById('wiz').style.display = 'flex';
-        if(document.getElementById('inpCity').value==='') renderList('listCity', DEFAULT_CITIES, (i)=>chooseCity(i));
+        if (!gAddr) { 
+            alert('База адрес ще завантажується, спробуйте через декілька секунд...'); 
+            return; 
+        }
+        els.wiz.style.display = 'flex';
+        // Reset view if empty
+        if (els.inpCity.value === '') renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i));
         goStep(1);
     }
-    function closeWiz() { document.getElementById('wiz').style.display = 'none'; }
+    
+    function closeWiz() { 
+        els.wiz.style.display = 'none'; 
+    }
+    
     function goStep(n) {
-        [1,2,3].forEach(i=>document.getElementById(`step${i}`).classList.remove('active'));
+        [1,2,3].forEach(i => document.getElementById(`step${i}`).classList.remove('active'));
         document.getElementById(`step${n}`).classList.add('active');
-        document.getElementById('wizTitle').innerText = ['Оберіть місто', 'Оберіть вулицю', 'Оберіть будинок'][n-1];
+        
+        const titles = ['Оберіть місто', 'Оберіть вулицю', 'Оберіть номер будинку'];
+        document.getElementById('wizTitle').innerText = titles[n-1];
+        
+        // Auto focus input
+        if(n===1) els.inpCity.focus();
+        if(n===2) els.inpStreet.focus();
+        if(n===3) els.inpHouse.focus();
     }
 
-    init();
+    // Close modal on click outside
+    els.wiz.addEventListener('click', (e) => {
+        if (e.target === els.wiz) closeWiz();
+    });
+
 </script>
 </body>
 </html>
