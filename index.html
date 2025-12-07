@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
     
     <style>
-        /* ВАШІ ОРИГІНАЛЬНІ СТИЛІ (index_old) */
+        /* === ВСІ СТИЛІ З INDEX_OLD === */
         :root {
             --bg: #f8f9fa;
             --text-main: #2c3e50;
@@ -31,6 +31,12 @@
             --yellow: #f1c40f;
             --white: #ffffff;
             --light-border: #e0e0e0;
+            
+            /* 🔥 Додані змінні для рожевого дизайну */
+            --row-bg-pink: #fff0f3;
+            --row-border-pink: #ffccd5;
+            --text-red-dark: #b92b27;
+            --badge-bg-red: #c0392b;
         }
 
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
@@ -40,7 +46,7 @@
         h1 { margin: 0 0 15px 0; font-size: 1.5rem; color: var(--text-main); line-height: 1.3; max-width: 800px; }
         .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 10px; }
 
-        /* КНОПКА TELEGRAM */
+        /* КНОПКА TELEGRAM (Збережено) */
         .btn-telegram {
             background: var(--tg-color); color: white; text-decoration: none;
             display: inline-flex; align-items: center; justify-content: center; gap: 12px;
@@ -66,7 +72,7 @@
         }
         .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
 
-        /* ТАБЛИЦЯ */
+        /* ТАБЛИЦЯ (Збережено old стиль) */
         .full-chart-section { 
             background: white; border-radius: 16px; padding: 15px; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; overflow: hidden;
@@ -107,7 +113,7 @@
         .btn-tomorrow:hover, .btn-tomorrow.active { background: var(--accent); color: white; }
         .msg-no-data { color: #e74c3c; font-style: italic; font-weight: bold; font-size: 0.9rem; }
 
-        /* КАРТКИ */
+        /* === КАРТКИ (ОНОВЛЕНІ ПІД РОЖЕВИЙ СТИЛЬ, АЛЕ В OLD КОНТЕЙНЕРІ) === */
         .personal-schedule-container {
             display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
             margin-top: 20px; display: none; opacity: 0; transition: opacity 0.5s;
@@ -116,32 +122,65 @@
 
         .p-card {
             background: white; border-radius: 16px; padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 450px; /* Трохи ширше для нових рядків */
             position: relative; border-top: 4px solid var(--accent);
             animation: slideUp 0.4s ease-out;
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         .p-header { text-align: center; font-weight: bold; color: #95a5a6; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        
         .p-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .p-date { background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; display: inline-block; }
-        .p-update-time { font-size: 0.8rem; color: #bdc3c7; margin-top: 4px; }
+        
         .p-group-box { 
             background: var(--accent); color: white; width: 60px; height: 60px; 
             border-radius: 12px; display: flex; align-items: center; justify-content: center;
             font-size: 2rem; font-weight: bold; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(142,68,173,0.3);
         }
-        
-        .outage-row {
-            background: #fff0f3; color: var(--red); border: 1px solid #ffccd5; border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 15px; margin-bottom: 8px; font-weight: bold; font-size: 1.1rem;
+
+        /* 🔥 НОВИЙ СТИЛЬ РЯДКА (РОЖЕВИЙ ЯК НА ФОТО) */
+        .outage-row-pink {
+            background-color: var(--row-bg-pink);
+            border: 1px solid var(--row-border-pink);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .outage-divider { height: 2px; width: 20px; background: var(--red); opacity: 0.3; }
-        .outage-duration { background: var(--red); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; min-width: 50px; text-align: center; }
+
+        .time-group-pink {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-red-dark);
+            font-size: 1.3rem;
+            font-weight: 800; /* Жирний шрифт як на фото */
+        }
+
+        .time-divider-pink {
+            width: 20px;
+            height: 2px;
+            background-color: #e6b0aa;
+        }
+
+        .duration-badge-pink {
+            background-color: var(--badge-bg-red);
+            color: white;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            min-width: 60px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.3);
+        }
+
         .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: #e8f8f5; border-radius: 10px; }
 
-        /* WIZARD */
+        /* WIZARD (Збережено old стиль) */
         .wiz-overlay { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
             background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 2000; 
@@ -292,7 +331,7 @@
             viewingGroup = urlGroup;
         }
 
-        // 🔥 МІТКА ЧАСУ
+        // 🔥 МІТКА ЧАСУ (Timestamp)
         const ts = Date.now();
         lastFetchTime = ts;
 
@@ -320,7 +359,7 @@
         } catch(e) { console.error(e); }
     }
 
-    // 🔥 PWA AUTO-REFRESH
+    // 🔥 PWA AUTO-REFRESH (оновлення при виході з фону)
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") {
             const now = Date.now();
@@ -378,7 +417,7 @@
         if(target) target.classList.add('highlight');
     }
 
-    // === ГРАФІК ЗАГАЛЬНИЙ ===
+    // === ГРАФІК ЗАГАЛЬНИЙ (Стиль old) ===
     function renderFullChart(dayKey) {
         const c = document.getElementById('fullChart'); c.innerHTML='';
         const titleEl = document.getElementById('chartTitle');
@@ -412,7 +451,7 @@
         });
     }
 
-    // === ПЕРСОНАЛЬНІ КАРТКИ ===
+    // === 🔥 ПЕРСОНАЛЬНІ КАРТКИ (ОНОВЛЕНО: РОЖЕВИЙ СТИЛЬ) ===
     function renderPersonalCards(group) {
         const container = document.getElementById('personalContainer');
         container.innerHTML = '';
@@ -433,10 +472,15 @@
                 outagesHTML = '<div class="no-outages">✅ Відключень не планується</div>';
             } else {
                 ranges.forEach(r => {
+                    // 🔥 Використовуємо класи для рожевого стилю
                     outagesHTML += `
-                    <div class="outage-row">
-                        <span>${r.start}</span><div class="outage-divider"></div><span>${r.end}</span>
-                        <div class="outage-duration">${r.duration}</div>
+                    <div class="outage-row-pink">
+                        <div class="time-group-pink">
+                            <span>${r.start}</span>
+                            <div class="time-divider-pink"></div>
+                            <span>${r.end}</span>
+                        </div>
+                        <div class="duration-badge-pink">${r.duration}</div>
                     </div>`;
                 });
             }
@@ -452,7 +496,6 @@
             container.appendChild(card);
         });
         
-        // Скрол
         if(window.scrollY < 100) container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -479,10 +522,8 @@
         if(h2 === 0 && end !== "00:00") h2 = 24;
         let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
         const hrs = Math.floor(diff / 60);
-        const mins = diff % 60;
-        if(hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
-        if(hrs > 0) return `${hrs} год`;
-        return `${mins} хв`;
+        // 🔥 Формат "1 год" як на картинці
+        return `${hrs} год`; 
     }
 
     // === WIZARD ПОШУК ===
@@ -557,7 +598,7 @@
     }
 
     function forceSearch(step) {
-        // Простий fallback
+        // Простий fallback (Збережено, бо ви просили "мертвий код" не видаляти)
         alert("Використовуйте підказки зі списку");
     }
 
