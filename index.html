@@ -17,7 +17,6 @@
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
     
     <style>
         :root {
@@ -27,8 +26,9 @@
             --accent-hover: #9b59b6;
             --tg-color: #229ED9;
             --tg-hover: #1b8dbf;
-            --red: #e74c3c;
-            --red-bg: #fadbd8;
+            --red: #c0392b; /* Темніший червоний для тексту */
+            --red-bg: #fff0f3; /* Дуже світло-рожевий фон */
+            --red-badge: #a93226; /* Темний фон для плашки часу */
             --green: #2ecc71;
             --green-bg: #d5f5e3;
             --yellow: #f1c40f;
@@ -101,7 +101,7 @@
         .ts-item { flex: 1; text-align: left; border-left: 1px solid #eee; padding-left: 2px; }
 
         .bg-on { background: var(--green); }
-        .bg-off { background: var(--red); }
+        .bg-off { background: #e74c3c; } /* Стандартний червоний для загального графіка */
         .bg-maybe { background: var(--yellow); }
         .bg-u { background: #ecf0f1; }
 
@@ -113,7 +113,7 @@
         .btn-tomorrow:hover, .btn-tomorrow.active { background: var(--accent); color: white; }
         .msg-no-data { color: #e74c3c; font-style: italic; font-size: 0.85rem; }
 
-        /* КАРТКИ (СТОРІНКИ ГРУП) */
+        /* === КАРТКИ (СТОРІНКИ ГРУП) - ОНОВЛЕНИЙ ДИЗАЙН === */
         .personal-schedule-container {
             display: flex; flex-direction: column; gap: 20px; align-items: center; 
             margin-top: 10px; display: none; opacity: 0; transition: opacity 0.4s;
@@ -121,32 +121,97 @@
         .personal-schedule-container.show { display: flex; opacity: 1; }
 
         .p-card {
-            background: white; border-radius: 16px; padding: 20px;
-            box-shadow: var(--shadow); width: 100%; max-width: 450px;
-            position: relative; border-left: 5px solid var(--accent);
+            background: white; 
+            border-radius: 16px; 
+            padding: 20px;
+            box-shadow: var(--shadow); 
+            width: 100%; max-width: 450px;
+            position: relative; 
+            border-top: 5px solid var(--accent); /* Фіолетова смужка зверху */
             animation: slideUp 0.3s ease-out;
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .p-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
-        .p-title { font-weight: bold; font-size: 1.1rem; color: var(--text-main); }
-        .p-group-badge { background: var(--accent); color: white; padding: 4px 10px; border-radius: 8px; font-weight: bold; }
-        
-        .p-date-label { font-size: 0.8rem; color: #95a5a6; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .outage-row {
-            background: var(--red-bg); color: var(--red); border: 1px solid #f5b7b1; border-radius: 10px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 15px; margin-bottom: 10px; font-weight: 700; font-size: 1.1rem;
+        /* Верхній напис "ГРАФІК (СЬОГОДНІ)" */
+        .p-top-label {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #95a5a6;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
         }
-        .outage-divider { height: 2px; flex: 1; background: var(--red); opacity: 0.2; margin: 0 15px; }
-        .outage-duration { background: white; color: var(--red); padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; border: 1px solid #f5b7b1; }
+
+        /* Рядок заголовка з кнопкою і номером черги */
+        .p-header-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 25px; 
+        }
+
+        .p-day-badge { 
+            background: var(--accent); 
+            color: white; 
+            padding: 8px 20px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            font-size: 1rem;
+        }
+        
+        .p-group-square { 
+            background: var(--accent); 
+            color: white; 
+            width: 55px; 
+            height: 55px;
+            border-radius: 14px; 
+            font-weight: 800; 
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(142, 68, 173, 0.3);
+        }
+
+        /* Стиль рядка відключення (рожевий) */
+        .outage-row {
+            background: var(--red-bg); /* Світло-рожевий */
+            color: var(--red); 
+            border: 1px solid #ffe0e6;
+            border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; 
+            margin-bottom: 12px; 
+            font-weight: 800; 
+            font-size: 1.15rem;
+        }
+        
+        .outage-divider { 
+            height: 2px; 
+            flex: 1; 
+            background: #d98880; /* Колір риски */
+            opacity: 0.4; 
+            margin: 0 20px; 
+        }
+
+        .outage-duration { 
+            background: var(--red-badge); /* Темно-червона плашка */
+            color: white; 
+            padding: 5px 12px; 
+            border-radius: 6px; 
+            font-size: 0.8rem; 
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.2);
+        }
+
         .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 15px; background: var(--green-bg); border-radius: 10px; border: 1px solid #abebc6; }
 
         .btn-share {
-            margin-top: 10px; width: 100%; padding: 10px; border: 1px dashed var(--accent); 
-            color: var(--accent); background: #fbf6ff; border-radius: 8px; cursor: pointer; 
+            margin-top: 20px; width: 100%; padding: 12px; border: 1px dashed var(--accent); 
+            color: var(--accent); background: #fbf6ff; border-radius: 12px; cursor: pointer; 
             font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-weight: 600;
         }
         .btn-share:hover { background: #f4eaff; }
 
@@ -296,7 +361,6 @@
     let selectedStreet = "";
 
     async function init() {
-        // Перевірка URL параметрів для відображення конкретної "сторінки групи"
         const params = new URLSearchParams(window.location.search);
         const urlGroup = params.get('group');
         
@@ -309,7 +373,7 @@
             const timestamp = Date.now();
             const [dRes, aRes] = await Promise.all([
                 fetch(`${RAW_URL}/schedule.json?v=${timestamp}`),
-                fetch(`${RAW_URL}/addresses.json?v=${timestamp}`).catch(e => null) // Fallback if missing
+                fetch(`${RAW_URL}/addresses.json?v=${timestamp}`).catch(e => null)
             ]);
             
             if(dRes.ok) {
@@ -320,11 +384,9 @@
                 renderFullChart('today'); 
                 checkTomorrowButton();
                 
-                // Якщо група вибрана, показуємо її картку (ніби це сторінка групи)
                 if(viewingGroup) {
                     renderPersonalCards(viewingGroup);
                     setActiveGroupVisuals(viewingGroup);
-                    // Легкий скрол до картки, якщо це не перше завантаження сторінки
                     if(!urlGroup) document.getElementById('personalContainer').scrollIntoView({behavior:'smooth'});
                 }
             } else {
@@ -377,15 +439,12 @@
         viewingGroup = group;
         localStorage.setItem('myGroup', group);
         
-        // Оновлюємо URL без перезавантаження сторінки (Single Page Application feel)
-        // Це створює ефект переходу на "сторінку групи"
         const newUrl = `${window.location.pathname}?group=${group}`;
         window.history.pushState({path: newUrl}, '', newUrl);
 
         renderPersonalCards(group);
         setActiveGroupVisuals(group);
         
-        // Скрол до карток
         document.getElementById('personalContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -422,7 +481,6 @@
         titleEl.innerText = `Загальний графік: ${dayName} (${dateStr})`;
 
         const data = gData[dayKey].data;
-        // Сортуємо групи: 1.1, 1.2, ... 6.3
         const groups = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
 
         groups.forEach(grp => {
@@ -444,13 +502,12 @@
         });
     }
 
-    // === ПЕРСОНАЛЬНІ КАРТКИ ===
+    // === ПЕРСОНАЛЬНІ КАРТКИ (ЗМІНЕНО) ===
     function renderPersonalCards(group) {
         const container = document.getElementById('personalContainer');
         container.innerHTML = '';
         container.classList.add('show');
         
-        // Створюємо картки для Сьогодні та Завтра (якщо є)
         ['today', 'tomorrow'].forEach(dayKey => {
             if(!gData || !gData[dayKey]) return;
             const dayInfo = gData[dayKey];
@@ -478,16 +535,15 @@
 
             const dayLabel = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
 
+            // Оновлена HTML структура для шапки картки
             card.innerHTML = `
+                <div class="p-top-label">ГРАФІК (${dayLabel.toUpperCase()})</div>
                 <div class="p-header-row">
-                    <div style="display:flex; flex-direction:column;">
-                        <span class="p-title">${dayLabel}</span>
-                        <span class="p-date-label">${dayInfo.date}</span>
-                    </div>
-                    <div class="p-group-badge">Черга ${group}</div>
+                    <div class="p-day-badge">${dayLabel}</div>
+                    <div class="p-group-square">${group}</div>
                 </div>
                 ${outagesHTML}
-                ${dayKey === 'today' ? `<div class="btn-share" onclick="shareGroupLink()">🔗 Поділитися графіком черги ${group}</div>` : ''}
+                ${dayKey === 'today' ? `<div class="btn-share" onclick="shareGroupLink()">🔗 Поділитися графіком</div>` : ''}
             `;
             container.appendChild(card);
         });
@@ -500,7 +556,6 @@
         
         times.forEach(t => {
             const status = scheduleObj[t];
-            // Вважаємо 'maybe' теж як потенційне відключення для відображення діапазону
             if ((status === 'off' || status === 'maybe') && !start) start = t;
             if (status === 'on' && start) {
                 ranges.push({ start, end: t, duration: getDuration(start, t) });
@@ -572,7 +627,6 @@
         selectedCity = name;
         document.getElementById('inpCity').value = name;
         document.getElementById('listCity').classList.remove('show');
-        // Pre-fill street list
         const streets = [...new Set(gAddr.filter(i => i.c === name).map(i => i.s))].sort();
         renderList('listStreet', streets, (item) => chooseStreet(item));
         goStep(2);
@@ -583,11 +637,9 @@
         document.getElementById('inpStreet').value = name;
         document.getElementById('listStreet').classList.remove('show');
         
-        // Check exact match houses
         const houses = gAddr.filter(i => i.c === selectedCity && i.s === name);
         const grps = [...new Set(houses.map(h => h.g))];
         
-        // Якщо вулиця має лише одну чергу на всі будинки
         if(grps.length === 1) { 
             saveGroup(grps[0]); 
             return; 
@@ -612,7 +664,6 @@
 
     function openWiz() { 
         document.getElementById('wiz').style.display = 'flex';
-        // Reset or init list
         if(gAddr && document.getElementById('inpCity').value === '') {
              const cities = [...new Set(gAddr.map(i => i.c))].sort();
              renderList('listCity', cities, (i)=>chooseCity(i));
