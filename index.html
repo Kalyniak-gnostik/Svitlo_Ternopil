@@ -2,222 +2,280 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <title>Графік відключення світла Тернопіль (ГПВ) | Офіційні дані</title>
+    <meta name="description" content="Актуальний графік погодинних відключень світла в Тернополі та області. Дізнайся свою чергу за адресою. Оновлення в реальному часі.">
+    <meta name="keywords" content="світло тернопіль, графік відключень, обленерго, черга, гпв">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Графік відключення світла Тернопіль">
+    <meta property="og:description" content="Перевір, коли буде світло. Актуальний графік та пошук черги.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="uk_UA">
+
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Світло ТР">
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Графік відключення світла Тернопіль та область</title>
-    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області. Знайдіть свою чергу за адресою.">
-    
-    <meta property="og:title" content="Графік відключення світла Тернопіль та область">
-    <meta property="og:type" content="website">
-
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%238e44ad'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
     
     <style>
-        /* === ВСІ СТИЛІ З INDEX_OLD === */
+        /* === ЗМІННІ КОЛЬОРІВ (Light/Dark) === */
         :root {
-            --bg: #f8f9fa;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
             --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --border: #e0e0e0;
+            --input-bg: #ffffff;
+            
             --accent: #8e44ad; 
             --accent-hover: #9b59b6;
+            --accent-light: rgba(142, 68, 173, 0.1);
+            
             --tg-color: #229ED9;
             --tg-hover: #1b8dbf;
-            --red: #c0392b;
+            
+            --red: #e74c3c;
+            --red-bg: #fff0f3;
+            --red-text: #c0392b;
+            
             --green: #27ae60;
             --yellow: #f1c40f;
-            --white: #ffffff;
-            --light-border: #e0e0e0;
+            --gray-u: #ecf0f1;
             
-            /* 🔥 Додані змінні для рожевого дизайну */
-            --row-bg-pink: #fff0f3;
-            --row-border-pink: #ffccd5;
-            --text-red-dark: #b92b27;
-            --badge-bg-red: #c0392b;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
         }
 
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
-        .container { max-width: 1000px; margin: 0 auto; width: 100%; flex: 1; }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --card-bg: #1e1e1e;
+                --text-main: #ecf0f1;
+                --text-sub: #bdc3c7;
+                --border: #333333;
+                --input-bg: #2c2c2c;
+                
+                --accent: #9b59b6;
+                --accent-light: rgba(155, 89, 182, 0.2);
+                
+                --red-bg: #3e1818;
+                --red-text: #ff6b6b;
+                --gray-u: #34495e;
+                
+                --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            }
+        }
 
-        header { text-align: center; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
-        h1 { margin: 0 0 15px 0; font-size: 1.5rem; color: var(--text-main); line-height: 1.3; max-width: 800px; }
-        .sub-header { color: #7f8c8d; font-size: 0.9rem; margin-top: 10px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: var(--bg); 
+            margin: 0; padding: 15px; 
+            color: var(--text-main); 
+            display: flex; flex-direction: column; min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
 
-        /* КНОПКА TELEGRAM (Збережено) */
+        /* HEADER */
+        header { text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; }
+        h1 { margin: 10px 0 15px 0; font-size: 1.5rem; color: var(--text-main); line-height: 1.3; font-weight: 800; }
+        .sub-header { color: var(--text-sub); font-size: 0.85rem; margin-top: 5px; display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        /* BUTTONS */
         .btn-telegram {
             background: var(--tg-color); color: white; text-decoration: none;
             display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            padding: 12px 20px; border-radius: 12px;
+            padding: 12px 20px; border-radius: 14px;
             box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
-            transition: transform 0.2s, background 0.2s; width: 100%; max-width: 500px;
-            margin-bottom: 10px; text-align: left; border: none;
+            transition: transform 0.2s, background 0.2s; width: 100%; max-width: 450px;
+            border: none; margin-bottom: 10px;
         }
-        .btn-telegram:hover { transform: translateY(-2px); background: var(--tg-hover); }
-        .btn-telegram:active { transform: scale(0.98); }
-        
-        .tg-icon svg { width: 32px; height: 32px; fill: white; display: block; }
-        .tg-text { display: flex; flex-direction: column; }
-        .tg-title { font-weight: bold; font-size: 1rem; margin-bottom: 2px; }
-        .tg-desc { font-size: 0.75rem; opacity: 0.9; line-height: 1.2; }
+        .btn-telegram:active { transform: scale(0.97); }
+        .tg-icon svg { width: 30px; height: 30px; fill: white; display: block; }
+        .tg-text { display: flex; flex-direction: column; text-align: left; }
+        .tg-title { font-weight: bold; font-size: 1rem; }
+        .tg-desc { font-size: 0.75rem; opacity: 0.9; }
 
-        /* Кнопка пошуку */
         .btn-search {
             background: var(--accent); color: white; border: none; padding: 12px 30px;
             border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.4); transition: 0.2s;
+            box-shadow: 0 4px 15px var(--accent-light); transition: 0.2s;
             display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
         }
         .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
 
-        /* ТАБЛИЦЯ (Збережено old стиль) */
+        /* CHART SECTION */
         .full-chart-section { 
-            background: white; border-radius: 16px; padding: 15px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; overflow: hidden;
+            background: var(--card-bg); border-radius: 18px; padding: 15px; 
+            box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden;
         }
-        .full-chart-title { text-align: center; font-weight: bold; color: #555; margin-bottom: 10px; font-size: 0.95rem; }
-        
+        .full-chart-title { text-align: center; font-weight: 700; color: var(--text-sub); margin-bottom: 12px; font-size: 0.95rem; }
+
         .chart-row { 
-            display: flex; height: 35px; margin-bottom: 6px; align-items: stretch; 
-            cursor: pointer; transition: transform 0.1s, background-color 0.1s; border-radius: 6px;
+            display: flex; height: 34px; margin-bottom: 6px; align-items: stretch; 
+            cursor: pointer; transition: transform 0.1s; border-radius: 8px; overflow: hidden;
         }
-        .chart-row:hover { background-color: rgba(142, 68, 173, 0.1); transform: scale(1.01); }
-        .chart-row:active { transform: scale(0.99); }
+        .chart-row:active { transform: scale(0.98); }
 
         .grp-lbl { 
-            width: 50px; background: #34495e; color: white; 
+            width: 45px; background: #34495e; color: white; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 0.9rem; font-weight: bold; border-radius: 6px 0 0 6px; flex-shrink: 0;
-            transition: background 0.3s;
+            font-size: 0.9rem; font-weight: 700; flex-shrink: 0;
         }
-        .grp-lbl.highlight { background: var(--accent) !important; box-shadow: 0 0 8px var(--accent); z-index: 2; position: relative; }
+        .grp-lbl.highlight { background: var(--accent) !important; box-shadow: 0 0 10px var(--accent); z-index: 2; }
 
-        .bar { flex: 1; display: flex; border-radius: 0 6px 6px 0; overflow: hidden; }
-        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.2); position: relative; }
+        .bar { flex: 1; display: flex; }
+        .h-blk { flex: 1; border-right: 1px solid rgba(255,255,255,0.1); }
         
-        .time-scale { display: flex; margin-left: 50px; margin-bottom: 5px; font-size: 0.75rem; color: #999; }
-        .ts-item { flex: 1; text-align: left; border-left: 1px solid #ddd; padding-left: 3px; position: relative; }
+        .time-scale { display: flex; margin-left: 45px; margin-bottom: 5px; font-size: 0.7rem; color: var(--text-sub); }
+        .ts-item { flex: 1; text-align: left; border-left: 1px solid var(--border); padding-left: 2px; }
 
         .bg-on { background: var(--green); }
         .bg-off { background: var(--red); }
         .bg-maybe { background: var(--yellow); }
-        .bg-u { background: #e0e0e0; }
+        .bg-u { background: var(--gray-u); }
 
+        /* TOMORROW TOGGLE */
         .tomorrow-control { text-align: center; margin-bottom: 30px; }
         .btn-tomorrow {
-            background: white; border: 2px solid var(--accent); color: var(--accent);
-            padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s;
+            background: transparent; border: 2px solid var(--accent); color: var(--accent);
+            padding: 10px 24px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
-        .btn-tomorrow:hover, .btn-tomorrow.active { background: var(--accent); color: white; }
-        .msg-no-data { color: #e74c3c; font-style: italic; font-weight: bold; font-size: 0.9rem; }
+        .btn-tomorrow.active { background: var(--accent); color: white; }
+        .msg-no-data { color: var(--red-text); font-style: italic; font-weight: 600; }
 
-        /* === КАРТКИ (ОНОВЛЕНІ ПІД РОЖЕВИЙ СТИЛЬ, АЛЕ В OLD КОНТЕЙНЕРІ) === */
+        /* PERSONAL CARDS */
         .personal-schedule-container {
-            display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
-            margin-top: 20px; display: none; opacity: 0; transition: opacity 0.5s;
+            display: flex; flex-direction: column; gap: 20px; align-items: center; 
+            margin-top: 10px; display: none; opacity: 0; transition: opacity 0.4s;
         }
         .personal-schedule-container.show { display: flex; opacity: 1; }
 
         .p-card {
-            background: white; border-radius: 16px; padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 450px; /* Трохи ширше для нових рядків */
-            position: relative; border-top: 4px solid var(--accent);
-            animation: slideUp 0.4s ease-out;
+            background: var(--card-bg); 
+            border-radius: 20px; padding: 20px;
+            box-shadow: var(--shadow); 
+            width: 100%; max-width: 450px;
+            position: relative; 
+            border-top: 5px solid var(--accent);
+            animation: slideUp 0.3s ease-out;
+            box-sizing: border-box;
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .p-header { text-align: center; font-weight: bold; color: #95a5a6; margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .p-top-label { text-align: center; font-size: 0.7rem; color: var(--text-sub); font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
         
-        .p-top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .p-date { background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; display: inline-block; }
-        
-        .p-group-box { 
-            background: var(--accent); color: white; width: 60px; height: 60px; 
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: bold; margin-bottom: 5px; box-shadow: 0 4px 10px rgba(142,68,173,0.3);
+        .p-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .p-day-badge { background: var(--accent); color: white; padding: 8px 16px; border-radius: 12px; font-weight: bold; font-size: 0.95rem; }
+        .p-group-square { 
+            background: var(--accent); color: white; width: 50px; height: 50px;
+            border-radius: 12px; font-weight: 800; font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px var(--accent-light);
         }
 
-        /* 🔥 НОВИЙ СТИЛЬ РЯДКА (РОЖЕВИЙ ЯК НА ФОТО) */
-        .outage-row-pink {
-            background-color: var(--row-bg-pink);
-            border: 1px solid var(--row-border-pink);
-            border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .outage-row {
+            background: var(--red-bg); color: var(--red-text); 
+            border: 1px solid var(--red-bg);
+            border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 18px; margin-bottom: 10px; 
+            font-weight: 700; font-size: 1.1rem;
         }
+        .outage-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.2; margin: 0 15px; }
+        .outage-duration { font-size: 0.8rem; opacity: 0.9; background: rgba(0,0,0,0.05); padding: 4px 8px; border-radius: 6px; }
 
-        .time-group-pink {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            color: var(--text-red-dark);
-            font-size: 1.3rem;
-            font-weight: 800; /* Жирний шрифт як на фото */
+        .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: var(--bg); border-radius: 12px; border: 1px dashed var(--green); }
+
+        /* SHARE BUTTON */
+        .btn-share {
+            margin-top: 15px; width: 100%; padding: 14px; 
+            border: 2px dashed var(--accent); 
+            color: var(--accent); background: var(--accent-light);
+            border-radius: 14px; cursor: pointer; 
+            font-size: 1rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: 0.2s;
+            box-sizing: border-box;
         }
+        .btn-share:hover { background: var(--accent); color: white; border-style: solid; }
+        .btn-share:active { transform: scale(0.98); }
 
-        .time-divider-pink {
-            width: 20px;
-            height: 2px;
-            background-color: #e6b0aa;
-        }
-
-        .duration-badge-pink {
-            background-color: var(--badge-bg-red);
-            color: white;
-            font-weight: bold;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            min-width: 60px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.3);
-        }
-
-        .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 20px; background: #e8f8f5; border-radius: 10px; }
-
-        /* WIZARD (Збережено old стиль) */
+        /* WIZARD (SEARCH) */
         .wiz-overlay { 
             display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 2000; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; 
             align-items: center; justify-content: center; 
         }
         .wiz-box { 
-            background: white; width: 95%; max-width: 450px; height: 85vh; max-height: 600px;
-            border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            background: var(--card-bg); width: 95%; max-width: 480px; height: 85vh; max-height: 650px;
+            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
             display: flex; flex-direction: column; overflow: hidden; position: relative;
         }
-        .wiz-header { padding: 15px 20px; background: #f4f4f4; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #555; }
-        .wiz-close { font-size: 24px; cursor: pointer; color: #aaa; padding: 0 10px; }
+        
+        .wiz-header {
+            padding: 18px 20px; background: var(--bg); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; 
+            font-weight: bold; font-size: 1.1rem; color: var(--text-main);
+        }
+        .wiz-close { font-size: 28px; cursor: pointer; color: var(--text-sub); padding: 0 10px; }
+        
         .wiz-body { padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
         .wiz-step { display: none; flex-direction: column; height: 100%; }
-        .wiz-step.active { display: flex; animation: fadeIn 0.2s; }
+        .wiz-step.active { display: flex; animation: fadeIn 0.25s; }
         @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        .input-wrapper { display: flex; gap: 8px; margin-bottom: 15px; }
-        .wiz-input { flex: 1; padding: 12px; border: 2px solid var(--light-border); border-radius: 10px; font-size: 16px; outline: none; transition: 0.2s; }
+
+        .input-wrapper { display: flex; gap: 10px; margin-bottom: 15px; }
+        .wiz-input { 
+            flex: 1; padding: 14px; 
+            background: var(--input-bg); color: var(--text-main);
+            border: 2px solid var(--border); border-radius: 14px; 
+            font-size: 16px; outline: none; transition: 0.2s;
+        }
         .wiz-input:focus { border-color: var(--accent); }
-        .btn-check { background: var(--accent); color: white; border: none; border-radius: 10px; width: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .results-list { flex: 1; overflow-y: auto; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px; display: none; }
-        .results-list.show { display: block; }
-        .res-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 15px; color: #333; transition: 0.1s; }
-        .res-item:last-child { border-bottom: none; }
-        .res-item:active { background: #f0edff; color: var(--accent); }
-        .wiz-footer { text-align: center; margin-top: auto; }
-        .btn-back { color: #999; padding: 10px; cursor: pointer; font-size: 0.9rem; }
-        label { font-weight: bold; margin-bottom: 8px; display: block; color: var(--text-main); }
         
-        .seo-footer { margin-top: 30px; padding: 20px; border-top: 1px solid #e0e0e0; color: #7f8c8d; font-size: 0.8rem; text-align: center; }
+        .btn-check {
+            background: var(--accent); color: white; border: none; border-radius: 14px;
+            width: 54px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .btn-check:active { transform: scale(0.95); }
+
+        .results-list { flex: 1; overflow-y: auto; border-radius: 12px; margin-bottom: 10px; display: none; }
+        .results-list.show { display: block; border: 1px solid var(--border); }
+        
+        .res-item { 
+            padding: 14px 15px; border-bottom: 1px solid var(--border); cursor: pointer; 
+            font-size: 16px; color: var(--text-main); transition: 0.1s;
+        }
+        .res-item:last-child { border-bottom: none; }
+        .res-item:active { background: var(--accent-light); color: var(--accent); }
+
+        .wiz-footer { margin-top: auto; padding-top: 10px; }
+        .btn-back { color: var(--text-sub); padding: 12px; cursor: pointer; font-size: 0.95rem; text-align: center; width: 100%; background: var(--bg); border-radius: 10px; box-sizing: border-box; }
+
+        label { font-weight: 700; margin-bottom: 10px; display: block; color: var(--text-main); font-size: 0.95rem; }
+        
+        .seo-footer { margin-top: 40px; padding: 25px; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 0.75rem; text-align: center; line-height: 1.5; }
+        .seo-footer h2 { font-size: 0.9rem; color: var(--text-main); margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Графік відключення світла Тернопіль та Тернопільська область</h1>
+        <h1>Графік відключення світла<br>Тернопіль та область</h1>
         
         <a href="https://t.me/Grafik_Tern_bot" target="_blank" class="btn-telegram">
             <div class="tg-icon">
@@ -226,20 +284,20 @@
                 </svg>
             </div>
             <div class="tg-text">
-                <div class="tg-title">🇺🇦 Світло Тернопіль: Графіки та Черги</div>
-                <div class="tg-desc">Самі актуальні графіки відключень. Пошук групи.</div>
+                <div class="tg-title">🇺🇦 Світло Тернопіль: Бот</div>
+                <div class="tg-desc">Миттєві сповіщення у Telegram</div>
             </div>
         </a>
 
-        <div class="sub-header" id="globalUpdate">Оновлення даних...</div>
-        <button class="btn-search" onclick="openWiz()">🔍 Знайти свою групу</button>
+        <div class="sub-header">
+            <span class="status-dot"></span>
+            <span id="globalUpdate">Оновлення даних...</span>
+        </div>
+        <button class="btn-search" onclick="openWiz()">🔍 Знайти свою чергу</button>
     </header>
 
     <div class="full-chart-section">
         <div class="full-chart-title" id="chartTitle">Загальний графік</div>
-        <div style="text-align:center; font-size:0.75rem; color:#888; margin-bottom:8px;">
-            (Натисніть на рядок з групою, щоб побачити деталі)
-        </div>
         
         <div class="time-scale">
             <div class="ts-item">00</div><div class="ts-item">03</div>
@@ -249,11 +307,14 @@
         </div>
         
         <div id="fullChart"></div>
+        <div style="text-align:center; font-size:0.75rem; color:var(--text-sub); margin-top:10px;">
+            (Натисніть на рядок, щоб відкрити деталі)
+        </div>
     </div>
 
     <div class="tomorrow-control">
         <button id="btnTomorrow" class="btn-tomorrow" onclick="toggleTomorrow()" style="display:none;">
-            Загальний графік на завтра
+            Показати графік на завтра
         </button>
         <div id="msgNoTomorrow" class="msg-no-data" style="display:none;">
             Графік на завтра ще не опубліковано
@@ -264,117 +325,115 @@
 </div>
 
 <footer class="seo-footer">
-    <h2>Інформація про відключення</h2>
-    <p>Цей сервіс надає актуальний <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для міста <strong>Тернопіль</strong> та області.</p>
+    <h2>Інформація</h2>
+    <p>Цей сервіс надає актуальний <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для міста <strong>Тернопіль</strong> та області. Дані автоматично синхронізуються з офіційними джерелами ВАТ "Тернопільобленерго". Сайт оптимізовано для швидкої роботи навіть при поганому інтернеті.</p>
+    <p>&copy; 2025 Світло Тернопіль</p>
 </footer>
 
 <div class="wiz-overlay" id="wiz">
     <div class="wiz-box">
         <div class="wiz-header">
-            <span id="wizTitle">Пошук</span>
+            <span id="wizTitle">Пошук черги</span>
             <span class="wiz-close" onclick="closeWiz()">&times;</span>
         </div>
+        
         <div class="wiz-body">
             <div class="wiz-step active" id="step1">
-                <label>🏙 Населений пункт</label>
+                <label>🏙 Оберіть населений пункт</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpCity" placeholder="Почніть писати...">
+                    <input type="text" class="wiz-input" id="inpCity" placeholder="Введіть назву..." autocomplete="off">
                     <button class="btn-check" onclick="forceSearch(1)">🔍</button>
                 </div>
                 <div class="results-list" id="listCity"></div>
             </div>
+
             <div class="wiz-step" id="step2">
-                <label>🛣 Вулиця</label>
+                <label>🛣 Назва вулиці</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Назва вулиці...">
+                    <input type="text" class="wiz-input" id="inpStreet" placeholder="Почніть писати..." autocomplete="off">
                     <button class="btn-check" onclick="forceSearch(2)">🔍</button>
                 </div>
                 <div class="results-list" id="listStreet"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">🔙 Назад</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(1)">🔙 Назад до міст</div></div>
             </div>
+
             <div class="wiz-step" id="step3">
-                <label>🏠 Будинок</label>
+                <label>🏠 Номер будинку</label>
                 <div class="input-wrapper">
-                    <input type="text" class="wiz-input" id="inpHouse" placeholder="Номер...">
-                    <button class="btn-check" onclick="forceSearch(3)">✅</button>
+                    <input type="text" class="wiz-input" id="inpHouse" placeholder="Номер..." autocomplete="off">
+                    <button class="btn-check" onclick="forceSearch(3)">🔍</button>
                 </div>
                 <div class="results-list" id="listHouse"></div>
-                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">🔙 Назад</div></div>
+                <div class="wiz-footer"><div class="btn-back" onclick="goStep(2)">🔙 Назад до вулиць</div></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔥 НАЛАШТУВАННЯ
+    // 🔥 CONFIG
     const GITHUB_USER = 'kalyniak-gnostik'; 
     const REPO_NAME = 'Svitlo_Ternopil';
-    const RAW_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
+    const DATA_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main`;
+    
+    // DEFAULT CITIES (Top of the list)
+    const DEFAULT_CITIES = ['Тернопіль', 'Чортків', 'Кременець', 'Бережани'];
 
     let gData = null;
     let gAddr = null;
-    let myGroup = localStorage.getItem('myGroup');
+    
+    // Get group from URL or LocalStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    let myGroup = urlParams.get('group') || localStorage.getItem('myGroup');
     let viewingGroup = myGroup; 
-    let isShowingTomorrow = false; 
-    let lastFetchTime = 0; // 🔥 Для контролю оновлення
 
-    // Дані для пошуку
+    let isShowingTomorrow = false; 
     let selectedCity = "";
     let selectedStreet = "";
 
     async function init() {
-        // Обробка URL (?group=3.2)
-        const params = new URLSearchParams(window.location.search);
-        const urlGroup = params.get('group');
-        if(urlGroup) {
-            myGroup = urlGroup;
-            viewingGroup = urlGroup;
-        }
-
-        // 🔥 МІТКА ЧАСУ (Timestamp)
-        const ts = Date.now();
-        lastFetchTime = ts;
-
         try {
-            // 🔥 ВАЖЛИВО: додаємо ?v=Date.now() щоб уникнути кешування
+            // Anti-cache timestamp
+            const ts = Date.now();
+            
             const [dRes, aRes] = await Promise.all([
-                fetch(`${RAW_URL}/schedule.json?v=${ts}`),
-                fetch(`${RAW_URL}/addresses.json?v=${ts}`) 
+                fetch(`${DATA_URL}/schedule.json?v=${ts}`),
+                fetch(`${DATA_URL}/addresses.json?v=${ts}`).catch(e => null)
             ]);
             
             if(dRes.ok) {
                 gData = await dRes.json();
-                document.getElementById('globalUpdate').innerText = `Оновлено: ${gData.updated_at}`;
+                const dateObj = new Date(gData.updated_at);
+                const timeStr = dateObj.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+                document.getElementById('globalUpdate').innerText = `Оновлено: ${timeStr}`;
+                
                 renderFullChart('today'); 
                 checkTomorrowButton();
-                if(viewingGroup) renderPersonalCards(viewingGroup);
-            }
-            if(aRes.ok) {
-                gAddr = await aRes.json();
+
+                if(viewingGroup) {
+                    selectGroup(viewingGroup, false); // false = no scroll on init if not needed
+                }
             } else {
-                console.warn("Addresses.json not found. Search wizard may not work.");
+                document.getElementById('globalUpdate').innerText = "Помилка даних";
+                document.getElementById('globalUpdate').style.color = "var(--red)";
             }
+
+            if(aRes && aRes.ok) gAddr = await aRes.json();
             
             setupLiveSearch();
-        } catch(e) { console.error(e); }
+
+        } catch(e) { 
+            console.error(e);
+            document.getElementById('globalUpdate').innerText = "Немає зв'язку";
+        }
     }
 
-    // 🔥 PWA AUTO-REFRESH (оновлення при виході з фону)
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-            const now = Date.now();
-            // Якщо пройшло більше 60 сек, оновлюємо
-            if (now - lastFetchTime > 60000) {
-                console.log("App visible: refreshing data...");
-                init();
-            }
-        }
-    });
+    // === UI LOGIC ===
 
-    // === КЕРУВАННЯ ===
     function checkTomorrowButton() {
         const btn = document.getElementById('btnTomorrow');
         const msg = document.getElementById('msgNoTomorrow');
+        
         if (gData && gData.tomorrow) {
             btn.style.display = 'inline-block';
             msg.style.display = 'none';
@@ -387,28 +446,46 @@
     function toggleTomorrow() {
         isShowingTomorrow = !isShowingTomorrow;
         const btn = document.getElementById('btnTomorrow');
+        
         if (isShowingTomorrow) {
             renderFullChart('tomorrow');
             btn.innerText = "Повернутись до графіка на сьогодні";
             btn.classList.add('active');
         } else {
             renderFullChart('today');
-            btn.innerText = "Загальний графік на завтра";
+            btn.innerText = "Показати графік на завтра";
             btn.classList.remove('active');
         }
+        
         if(viewingGroup) setActiveGroupVisuals(viewingGroup);
     }
 
-    function selectGroup(group) {
+    function selectGroup(group, doScroll = true) {
         viewingGroup = group;
         localStorage.setItem('myGroup', group);
         
-        // Оновлюємо URL
+        // Update URL without reloading
         const newUrl = `${window.location.pathname}?group=${group}`;
         window.history.pushState({path: newUrl}, '', newUrl);
 
         renderPersonalCards(group);
         setActiveGroupVisuals(group);
+        
+        if(doScroll) {
+            setTimeout(() => {
+                const el = document.getElementById('personalContainer');
+                const offset = -20;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elRect = el.getBoundingClientRect().top;
+                const elPosition = elRect - bodyRect;
+                const offsetPosition = elPosition + offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }, 100);
+        }
     }
 
     function setActiveGroupVisuals(group) {
@@ -417,28 +494,30 @@
         if(target) target.classList.add('highlight');
     }
 
-    // === ГРАФІК ЗАГАЛЬНИЙ (Стиль old) ===
+    // === CHARTS ===
     function renderFullChart(dayKey) {
         const c = document.getElementById('fullChart'); c.innerHTML='';
         const titleEl = document.getElementById('chartTitle');
 
-        if(!gData[dayKey]) { titleEl.innerText = "Дані відсутні"; return; }
+        if(!gData[dayKey]) {
+            titleEl.innerText = "Дані відсутні";
+            return;
+        }
 
+        const dataObj = gData[dayKey];
         const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
-        const dateStr = gData[dayKey].date;
-        titleEl.innerText = `Загальний графік на ${dateStr} (${dayName})`;
+        titleEl.innerText = `Загальний графік: ${dayName} (${dataObj.date})`;
 
-        const data = gData[dayKey].data;
+        const data = dataObj.data;
         const groups = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
-
+        
         groups.forEach(grp => {
-            const row = document.createElement('div'); row.className='chart-row';
+            const row = document.createElement('div'); 
+            row.className='chart-row';
             row.onclick = () => selectGroup(grp);
 
             const isMine = (grp === viewingGroup) ? 'highlight' : '';
             let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
-            
-            // Сортування часу
             Object.keys(data[grp]).sort().forEach(t => {
                 let cls = 'bg-u';
                 const s = data[grp][t];
@@ -451,7 +530,6 @@
         });
     }
 
-    // === 🔥 ПЕРСОНАЛЬНІ КАРТКИ (ОНОВЛЕНО: РОЖЕВИЙ СТИЛЬ) ===
     function renderPersonalCards(group) {
         const container = document.getElementById('personalContainer');
         container.innerHTML = '';
@@ -472,31 +550,32 @@
                 outagesHTML = '<div class="no-outages">✅ Відключень не планується</div>';
             } else {
                 ranges.forEach(r => {
-                    // 🔥 Використовуємо класи для рожевого стилю
                     outagesHTML += `
-                    <div class="outage-row-pink">
-                        <div class="time-group-pink">
-                            <span>${r.start}</span>
-                            <div class="time-divider-pink"></div>
-                            <span>${r.end}</span>
-                        </div>
-                        <div class="duration-badge-pink">${r.duration}</div>
+                    <div class="outage-row">
+                        <span>${r.start}</span>
+                        <div class="outage-divider"></div>
+                        <span>${r.end}</span>
+                        <div class="outage-duration">${r.duration}</div>
                     </div>`;
                 });
             }
 
+            const dayLabel = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
+            
+            // Share button only needed on today card or both? Let's add to both for convenience.
             card.innerHTML = `
-                <div class="p-header">Графік (${dayKey === 'today' ? 'Сьогодні' : 'Завтра'})</div>
-                <div class="p-top-row">
-                    <div class="p-date-block"><div class="p-date">${dayInfo.date}</div></div>
-                    <div class="p-group-block"><div class="p-group-box">${group}</div></div>
+                <div class="p-top-label">ГРАФІК (${dayLabel.toUpperCase()})</div>
+                <div class="p-header-row">
+                    <div class="p-day-badge">${dayLabel}, ${dayInfo.date}</div>
+                    <div class="p-group-square">${group}</div>
                 </div>
                 ${outagesHTML}
+                <button class="btn-share" onclick="shareGroup()">
+                    🔗 Поділитися графіком
+                </button>
             `;
             container.appendChild(card);
         });
-        
-        if(window.scrollY < 100) container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     function calculateOutages(scheduleObj) {
@@ -507,12 +586,14 @@
         times.forEach(t => {
             const status = scheduleObj[t];
             if ((status === 'off' || status === 'maybe') && !start) start = t;
-            if (status === 'on' && start) {
-                ranges.push({ start, end: t, duration: getDuration(start, t) });
+            if ((status === 'on') && start) {
+                ranges.push({ start: start, end: t, duration: getDuration(start, t) });
                 start = null;
             }
         });
-        if (start) ranges.push({ start, end: "24:00", duration: getDuration(start, "24:00") });
+        if (start) {
+            ranges.push({ start: start, end: "24:00", duration: getDuration(start, "24:00") });
+        }
         return ranges;
     }
 
@@ -520,24 +601,55 @@
         const [h1, m1] = start.split(':').map(Number);
         let [h2, m2] = end.split(':').map(Number);
         if(h2 === 0 && end !== "00:00") h2 = 24;
+        
         let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
         const hrs = Math.floor(diff / 60);
-        // 🔥 Формат "1 год" як на картинці
-        return `${hrs} год`; 
+        const mins = diff % 60;
+        
+        if(hrs > 0 && mins > 0) return `${hrs}г ${mins}хв`;
+        if(hrs > 0) return `${hrs} год`;
+        return `${mins} хв`;
     }
 
-    // === WIZARD ПОШУК ===
+    function shareGroup() {
+        if(!viewingGroup) return;
+        const url = window.location.href; 
+        const shareData = {
+            title: `Графік світла: Черга ${viewingGroup}`,
+            text: `Мій графік відключень (Черга ${viewingGroup}). Переглянути тут:`,
+            url: url
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => console.log('Share dismissed'));
+        } else {
+            navigator.clipboard.writeText(url).then(() => {
+                alert("Посилання скопійовано в буфер обміну!");
+            });
+        }
+    }
+
+    // === SEARCH WIZARD ===
     function setupLiveSearch() {
-        if(!gAddr) return;
-        
         const inpCity = document.getElementById('inpCity');
+        
+        // City Input Logic
         inpCity.addEventListener('input', () => {
             const val = inpCity.value.toLowerCase();
+            if(val.length === 0) {
+                renderList('listCity', DEFAULT_CITIES, (item) => chooseCity(item));
+                return;
+            }
             const cities = [...new Set(gAddr.map(i => i.c))].sort();
             const matches = cities.filter(c => c.toLowerCase().includes(val));
             renderList('listCity', matches, (item) => chooseCity(item));
         });
+        inpCity.addEventListener('focus', () => {
+             if(inpCity.value.length === 0) renderList('listCity', DEFAULT_CITIES, (item) => chooseCity(item));
+        });
+        inpCity.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(1); });
 
+        // Street Input Logic
         const inpStreet = document.getElementById('inpStreet');
         inpStreet.addEventListener('input', () => {
             if(!selectedCity) return;
@@ -546,7 +658,9 @@
             const matches = streets.filter(s => s.toLowerCase().includes(val));
             renderList('listStreet', matches, (item) => chooseStreet(item));
         });
+        inpStreet.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(2); });
 
+        // House Input Logic
         const inpHouse = document.getElementById('inpHouse');
         inpHouse.addEventListener('input', () => {
             if(!selectedCity || !selectedStreet) return;
@@ -555,14 +669,20 @@
             const matches = houses.filter(h => h.h.toLowerCase().includes(val)).map(h => h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
             renderList('listHouse', matches, (item) => chooseHouse(item));
         });
+        inpHouse.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(3); });
     }
 
     function renderList(elementId, items, callback) {
         const el = document.getElementById(elementId);
         el.innerHTML = '';
-        if(items.length === 0) { el.classList.remove('show'); return; }
+        if(items.length === 0) {
+            el.classList.remove('show');
+            return;
+        }
+        
         el.classList.add('show');
-        items.slice(0, 50).forEach(item => {
+        // Limit render to 40 items for performance
+        items.slice(0, 40).forEach(item => {
             const div = document.createElement('div');
             div.className = 'res-item';
             div.innerText = item;
@@ -582,9 +702,14 @@
     function chooseStreet(name) {
         selectedStreet = name;
         document.getElementById('inpStreet').value = name;
+        
         const houses = gAddr.filter(i => i.c === selectedCity && i.s === name);
         const grps = [...new Set(houses.map(h => h.g))];
-        if(grps.length === 1) { saveGroup(grps[0]); return; }
+        if(grps.length === 1) {
+            saveGroup(grps[0]);
+            return;
+        }
+        
         const hList = houses.map(h => h.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
         renderList('listHouse', hList, (item) => chooseHouse(item));
         goStep(3);
@@ -598,21 +723,38 @@
     }
 
     function forceSearch(step) {
-        // Простий fallback (Збережено, бо ви просили "мертвий код" не видаляти)
-        alert("Використовуйте підказки зі списку");
+        // Triggered by Loopa button or Enter
+        if(step === 1) {
+            const val = document.getElementById('inpCity').value;
+            const cities = [...new Set(gAddr.map(i => i.c))];
+            const found = cities.find(c => c.toLowerCase() === val.toLowerCase()) || cities.find(c => c.toLowerCase().includes(val.toLowerCase()));
+            if(found) chooseCity(found);
+            else alert("Місто не знайдено");
+        }
+        if(step === 2) {
+            const val = document.getElementById('inpStreet').value;
+            const streets = [...new Set(gAddr.filter(i => i.c === selectedCity).map(i => i.s))];
+            const found = streets.find(s => s.toLowerCase() === val.toLowerCase()) || streets.find(s => s.toLowerCase().includes(val.toLowerCase()));
+            if(found) chooseStreet(found);
+            else alert("Вулицю не знайдено");
+        }
+        if(step === 3) {
+            const val = document.getElementById('inpHouse').value;
+            chooseHouse(val);
+        }
     }
 
     function saveGroup(g) {
-        myGroup = g; localStorage.setItem('myGroup', g);
         closeWiz();
-        selectGroup(g);
+        selectGroup(g, true);
     }
 
     function openWiz() { 
+        if(!gAddr) { alert('База адрес завантажується, зачекайте...'); return; }
         document.getElementById('wiz').style.display = 'flex';
-        if(gAddr) {
-             const cities = [...new Set(gAddr.map(i => i.c))].sort();
-             renderList('listCity', cities, (i)=>chooseCity(i));
+        // Reset or default state
+        if(document.getElementById('inpCity').value === '') {
+            renderList('listCity', DEFAULT_CITIES, (i)=>chooseCity(i));
         }
         goStep(1);
     }
@@ -620,7 +762,8 @@
     function goStep(n) {
         [1,2,3].forEach(i=>document.getElementById(`step${i}`).classList.remove('active'));
         document.getElementById(`step${n}`).classList.add('active');
-        document.getElementById('wizTitle').innerText = n===1?'Оберіть місто':(n===2?'Оберіть вулицю':'Оберіть будинок');
+        const titles = ['Оберіть місто', 'Оберіть вулицю', 'Оберіть будинок'];
+        document.getElementById('wizTitle').innerText = titles[n-1];
     }
 
     init();
