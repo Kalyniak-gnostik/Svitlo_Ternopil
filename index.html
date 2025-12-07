@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <title>Графік відключення світла Тернопіль (ГПВ) | Оновлення наживо</title>
-    <meta name="description" content="Актуальний графік погодинних відключень електроенергії (ГПВ) в Тернополі та області. Пошук черги за адресою. Прогноз на сьогодні та завтра.">
-    <meta name="keywords" content="світло тернопіль, графік відключень, гпв тернопіль, коли буде світло, тернопільобленерго графік, черги відключення">
+    <meta name="description" content="Актуальний графік погодинних відключень електроенергії (ГПВ) в Тернополі та області. Пошук черги за адресою. Прогноз на сьогодні та завтра. Всі групи.">
+    <meta name="keywords" content="світло тернопіль, графік відключень, гпв тернопіль, коли буде світло, тернопільобленерго графік, черги відключення, 6 черг">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Svitlo Ternopil">
+    <link rel="canonical" href="https://svitlo-ternopil.ue">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://svitlo-ternopil.ue">
-    <meta property="og:title" content="Графік світла Тернопіль">
-    <meta property="og:description" content="Дізнайся свою чергу та графік відключень за 1 хвилину. Актуальні дані.">
+    <meta property="og:title" content="Графік світла Тернопіль: Знайди свою чергу">
+    <meta property="og:description" content="Дізнайся графік відключень за 1 хвилину. Пошук по вулиці. Актуальні дані обленерго.">
     <meta property="og:image" content="https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main/og-image.png">
     
     <meta name="theme-color" content="#f4f7f6" media="(prefers-color-scheme: light)">
@@ -254,34 +255,45 @@
             .p-group-square { background: #2c2c2c; }
         }
 
+        /* === ОНОВЛЕНІ СТИЛІ СПИСКУ (Всі стани) === */
         .outages-list { display: flex; flex-direction: column; gap: 10px; }
-        .outage-row {
-            background: var(--red-bg); color: var(--red-text); 
-            border: 1px solid rgba(231, 76, 60, 0.1);
+        
+        .schedule-row {
             border-radius: 16px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 20px; 
-            font-weight: 700; font-size: 1.2rem;
+            font-weight: 700; font-size: 1.1rem;
+            border: 1px solid transparent;
+            transition: transform 0.2s;
         }
-        .outage-row.is-maybe {
-            background: #fffcf0; color: #b7950b; border-color: rgba(241, 196, 15, 0.2);
+        
+        /* Типи станів */
+        .type-off {
+            background: var(--red-bg); color: var(--red-text); 
+            border-color: rgba(231, 76, 60, 0.1);
         }
-        @media (prefers-color-scheme: dark) {
-            .outage-row.is-maybe { background: #3e3818; color: #f1c40f; }
+        
+        .type-maybe {
+            background: #fffcf0; color: #b7950b; 
+            border-color: rgba(241, 196, 15, 0.2);
+        }
+        
+        .type-on {
+            background: var(--green-bg); color: var(--green-text);
+            border-color: rgba(39, 174, 96, 0.2);
         }
 
-        .outage-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.15; margin: 0 15px; border-radius: 2px; }
-        .outage-duration { 
+        @media (prefers-color-scheme: dark) {
+            .type-maybe { background: #3e3818; color: #f1c40f; }
+            /* Зелений/червоний вже адаптовані через змінні */
+        }
+
+        .schedule-divider { height: 2px; flex: 1; background: currentColor; opacity: 0.15; margin: 0 15px; border-radius: 2px; }
+        .schedule-duration { 
             font-size: 0.85rem; opacity: 1; 
             background: rgba(0,0,0,0.06); padding: 5px 10px; 
             border-radius: 8px; font-weight: 600;
-        }
-
-        .no-outages { 
-            text-align: center; color: var(--green-text); background: var(--green-bg);
-            font-weight: 700; padding: 30px; border-radius: 18px; 
-            border: 2px dashed rgba(39, 174, 96, 0.3);
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 6px;
         }
 
         .btn-share {
@@ -415,8 +427,7 @@
                 <div class="ts-item">18</div><div class="ts-item">21</div>
             </div>
             
-            <div id="fullChart">
-                </div>
+            <div id="fullChart"></div>
             <div style="text-align:center; font-size:0.75rem; color:var(--text-sub); margin-top:15px; opacity:0.8;">
                 👆 Натисніть на рядок, щоб відкрити детальний розклад
             </div>
@@ -431,8 +442,7 @@
             </div>
         </div>
 
-        <div id="personalContainer" class="personal-schedule-container">
-            </div>
+        <div id="personalContainer" class="personal-schedule-container"></div>
     </main>
 </div>
 
@@ -493,7 +503,7 @@
     const REPO_NAME = 'Svitlo_Ternopil';
     const BRANCH = 'main';
     const BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/${BRANCH}`;
-    const CACHE_BUST = `?v=${Date.now()}`; // Prevent caching of JSON files
+    const CACHE_BUST = `?v=${Date.now()}`; 
     
     // Defaults for empty search
     const DEFAULT_CITIES = ['Тернопіль', 'Чортків', 'Кременець', 'Бережани', 'Збараж', 'Теребовля'];
@@ -502,7 +512,6 @@
     let gData = null;       // Schedule data
     let gAddr = null;       // Addresses database
     
-    // Get group from URL or LocalStorage
     let myGroup = new URLSearchParams(window.location.search).get('group') || localStorage.getItem('myGroup');
     let viewingGroup = myGroup; 
     
@@ -537,29 +546,26 @@
         els.statusDot.style.display = 'none';
 
         try {
-            // 1. Fetch Schedule (Critical)
+            // 1. Fetch Schedule
             const scheduleResponse = await fetch(`${BASE_URL}/schedule.json${CACHE_BUST}`);
             if (!scheduleResponse.ok) throw new Error("Schedule fetch failed");
             
             gData = await scheduleResponse.json();
             
-            // Process Date & Time
             const d = new Date(gData.updated_at);
             globalUpdateTimeStr = d.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
             els.globalUpdate.innerText = `Оновлено: ${globalUpdateTimeStr}`;
             els.statusDot.style.display = 'inline-block';
             els.mainLoader.style.display = 'none';
 
-            // Initial Render
             renderFullChart('today');
             checkTomorrowButton();
 
-            // If user has a group selected/saved, show it
             if (viewingGroup) {
                 selectGroup(viewingGroup, false);
             }
 
-            // 2. Fetch Addresses (Lazy/Non-blocking)
+            // 2. Fetch Addresses
             fetchAddresses();
 
         } catch (e) {
@@ -578,7 +584,7 @@
             if (res.ok) {
                 gAddr = await res.json();
                 console.log(`Addresses loaded: ${gAddr.length} entries`);
-                setupLiveSearch(); // Enable wizard logic
+                setupLiveSearch(); 
             }
         } catch (e) {
             console.warn("Address DB failed to load", e);
@@ -610,7 +616,6 @@
             els.btnTomorrow.classList.remove('active');
         }
         
-        // Refresh highlight on the chart
         if (viewingGroup) setActiveGroupVisuals(viewingGroup);
     }
 
@@ -620,7 +625,6 @@
         viewingGroup = group;
         localStorage.setItem('myGroup', group);
         
-        // Update URL without reload
         const newUrl = `${window.location.pathname}?group=${group}`;
         window.history.pushState({path: newUrl}, '', newUrl);
 
@@ -636,11 +640,7 @@
     }
 
     function setActiveGroupVisuals(group) {
-        // Remove highlight from all
         document.querySelectorAll('.grp-lbl').forEach(el => el.classList.remove('highlight'));
-        
-        // Add highlight to current
-        // We find the specific row label that matches the text
         const labels = Array.from(document.querySelectorAll('.grp-lbl'));
         const target = labels.find(el => el.innerText.trim() === group);
         if (target) target.classList.add('highlight');
@@ -658,12 +658,18 @@
 
         const dataObj = gData[dayKey];
         const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
-        const dateStr = dataObj.date; 
+        const dateStr = dataObj.date;
 
-        els.chartTitle.innerText = `ЗАГАЛЬНИЙ ГРАФІК: ${dateStr} (${dayName.toUpperCase()})`;
+        // === Fix Date Duplication ===
+        let titleHtml = '';
+        if (dateStr.toLowerCase().includes(dayName.toLowerCase())) {
+            titleHtml = `📅 ГРАФІК: ${dateStr.toUpperCase()}`;
+        } else {
+            titleHtml = `📅 ${dateStr} <span style="opacity:0.6; font-weight:400;">(${dayName})</span>`;
+        }
+        els.chartTitle.innerHTML = titleHtml;
 
         const scheduleData = dataObj.data;
-        // Sort groups numerically: "1.1", "1.2" ...
         const groups = Object.keys(scheduleData).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
 
         groups.forEach(grp => {
@@ -675,8 +681,6 @@
             const isMine = (grp === viewingGroup) ? 'highlight' : '';
             
             let html = `<div class="grp-lbl ${isMine}">${grp}</div><div class="bar">`;
-            
-            // Generate hours 00:00 to 23:00
             const hours = Object.keys(scheduleData[grp]).sort();
             
             hours.forEach(t => {
@@ -700,45 +704,52 @@
         els.personalContainer.classList.add('show');
         
         ['today', 'tomorrow'].forEach(dayKey => {
-            if (!gData[dayKey]) return; // Skip if no data for tomorrow
+            if (!gData[dayKey]) return;
             
             const dayInfo = gData[dayKey];
             const schedule = dayInfo.data[group];
             
             if (!schedule) return;
 
-            const ranges = calculateOutages(schedule);
+            // Use new calculator for full list
+            const ranges = calculateRanges(schedule);
             
             const card = document.createElement('div');
             card.className = 'p-card';
             
-            let outagesHTML = '<div class="outages-list">';
-            if (ranges.length === 0) {
-                outagesHTML += `
-                    <div class="no-outages">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        <span>Відключень не планується</span>
-                    </div>`;
-            } else {
-                ranges.forEach(r => {
-                    // Check if it is a "maybe" outage
-                    const isMaybe = r.type === 'maybe';
-                    const cssClass = isMaybe ? 'outage-row is-maybe' : 'outage-row';
-                    const icon = isMaybe ? '⚠️' : '⚡️';
-                    
-                    outagesHTML += `
-                    <div class="${cssClass}">
-                        <span>${r.start}</span>
-                        <div class="outage-divider"></div>
-                        <span>${r.end}</span>
-                        <div class="outage-duration">${icon} ${r.duration}</div>
-                    </div>`;
-                });
-            }
-            outagesHTML += '</div>';
+            let listHTML = '<div class="outages-list">';
+            
+            ranges.forEach(r => {
+                let cssClass = '';
+                let icon = '';
+                let label = '';
+
+                if (r.type === 'off') {
+                    cssClass = 'type-off';
+                    icon = '⚡️';
+                    label = 'Немає світла';
+                } else if (r.type === 'maybe') {
+                    cssClass = 'type-maybe';
+                    icon = '⚠️';
+                    label = 'Можливе відключення';
+                } else {
+                    cssClass = 'type-on';
+                    icon = '💡';
+                    label = 'Світло є';
+                }
+
+                listHTML += `
+                <div class="schedule-row ${cssClass}">
+                    <span>${r.start}</span>
+                    <div class="schedule-divider"></div>
+                    <span>${r.end}</span>
+                    <div class="schedule-duration" title="${label}">
+                        ${icon} ${r.duration}
+                    </div>
+                </div>`;
+            });
+            
+            listHTML += '</div>';
 
             const dayLabel = dayKey === 'today' ? 'СЬОГОДНІ' : 'ЗАВТРА';
             const dateStr = dayInfo.date;
@@ -752,7 +763,7 @@
                     </div>
                     <div class="p-group-square">${group}</div>
                 </div>
-                ${outagesHTML}
+                ${listHTML}
                 <button class="btn-share" onclick="shareGroup()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                     Поділитися
@@ -762,28 +773,27 @@
         });
     }
 
-    // === LOGIC: Time Calculation ===
+    // === LOGIC: Time Calculation (All states) ===
 
-    function calculateOutages(scheduleObj) {
+    function calculateRanges(scheduleObj) {
         const times = Object.keys(scheduleObj).sort(); // 00:00, 01:00 ...
         let ranges = [];
         
-        let currentType = null; // 'off' or 'maybe'
+        let currentType = null; // 'off', 'maybe', 'on'
         let start = null;
 
         for (let i = 0; i < times.length; i++) {
             const t = times[i];
             const status = scheduleObj[t];
             
-            // Determining the type of current block
-            let type = null;
+            // Normalize status to our types
+            let type = 'on'; // default to on
             if (status === 'off') type = 'off';
             if (status === 'maybe') type = 'maybe';
 
             if (type !== currentType) {
                 // Status changed
                 if (currentType !== null) {
-                    // Close previous block
                     ranges.push({ 
                         start: start, 
                         end: t, 
@@ -792,15 +802,13 @@
                     });
                 }
                 
-                // Start new block if it's an outage
-                if (type !== null) {
-                    start = t;
-                }
+                // Start new block
+                start = t;
                 currentType = type;
             }
         }
 
-        // Handle the end of the day (24:00)
+        // Close last block
         if (currentType !== null) {
             ranges.push({ 
                 start: start, 
@@ -817,7 +825,6 @@
         const [h1, m1] = start.split(':').map(Number);
         let [h2, m2] = end.split(':').map(Number);
         
-        // Handle 24:00 case
         if (h2 === 0 && end !== "00:00") h2 = 24;
         
         let diffMinutes = (h2 * 60 + m2) - (h1 * 60 + m1);
@@ -842,41 +849,34 @@
         if (navigator.share) { 
             navigator.share(shareData).catch(err => console.log('Share dismissed')); 
         } else { 
-            navigator.clipboard.writeText(url).then(() => alert("Посилання скопійовано в буфер обміну!")); 
+            navigator.clipboard.writeText(url).then(() => alert("Посилання скопійовано!")); 
         }
     }
 
     // === WIZARD LOGIC (Search) ===
 
     function setupLiveSearch() {
-        // Step 1: City
         els.inpCity.addEventListener('input', () => {
             const val = els.inpCity.value.toLowerCase().trim();
             if (val.length === 0) { 
                 renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); 
                 return; 
             }
-            
-            // Extract unique cities
             const cities = [...new Set(gAddr.map(i => i.c))].sort();
             const filtered = cities.filter(c => c.toLowerCase().includes(val));
             renderList('listCity', filtered, (i) => chooseCity(i));
         });
         
-        // Show defaults on focus
         els.inpCity.addEventListener('focus', () => { 
             if(els.inpCity.value === '') renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i)); 
         });
         
-        // Enter key support
         els.inpCity.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(1); });
 
-        // Step 2: Street
         els.inpStreet.addEventListener('input', () => {
             if (!selectedCity) return;
             const val = els.inpStreet.value.toLowerCase().trim();
             
-            // Filter streets for selected city
             const cityAddresses = gAddr.filter(i => i.c === selectedCity);
             const streets = [...new Set(cityAddresses.map(i => i.s))].sort();
             
@@ -885,13 +885,11 @@
         });
         els.inpStreet.addEventListener('keypress', (e) => { if(e.key === 'Enter') forceSearch(2); });
 
-        // Step 3: House
         els.inpHouse.addEventListener('input', () => {
             if (!selectedCity || !selectedStreet) return;
             const val = els.inpHouse.value.toLowerCase().trim();
             
             const houses = gAddr.filter(i => i.c === selectedCity && i.s === selectedStreet);
-            // Numeric sort for houses (1, 2, 10 instead of 1, 10, 2)
             const sortedHouses = houses.map(h => h.h).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
             
             const filtered = sortedHouses.filter(h => h.toLowerCase().includes(val));
@@ -903,15 +901,8 @@
     function renderList(elId, items, cb) {
         const el = document.getElementById(elId); 
         el.innerHTML = '';
-        
-        if (items.length === 0) { 
-            el.classList.remove('show'); 
-            return; 
-        }
-        
+        if (items.length === 0) { el.classList.remove('show'); return; }
         el.classList.add('show');
-        
-        // Limit rendering to 50 items for performance
         items.slice(0, 50).forEach(item => {
             const div = document.createElement('div');
             div.className = 'res-item'; 
@@ -921,31 +912,21 @@
         });
     }
 
-    // Search Flow Transitions
     function chooseCity(name) { 
         selectedCity = name; 
         els.inpCity.value = name; 
-        
-        // Pre-render streets logic
         const cityAddresses = gAddr.filter(i => i.c === name);
         const streets = [...new Set(cityAddresses.map(i => i.s))].sort();
         renderList('listStreet', streets, (i) => chooseStreet(i));
-        
         goStep(2); 
     }
 
     function chooseStreet(name) { 
         selectedStreet = name; 
         els.inpStreet.value = name; 
-        
         const houses = gAddr.filter(i => i.c === selectedCity && i.s === name);
         const uniqueGroups = [...new Set(houses.map(h => h.g))];
-        
-        // If all houses on this street have the same group, skip house selection
-        if (uniqueGroups.length === 1) { 
-            saveAndClose(uniqueGroups[0]); 
-            return; 
-        }
+        if (uniqueGroups.length === 1) { saveAndClose(uniqueGroups[0]); return; }
         
         const houseList = houses.map(h => h.h).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
         renderList('listHouse', houseList, (i) => chooseHouse(i));
@@ -955,11 +936,8 @@
     function chooseHouse(name) { 
         els.inpHouse.value = name;
         const found = gAddr.find(i => i.c === selectedCity && i.s === selectedStreet && i.h === name);
-        if (found) {
-            saveAndClose(found.g);
-        } else {
-            alert("На жаль, адресу не знайдено в базі.");
-        }
+        if (found) saveAndClose(found.g);
+        else alert("На жаль, адресу не знайдено в базі.");
     }
 
     function forceSearch(step) {
@@ -967,7 +945,7 @@
             const v = els.inpCity.value.trim();
             const found = [...new Set(gAddr.map(i=>i.c))].find(c => c.toLowerCase() === v.toLowerCase());
             if(found) chooseCity(found); 
-            else alert("Місто не знайдено. Спробуйте вибрати зі списку.");
+            else alert("Місто не знайдено.");
         }
         if (step === 2) {
             const v = els.inpStreet.value.trim();
@@ -976,49 +954,31 @@
             if(found) chooseStreet(found); 
             else alert("Вулицю не знайдено.");
         }
-        if (step === 3) {
-            chooseHouse(els.inpHouse.value.trim());
-        }
+        if (step === 3) chooseHouse(els.inpHouse.value.trim());
     }
 
-    function saveAndClose(group) { 
-        closeWiz(); 
-        selectGroup(group, true); 
-    }
+    function saveAndClose(group) { closeWiz(); selectGroup(group, true); }
 
-    // Modal Controls
     function openWiz() { 
-        if (!gAddr) { 
-            alert('База адрес ще завантажується, спробуйте через декілька секунд...'); 
-            return; 
-        }
+        if (!gAddr) { alert('База адрес завантажується...'); return; }
         els.wiz.style.display = 'flex';
-        // Reset view if empty
         if (els.inpCity.value === '') renderList('listCity', DEFAULT_CITIES, (i) => chooseCity(i));
         goStep(1);
     }
     
-    function closeWiz() { 
-        els.wiz.style.display = 'none'; 
-    }
+    function closeWiz() { els.wiz.style.display = 'none'; }
     
     function goStep(n) {
         [1,2,3].forEach(i => document.getElementById(`step${i}`).classList.remove('active'));
         document.getElementById(`step${n}`).classList.add('active');
-        
         const titles = ['Оберіть місто', 'Оберіть вулицю', 'Оберіть номер будинку'];
         document.getElementById('wizTitle').innerText = titles[n-1];
-        
-        // Auto focus input
         if(n===1) els.inpCity.focus();
         if(n===2) els.inpStreet.focus();
         if(n===3) els.inpHouse.focus();
     }
 
-    // Close modal on click outside
-    els.wiz.addEventListener('click', (e) => {
-        if (e.target === els.wiz) closeWiz();
-    });
+    els.wiz.addEventListener('click', (e) => { if (e.target === els.wiz) closeWiz(); });
 
 </script>
 </body>
