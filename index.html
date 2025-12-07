@@ -8,9 +8,6 @@
     <meta name="description" content="Актуальний графік погодинних відключень світла в Тернополі та області. Оновлення в реальному часі.">
     <meta name="robots" content="index, follow">
     
-    <meta property="og:title" content="Графік відключення світла Тернопіль">
-    <meta property="og:description" content="Перевір, коли буде світло. Актуальний графік та пошук черги.">
-    
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -146,7 +143,7 @@
         .btn-tomorrow.active { background: var(--accent); color: white; }
         .msg-no-data { color: var(--red-text); font-style: italic; font-weight: 600; }
 
-        /* === PERSONAL CARDS (UPDATED) === */
+        /* === PERSONAL CARDS (FIXED) === */
         .personal-schedule-container {
             display: flex; flex-direction: column; gap: 20px; align-items: center; 
             margin-top: 10px; display: none; opacity: 0; transition: opacity 0.4s;
@@ -165,25 +162,26 @@
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+        /* Верхній заголовок картки */
         .p-top-label { 
-            text-align: center; font-size: 0.7rem; color: var(--text-sub); 
-            font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; 
+            text-align: center; font-size: 0.75rem; color: var(--text-sub); 
+            font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; 
         }
         
-        .p-header-row { display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 20px; gap: 10px; }
+        .p-header-row { display: flex; justify-content: space-between; align-items: stretch; margin-bottom: 20px; gap: 12px; }
         
-        /* Виправлена плашка з датою */
+        /* Стиль фіолетової плашки */
         .p-day-badge { 
             background: var(--accent); color: white; 
-            padding: 8px 16px; border-radius: 14px; 
+            padding: 10px 18px; border-radius: 14px; 
             flex: 1; display: flex; flex-direction: column; justify-content: center;
         }
-        .p-day-title { font-size: 1.1rem; font-weight: 800; line-height: 1.2; }
-        .p-day-sub { font-size: 0.75rem; opacity: 0.85; margin-top: 2px; font-weight: 500; }
+        .p-day-title { font-size: 1.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
+        .p-day-sub { font-size: 0.75rem; opacity: 0.85; font-weight: 500; }
 
         .p-group-square { 
-            background: var(--accent); color: white; width: 55px;
-            border-radius: 14px; font-weight: 800; font-size: 1.5rem;
+            background: var(--accent); color: white; width: 60px;
+            border-radius: 14px; font-weight: 800; font-size: 1.6rem;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 10px var(--accent-light);
         }
@@ -455,9 +453,10 @@
 
         const dataObj = gData[dayKey];
         const dayName = (dayKey === 'tomorrow') ? 'Завтра' : 'Сьогодні';
-        
-        // ВИПРАВЛЕНО: Спочатку дата, потім "Сьогодні"
-        titleEl.innerText = `Загальний графік: ${dataObj.date} (${dayName})`;
+        const dateStr = dataObj.date; 
+
+        // ВИПРАВЛЕННЯ 1: Формат "Дата (Сьогодні)"
+        titleEl.innerText = `Загальний графік: ${dateStr} (${dayName})`;
 
         const data = dataObj.data;
         Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric: true})).forEach(grp => {
@@ -509,7 +508,8 @@
             const dayLabel = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
             const dateStr = dayInfo.date;
 
-            // ВИПРАВЛЕНО: Тексти та структура плашки
+            // ВИПРАВЛЕННЯ 2: Заголовок "ГРАФІК (Дата)"
+            // ВИПРАВЛЕННЯ 3: Дрібний текст без дублювання слова "Сьогодні"
             card.innerHTML = `
                 <div class="p-top-label">ГРАФІК (${dateStr})</div>
                 <div class="p-header-row">
@@ -629,7 +629,16 @@
             const found = [...new Set(gAddr.map(i=>i.c))].find(c=>c.toLowerCase()===v.toLowerCase());
             if(found) chooseCity(found); else alert("Місто не знайдено");
         }
-        // ... (Аналогічно для кроків 2 і 3, але тут скорочено для економії місця, логіка така ж як у попередньому файлі)
+        if(step===2) {
+            const v = document.getElementById('inpStreet').value;
+            const streets = [...new Set(gAddr.filter(i => i.c === selectedCity).map(i => i.s))];
+            const found = streets.find(s => s.toLowerCase() === v.toLowerCase());
+            if(found) chooseStreet(found); else alert("Вулицю не знайдено");
+        }
+        if(step===3) {
+            const v = document.getElementById('inpHouse').value;
+            chooseHouse(v);
+        }
     }
 
     function saveGroup(g) { closeWiz(); selectGroup(g, true); }
