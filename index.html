@@ -7,10 +7,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="theme-color" content="#8e44ad">
 
     <title>Графік відключення світла Тернопіль та область</title>
-    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області. Знайдіть свою чергу за адресою.">
+    <meta name="description" content="Актуальний графік відключення світла (ГПВ) в Тернополі та області.">
     
     <meta property="og:title" content="Графік відключення світла Тернопіль">
     <meta property="og:description" content="Дізнайся свою чергу та графік на сьогодні/завтра.">
@@ -26,9 +25,12 @@
             --accent-hover: #9b59b6;
             --tg-color: #229ED9;
             --tg-hover: #1b8dbf;
-            --red: #c0392b; /* Темніший червоний для тексту */
-            --red-bg: #fff0f3; /* Дуже світло-рожевий фон */
-            --red-badge: #a93226; /* Темний фон для плашки часу */
+            
+            /* Кольори для графіку як на скріншоті */
+            --red-text: #c0392b;     /* Темно-червоний текст */
+            --red-bg: #fff0f3;       /* Світло-рожевий фон рядка */
+            --red-badge: #e74c3c;    /* Червона плашка тривалості */
+            
             --green: #2ecc71;
             --green-bg: #d5f5e3;
             --yellow: #f1c40f;
@@ -72,7 +74,7 @@
         }
         .btn-search:hover { transform: translateY(-2px); background: var(--accent-hover); }
 
-        /* ТАБЛИЦЯ */
+        /* ТАБЛИЦЯ ЗАГАЛЬНА */
         .full-chart-section { 
             background: white; border-radius: 16px; padding: 15px; 
             box-shadow: var(--shadow); margin-bottom: 25px; overflow: hidden;
@@ -101,7 +103,7 @@
         .ts-item { flex: 1; text-align: left; border-left: 1px solid #eee; padding-left: 2px; }
 
         .bg-on { background: var(--green); }
-        .bg-off { background: #e74c3c; } /* Стандартний червоний для загального графіка */
+        .bg-off { background: var(--red-badge); }
         .bg-maybe { background: var(--yellow); }
         .bg-u { background: #ecf0f1; }
 
@@ -111,7 +113,7 @@
             padding: 8px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem;
         }
         .btn-tomorrow:hover, .btn-tomorrow.active { background: var(--accent); color: white; }
-        .msg-no-data { color: #e74c3c; font-style: italic; font-size: 0.85rem; }
+        .msg-no-data { color: var(--red-text); font-style: italic; font-size: 0.85rem; }
 
         /* === КАРТКИ (СТОРІНКИ ГРУП) - ОНОВЛЕНИЙ ДИЗАЙН === */
         .personal-schedule-container {
@@ -177,7 +179,7 @@
         /* Стиль рядка відключення (рожевий) */
         .outage-row {
             background: var(--red-bg); /* Світло-рожевий */
-            color: var(--red); 
+            color: var(--red-text); 
             border: 1px solid #ffe0e6;
             border-radius: 12px;
             display: flex; justify-content: space-between; align-items: center;
@@ -196,24 +198,38 @@
         }
 
         .outage-duration { 
-            background: var(--red-badge); /* Темно-червона плашка */
-            color: white; 
+            background: var(--white);
+            color: var(--red-text);
+            border: 1px solid #ffccd5;
             padding: 5px 12px; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             font-size: 0.8rem; 
-            font-weight: 600;
-            box-shadow: 0 2px 5px rgba(192, 57, 43, 0.2);
+            font-weight: 700;
         }
 
         .no-outages { text-align: center; color: var(--green); font-weight: bold; padding: 15px; background: var(--green-bg); border-radius: 10px; border: 1px solid #abebc6; }
 
+        /* Кнопка Share */
         .btn-share {
-            margin-top: 20px; width: 100%; padding: 12px; border: 1px dashed var(--accent); 
-            color: var(--accent); background: #fbf6ff; border-radius: 12px; cursor: pointer; 
-            font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px;
-            font-weight: 600;
+            margin-top: 20px; 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px dashed var(--accent); 
+            color: var(--accent); 
+            background: #fbf6ff; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            font-weight: 700;
+            transition: 0.2s;
+            box-sizing: border-box; /* Важливо для width 100% */
         }
-        .btn-share:hover { background: #f4eaff; }
+        .btn-share:hover { background: #f0e0ff; transform: translateY(-1px); }
+        .btn-share:active { transform: scale(0.98); }
 
         /* WIZARD */
         .wiz-overlay { 
@@ -238,14 +254,12 @@
         .input-wrapper { display: flex; gap: 8px; margin-bottom: 10px; }
         .wiz-input { flex: 1; padding: 12px; border: 2px solid var(--light-border); border-radius: 12px; font-size: 16px; outline: none; transition: 0.2s; }
         .wiz-input:focus { border-color: var(--accent); }
-        .btn-check { background: var(--accent); color: white; border: none; border-radius: 12px; width: 50px; font-size: 20px; cursor: pointer; }
         
         .results-list { flex: 1; overflow-y: auto; border: 1px solid #eee; border-radius: 12px; margin-bottom: 10px; display: none; }
         .results-list.show { display: block; }
         .res-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 15px; color: #333; }
         .res-item:last-child { border-bottom: none; }
         .res-item:hover { background: #f9f9f9; }
-        .res-item:active { background: #f0edff; color: var(--accent); }
         
         .wiz-footer { margin-top: auto; padding-top: 10px; }
         .btn-back { color: #7f8c8d; padding: 10px; cursor: pointer; font-size: 0.9rem; text-align: center; border-radius: 8px; }
@@ -456,7 +470,7 @@
 
     function shareGroupLink() {
         if(!viewingGroup) return;
-        const url = `${window.location.origin}${window.location.pathname}?group=${viewingGroup}`;
+        const url = window.location.href; // Беремо поточний URL з параметром групи
         if (navigator.share) {
             navigator.share({
                 title: `Графік світла: Черга ${viewingGroup}`,
@@ -465,7 +479,7 @@
             }).catch(console.error);
         } else {
             navigator.clipboard.writeText(url);
-            alert("Посилання на чергу скопійовано!");
+            alert("Посилання скопійовано в буфер обміну!");
         }
     }
 
@@ -502,7 +516,7 @@
         });
     }
 
-    // === ПЕРСОНАЛЬНІ КАРТКИ (ЗМІНЕНО) ===
+    // === ПЕРСОНАЛЬНІ КАРТКИ (ОНОВЛЕНО) ===
     function renderPersonalCards(group) {
         const container = document.getElementById('personalContainer');
         container.innerHTML = '';
@@ -535,7 +549,7 @@
 
             const dayLabel = dayKey === 'today' ? 'Сьогодні' : 'Завтра';
 
-            // Оновлена HTML структура для шапки картки
+            // Оновлена HTML структура: Верхній напис, Шапка, Список, Кнопка Share
             card.innerHTML = `
                 <div class="p-top-label">ГРАФІК (${dayLabel.toUpperCase()})</div>
                 <div class="p-header-row">
@@ -543,7 +557,9 @@
                     <div class="p-group-square">${group}</div>
                 </div>
                 ${outagesHTML}
-                ${dayKey === 'today' ? `<div class="btn-share" onclick="shareGroupLink()">🔗 Поділитися графіком</div>` : ''}
+                <div class="btn-share" onclick="shareGroupLink()">
+                    🔗 Поділитися графіком
+                </div>
             `;
             container.appendChild(card);
         });
