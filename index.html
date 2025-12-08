@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DZW6D0LRN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,10 +18,10 @@
     <meta name="keywords" content="світло тернопіль, графік відключень, гпв тернопіль, коли буде світло, тернопільобленерго графік, черги відключення, 6 черг">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Svitlo Ternopil">
-    <link rel="canonical" href="https://svitlo-ternopil.ue">
+    <link rel="canonical" href="https://grafik-svitla-ternopil.pp.ua">
     
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://svitlo-ternopil.ue">
+    <meta property="og:url" content="https://grafik-svitla-ternopil.pp.ua">
     <meta property="og:title" content="Графік світла Тернопіль: Знайди свою чергу">
     <meta property="og:description" content="Дізнайся графік відключень за 1 хвилину. Пошук по вулиці. Актуальні дані обленерго.">
     <meta property="og:image" content="https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main/og-image.png">
@@ -412,7 +410,7 @@
                 </svg>
             </div>
             <div class="tg-text">
-                <div class="tg-title">Світло Тернопіль Графік відключення</div>
+                <div class="tg-title">Офіційний Бот</div>
                 <div class="tg-desc">Отримуйте сповіщення миттєво</div>
             </div>
         </a>
@@ -459,7 +457,7 @@
 <footer class="seo-footer">
     <h2>Про сервіс</h2>
     <p>Цей веб-сайт надає найактуальніший <strong>графік погодинних відключень (ГПВ)</strong> електроенергії для споживачів ВАТ "Тернопільобленерго". Дані автоматично синхронізуються з офіційними джерелами та оновлюються в режимі реального часу. Перевіряйте свою чергу за адресою (місто, вулиця, будинок) та плануйте свій день.</p>
-    <p>&copy; 2025 Grafik Svitla Ternopil. Дані мають інформаційний характер.</p>
+    <p>&copy; 2025 Svitlo Ternopil. Дані мають інформаційний характер.</p>
 </footer>
 
 <div class="wiz-overlay" id="wiz">
@@ -829,6 +827,7 @@
         return ranges;
     }
 
+    // === ВИПРАВЛЕНА ФУНКЦІЯ ПІДРАХУНКУ ЧАСУ ===
     function getDuration(start, end) {
         const [h1, m1] = start.split(':').map(Number);
         const [h2, m2] = end.split(':').map(Number);
@@ -837,10 +836,9 @@
         const startTotal = h1 * 60 + m1;
         let endTotal = h2 * 60 + m2;
 
-        // Логіка: якщо кінець менший за початок (перехід через ніч) 
-        // або якщо кінець це рівно 00:00 (і це не старт з 00:00), то це 24:00
+        // Логіка переходу через добу або якщо час 00:00 (а почався не з 00:00)
         if (endTotal < startTotal || (endTotal === 0 && startTotal > 0)) {
-            endTotal += 24 * 60; // додаємо 1440 хвилин (24 години)
+            endTotal += 24 * 60; // додаємо 1440 хвилин
         }
         
         const diffMinutes = endTotal - startTotal;
@@ -1012,9 +1010,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
