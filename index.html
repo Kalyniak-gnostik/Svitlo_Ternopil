@@ -820,11 +820,19 @@
 
     function getDuration(start, end) {
         const [h1, m1] = start.split(':').map(Number);
-        let [h2, m2] = end.split(':').map(Number);
+        const [h2, m2] = end.split(':').map(Number);
         
-        if (h2 === 0 && end !== "00:00") h2 = 24;
+        // Переводимо все в хвилини від початку доби
+        const startTotal = h1 * 60 + m1;
+        let endTotal = h2 * 60 + m2;
+
+        // Логіка: якщо кінець менший за початок (перехід через ніч) 
+        // або якщо кінець це рівно 00:00 (і це не старт з 00:00), то це 24:00
+        if (endTotal < startTotal || (endTotal === 0 && startTotal > 0)) {
+            endTotal += 24 * 60; // додаємо 1440 хвилин (24 години)
+        }
         
-        let diffMinutes = (h2 * 60 + m2) - (h1 * 60 + m1);
+        const diffMinutes = endTotal - startTotal;
         
         const hrs = Math.floor(diffMinutes / 60);
         const mins = diffMinutes % 60;
@@ -993,6 +1001,7 @@
 </script>
 </body>
 </html>
+
 
 
 
