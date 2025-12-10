@@ -251,6 +251,21 @@
         .day-opt.active span { color: rgba(255,255,255,0.9); opacity: 1; }
         .day-opt.disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* === MESSAGE NO SCHEDULE (NEW) === */
+        .no-sched-msg {
+            display: none; /* За замовчуванням приховано */
+            width: 100%;
+            text-align: center;
+            background: var(--bg-input);
+            color: var(--text-sub);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            animation: fadeIn 0.3s;
+        }
+
         /* Big Group Badge */
         .group-display {
             width: 100%; text-align: center; margin-bottom: 20px;
@@ -437,6 +452,8 @@
                 <span id="dateTomorrow">--.--.--</span>
             </button>
         </div>
+
+        <div id="noDataMsg" class="no-sched-msg">Графік на завтра ще не опубліковано</div>
 
         <div class="group-display">
             <div class="group-display-label">ВАША ЧЕРГА</div>
@@ -669,11 +686,19 @@
         if(currGroup) selectGroup(currGroup); // re-trigger render
     }
 
+    // === MODIFIED FUNCTION TO SHOW TEXT INSTEAD OF ALERT ===
     function setDay(day) {
+        const msg = document.getElementById('noDataMsg');
+        
         if(day === 'tomorrow' && !gData.tomorrow) {
-            alert("Графік на завтра ще не опубліковано");
+            // Show message under buttons
+            msg.style.display = 'block';
             return;
         }
+
+        // Hide message if everything is OK
+        msg.style.display = 'none';
+
         currDay = day;
         document.getElementById('btnToday').classList.toggle('active', day === 'today');
         document.getElementById('btnTomorrow').classList.toggle('active', day === 'tomorrow');
@@ -861,4 +886,3 @@
 
 </body>
 </html>
-
