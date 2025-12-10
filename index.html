@@ -549,6 +549,14 @@
      */
     document.addEventListener('DOMContentLoaded', init);
 
+    // Допоміжна функція для отримання дати у форматі "DD.MM.YYYY"
+    function getFormattedDateStr(dateObj) {
+        const d = String(dateObj.getDate()).padStart(2, '0');
+        const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const y = dateObj.getFullYear();
+        return `${d}.${m}.${y}`;
+    }
+
     async function init() {
         els.mainLoader.style.display = 'inline-block';
         els.statusDot.style.display = 'none';
@@ -558,10 +566,49 @@
             const scheduleResponse = await fetch(`${BASE_URL}/schedule.json${CACHE_BUST}`);
             if (!scheduleResponse.ok) throw new Error("Schedule fetch failed");
             
-            gData = await scheduleResponse.json();
+            const rawData = await scheduleResponse.json();
             
+            // === РОЗУМНЕ СОРТУВАННЯ ДАТ ===
+            // 1. Отримуємо реальну дату користувача
+            const now = new Date();
+            const todayStr = getFormattedDateStr(now);
+            
+            const tmr = new Date(now); 
+            tmr.setDate(tmr.getDate() + 1);
+            const tomorrowStr = getFormattedDateStr(tmr);
+
+            // 2. Створюємо чистий об'єкт даних
+            gData = {
+                updated_at: rawData.updated_at,
+                today: null,
+                tomorrow: null
+            };
+
+            // 3. Перевіряємо дані з ключа "today" (з JSON)
+            if (rawData.today && rawData.today.date) {
+                if (rawData.today.date === todayStr) gData.today = rawData.today;
+                else if (rawData.today.date === tomorrowStr) gData.tomorrow = rawData.today;
+            }
+
+            // 4. Перевіряємо дані з ключа "tomorrow" (з JSON)
+            if (rawData.tomorrow && rawData.tomorrow.date) {
+                if (rawData.tomorrow.date === tomorrowStr) gData.tomorrow = rawData.tomorrow;
+                else if (rawData.tomorrow.date === todayStr) {
+                    // Якщо в 'tomorrow' лежить сьогоднішня дата - це дублікат,
+                    // використовуємо її як today, тільки якщо today ще порожній
+                    if (!gData.today) gData.today = rawData.tomorrow;
+                }
+            }
+            
+            // Форматуємо час оновлення
             const d = new Date(gData.updated_at);
-            globalUpdateTimeStr = d.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+            if (!isNaN(d.getTime())) {
+                 globalUpdateTimeStr = d.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+            } else {
+                 // Якщо дата в нестандартному форматі
+                 globalUpdateTimeStr = gData.updated_at.split(' ')[1] || gData.updated_at;
+            }
+            
             els.globalUpdate.innerText = `Оновлено: ${globalUpdateTimeStr}`;
             els.statusDot.style.display = 'inline-block';
             els.mainLoader.style.display = 'none';
@@ -667,11 +714,11 @@
         const dataObj = gData[dayKey];
         const isTomorrow = (dayKey === 'tomorrow');
         
-        // Вираховуємо дату:
-        const dayLabel = isTomorrow ? 'ЗАВТРА' : 'СЬОГОДНІ';
-        const dateStr = getCalcDate(isTomorrow);
+        // Беремо дату прямо з JSON
+        const dateStr = dataObj.date || getCalcDate(isTomorrow);
 
-        // Формуємо заголовок без дублювання
+        const dayLabel = isTomorrow ? 'ЗАВТРА' : 'СЬОГОДНІ';
+
         els.chartTitle.innerHTML = `📅 ГРАФІК: ${dayLabel} <span style="opacity:0.6; font-weight:400;">(${dateStr})</span>`;
 
         const scheduleData = dataObj.data;
@@ -708,6 +755,7 @@
         els.personalContainer.innerHTML = '';
         els.personalContainer.classList.add('show');
         
+        // Проходимо по днях, які реально є в gData
         ['today', 'tomorrow'].forEach(dayKey => {
             if (!gData[dayKey]) return;
             
@@ -716,7 +764,6 @@
             
             if (!schedule) return;
 
-            // Full range calculation (Green/Red/Yellow)
             const ranges = calculateRanges(schedule);
             
             const card = document.createElement('div');
@@ -758,7 +805,8 @@
 
             const isTomorrow = (dayKey === 'tomorrow');
             const dayLabel = isTomorrow ? 'ЗАВТРА' : 'СЬОГОДНІ';
-            const dateStr = getCalcDate(isTomorrow);
+            // Беремо дату з JSON
+            const dateStr = dayInfo.date || getCalcDate(isTomorrow);
 
             card.innerHTML = `
                 <div class="p-top-label">РОЗКЛАД ДЛЯ ВАШОЇ ЧЕРГИ</div>
@@ -827,7 +875,7 @@
         return ranges;
     }
 
-    // === ВИПРАВЛЕНА ФУНКЦІЯ ПІДРАХУНКУ ЧАСУ ===
+    // Виправлений підрахунок часу (коректно працює з переходом через ніч)
     function getDuration(start, end) {
         const [h1, m1] = start.split(':').map(Number);
         const [h2, m2] = end.split(':').map(Number);
@@ -837,7 +885,10 @@
         let endTotal = h2 * 60 + m2;
 
         // Логіка переходу через добу або якщо час 00:00 (а почався не з 00:00)
-        if (endTotal < startTotal || (endTotal === 0 && startTotal > 0)) {
+        // Також враховуємо "24:00" як кінець доби (це 1440 хвилин)
+        if (h2 === 24) {
+             endTotal = 24 * 60; 
+        } else if (endTotal < startTotal || (endTotal === 0 && startTotal > 0)) {
             endTotal += 24 * 60; // додаємо 1440 хвилин
         }
         
@@ -1010,4 +1061,3 @@
 </script>
 </body>
 </html>
-
