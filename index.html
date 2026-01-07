@@ -14,60 +14,24 @@
     
     <title>Графік відключення світла Тернопіль (ГПВ) | Оновлення наживо</title>
     <meta name="description" content="Актуальний графік погодинних відключень електроенергії (ГПВ) в Тернополі та області. Пошук черги за адресою. Прогноз на сьогодні та завтра. Всі групи.">
-    <meta name="keywords" content="світло тернопіль, графік відключень, гпв тернопіль, коли буде світло, тернопільобленерго графік, черги відключення, 6 черг">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Svitlo Ternopil">
-    <link rel="canonical" href="https://grafik-svitla-ternopil.pp.ua">
     
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://grafik-svitla-ternopil.pp.ua">
-    <meta property="og:title" content="Світло Тернопіль: Знайди свою чергу">
-    <meta property="og:description" content="Дізнайся графік відключень за 1 хвилину. Пошук по вулиці. Актуальні дані обленерго.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main/og-image.png">
-    
-    <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%239b59b6'/%3E%3Cpath d='M58 15 L28 52 H52 L42 85 L72 40 H48 Z' fill='%23f1c40f' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Графік відключення світла Тернопіль",
-      "description": "Сервіс для перевірки графіку погодинних відключень електроенергії у місті Тернопіль та області.",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "All",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "UAH" }
-    }
-    </script>
-
     <style>
         /* === DESIGN SYSTEM === */
         :root {
             --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            
-            /* Light Theme Defaults */
             --bg-body: #f5f5f7;
             --bg-card: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.85);
             --bg-input: #f0f0f5;
-            
             --text-main: #1d1d1f;
             --text-sub: #86868b;
-            --border: #d2d2d7;
-
-            /* Accent Colors */
             --accent: #9b59b6; 
             --accent-hover: #8e44ad;
             --accent-glow: rgba(155, 89, 182, 0.4);
-            
             --green: #34c759; --green-bg: #e1fae6;
             --red: #ff3b30; --red-bg: #ffebeb;
             --yellow: #ffcc00; --yellow-bg: #fff9d6;
-            
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-lg: 0 12px 30px rgba(0,0,0,0.08);
-            
             --radius-lg: 22px;
             --radius-md: 14px;
         }
@@ -76,344 +40,176 @@
             :root {
                 --bg-body: #000000;
                 --bg-card: #1c1c1e;
-                --bg-glass: rgba(28, 28, 30, 0.85);
                 --bg-input: #2c2c2e;
-                
                 --text-main: #f5f5f7;
                 --text-sub: #98989d;
-                --border: #38383a;
-                
                 --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
                 --shadow-lg: 0 12px 30px rgba(0,0,0,0.3);
-
                 --green-bg: rgba(52, 199, 89, 0.15);
                 --red-bg: rgba(255, 59, 48, 0.15);
                 --yellow-bg: rgba(255, 204, 0, 0.15);
             }
         }
 
-        /* === RESET & BASE === */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            margin: 0; padding: 0; 
-            font-family: var(--font-main); 
-            background: var(--bg-body); 
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex; flex-direction: column;
-            overflow-x: hidden;
+            margin: 0; padding: 0; font-family: var(--font-main); 
+            background: var(--bg-body); color: var(--text-main); 
+            min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
         }
         
         .container { 
-            max-width: 640px; 
-            margin: 0 auto; 
-            padding: 20px 16px; 
-            width: 100%; 
-            flex: 1; 
-            display: flex; flex-direction: column; 
+            max-width: 640px; margin: 0 auto; padding: 20px 16px; 
+            width: 100%; flex: 1; display: flex; flex-direction: column; 
         }
 
+        /* === TOP BAR === */
+        .top-bar {
+            display: flex;
+            justify-content: space-between; /* Розносить кнопки по краях */
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .btn-top {
+            font-size: 13px; font-weight: 700; color: var(--accent);
+            text-decoration: none; background: var(--bg-card);
+            padding: 8px 14px; border-radius: 20px;
+            box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 6px;
+            transition: transform 0.2s;
+        }
+        .btn-top:active { transform: scale(0.95); }
+
         /* === HEADER === */
-        header { 
-            display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; text-align: center;
-        }
-        h1 { 
-            margin: 12px 0 8px 0; 
-            font-size: 26px; 
-            font-weight: 800; 
-            letter-spacing: -0.5px; 
-        }
+        header { display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; text-align: center; }
+        h1 { margin: 12px 0 8px 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
         
         .status-badge { 
             background: var(--bg-card); padding: 8px 16px; border-radius: 30px; 
             font-size: 13px; font-weight: 600; color: var(--text-sub); 
-            display: flex; align-items: center; gap: 8px; 
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.03);
+            display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm);
         }
         .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
         .dot.error { background: var(--red); animation: none; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); } }
 
         /* === ACTIONS === */
-        .actions-grid { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; 
-        }
+        .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
         .btn-main {
             border: none; padding: 16px; border-radius: var(--radius-md);
-            font-weight: 700; font-size: 15px; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            text-decoration: none;
-            position: relative; overflow: hidden;
+            font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none; transition: transform 0.1s;
         }
         .btn-main:active { transform: scale(0.97); }
+        .btn-tg { background: #229ED9; color: white; box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3); }
+        .btn-search { background: var(--accent); color: white; box-shadow: 0 4px 15px var(--accent-glow); }
 
-        .btn-tg { 
-            background: #229ED9; color: white; 
-            box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3); 
-        }
-        
-        /* Updated Search Button Style */
-        .btn-search { 
-            background: var(--accent); color: white; 
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-
-        /* === GROUP SCROLLER (Infinite & Smooth) === */
-        .scroller-container {
-            margin-bottom: 30px;
-        }
-        
-        /* Wrapper for the track */
+        /* === SCROLLER === */
+        .scroller-container { margin-bottom: 30px; }
         .group-track-wrapper {
-            position: relative;
-            margin: 0 -16px; /* Bleed to edges */
-            height: 70px; 
-            overflow: hidden;
-            /* Fade edges */
+            position: relative; margin: 0 -16px; height: 70px; overflow: hidden;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-
         .group-track {
-            display: flex;
-            gap: 12px;
-            padding: 0 50%; /* Center start */
-            align-items: center;
-            overflow-x: auto;
-            scroll-behavior: auto; /* JS handles smoothness */
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            cursor: grab;
-            user-select: none;
-            position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+            display: flex; gap: 12px; padding: 0 50%; align-items: center; overflow-x: auto;
+            scrollbar-width: none; position: absolute; left: 0; right: 0; top: 0; bottom: 0;
         }
-        .group-track::-webkit-scrollbar { display: none; }
-        .group-track:active { cursor: grabbing; }
-
         .btn-group {
-            flex: 0 0 auto;
-            width: 56px; height: 56px;
-            background: var(--bg-card);
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
+            flex: 0 0 auto; width: 56px; height: 56px; background: var(--bg-card);
+            border-radius: 18px; display: flex; align-items: center; justify-content: center;
             font-weight: 700; font-size: 16px; color: var(--text-sub);
-            border: 2px solid transparent;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
+            box-shadow: var(--shadow-sm); transition: all 0.2s; border: 2px solid transparent;
         }
-        
         .btn-group.active {
-            background: var(--bg-card);
-            color: var(--accent);
-            border-color: var(--accent);
-            box-shadow: 0 4px 15px var(--accent-glow);
-            transform: scale(1.1);
-            z-index: 2;
+            background: var(--bg-card); color: var(--accent); border-color: var(--accent);
+            box-shadow: 0 4px 15px var(--accent-glow); transform: scale(1.1); z-index: 2;
         }
+        .scroll-hint { text-align: center; font-size: 12px; color: var(--text-sub); margin-top: 8px; opacity: 0.7; }
 
-        .scroll-hint {
-            text-align: center;
-            font-size: 12px; color: var(--text-sub);
-            margin-top: 8px; opacity: 0.7;
-            font-weight: 500;
-        }
-
-        /* === MAIN CARD === */
+        /* === CARD === */
         .card {
             background: var(--bg-card); border-radius: var(--radius-lg);
             padding: 24px; box-shadow: var(--shadow-lg); margin-bottom: 30px;
-            display: flex; flex-direction: column; align-items: center;
-            animation: fadeIn 0.4s ease-out;
-            border: 1px solid rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; align-items: center; animation: fadeIn 0.4s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Day Switcher */
-        .day-switch {
-            background: var(--bg-input); padding: 5px; border-radius: 18px;
-            display: flex; width: 100%; margin-bottom: 24px;
-        }
+        .day-switch { background: var(--bg-input); padding: 5px; border-radius: 18px; display: flex; width: 100%; margin-bottom: 24px; }
         .day-opt {
             flex: 1; border: none; background: transparent; padding: 12px;
-            border-radius: 14px; font-weight: 700; font-size: 14px;
-            color: var(--text-sub); cursor: pointer; transition: 0.2s;
-            display: flex; flex-direction: column; align-items: center; line-height: 1.2;
+            border-radius: 14px; font-weight: 700; font-size: 14px; color: var(--text-sub);
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.2s;
         }
-        .day-opt span { font-size: 11px; opacity: 0.8; margin-top: 2px; font-weight: 500; }
-        
-        /* Active State for Day Switcher - Purple */
-        .day-opt.active {
-            background: var(--accent); 
-            color: white;
-            box-shadow: 0 4px 12px var(--accent-glow);
-        }
-        .day-opt.active span { color: rgba(255,255,255,0.9); opacity: 1; }
-        .day-opt.disabled { opacity: 0.4; cursor: not-allowed; }
+        .day-opt.active { background: var(--accent); color: white; box-shadow: 0 4px 12px var(--accent-glow); }
+        .day-opt span { font-size: 11px; opacity: 0.8; margin-top: 2px; }
 
-        /* === MESSAGE NO SCHEDULE (NEW) === */
-        .no-sched-msg {
-            display: none; /* За замовчуванням приховано */
-            width: 100%;
-            text-align: center;
-            background: var(--bg-input);
-            color: var(--text-sub);
-            padding: 12px;
-            border-radius: var(--radius-md);
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            animation: fadeIn 0.3s;
-        }
+        .no-sched-msg { display: none; width: 100%; text-align: center; background: var(--bg-input); color: var(--text-sub); padding: 12px; border-radius: var(--radius-md); margin-bottom: 20px; font-size: 14px; font-weight: 600; }
 
-        /* Big Group Badge */
-        .group-display {
-            width: 100%; text-align: center; margin-bottom: 20px;
-        }
+        .group-display { width: 100%; text-align: center; margin-bottom: 20px; }
         .group-display-inner {
             display: inline-flex; align-items: center; justify-content: center;
-            width: 80px; height: 80px;
-            border-radius: 26px;
-            background: var(--bg-body);
-            color: var(--accent);
-            font-size: 32px; font-weight: 900;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
-            border: 2px solid var(--accent);
+            width: 80px; height: 80px; border-radius: 26px; background: var(--bg-body);
+            color: var(--accent); font-size: 32px; font-weight: 900;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.05); border: 2px solid var(--accent);
         }
-        .group-display-label {
-            display: block; font-size: 12px; color: var(--text-sub); 
-            text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
-            margin-bottom: 10px;
-        }
+        .group-display-label { display: block; font-size: 12px; color: var(--text-sub); text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
 
-        /* Timeline List */
-        .schedule-list { width: 100%; display: flex; flex-direction: column; gap: 0; position: relative; }
-        .schedule-list::before {
-            content: ''; position: absolute; left: 28px; top: 15px; bottom: 15px;
-            width: 2px; background: var(--bg-input); z-index: 0;
-        }
-
-        .row {
-            display: flex; align-items: center; gap: 16px;
-            padding: 12px 0; position: relative; z-index: 1;
-        }
+        .schedule-list { width: 100%; display: flex; flex-direction: column; position: relative; }
+        .schedule-list::before { content: ''; position: absolute; left: 28px; top: 15px; bottom: 15px; width: 2px; background: var(--bg-input); z-index: 0; }
         
+        .row { display: flex; align-items: center; gap: 16px; padding: 12px 0; position: relative; z-index: 1; }
         .time-box {
-            background: var(--bg-card);
-            border: 2px solid var(--bg-input);
-            width: 60px; text-align: center; padding: 6px 0;
-            border-radius: 10px; font-weight: 700; font-size: 13px;
-            color: var(--text-main);
-            box-shadow: var(--shadow-sm);
+            background: var(--bg-card); border: 2px solid var(--bg-input); width: 60px; text-align: center;
+            padding: 6px 0; border-radius: 10px; font-weight: 700; font-size: 13px; color: var(--text-main);
         }
-
         .status-box {
-            flex: 1; padding: 14px 18px; border-radius: 16px;
-            display: flex; justify-content: space-between; align-items: center;
-            font-weight: 600; font-size: 15px;
+            flex: 1; padding: 14px 18px; border-radius: 16px; display: flex; justify-content: space-between;
+            align-items: center; font-weight: 600; font-size: 15px;
         }
-        
         .row.on .status-box { background: var(--green-bg); color: var(--green); }
         .row.on .time-box { border-color: var(--green); color: var(--green); }
-        
         .row.off .status-box { background: var(--red-bg); color: var(--red); }
         .row.off .time-box { border-color: var(--red); color: var(--red); }
-        
         .row.maybe .status-box { background: var(--yellow-bg); color: #dcb000; }
         .row.maybe .time-box { border-color: var(--yellow); color: #dcb000; }
-
-        .row-dur { opacity: 0.8; font-size: 13px; font-weight: 500; }
-        .empty-state { text-align: center; color: var(--text-sub); padding: 40px 0; font-style: italic; width: 100%; }
-
+        
         .btn-share {
             margin-top: 24px; width: 100%; padding: 16px; border-radius: var(--radius-md);
             border: 2px dashed var(--accent); background: rgba(155, 89, 182, 0.05);
             color: var(--accent); font-weight: 700; cursor: pointer;
-            transition: 0.2s;
         }
-        .btn-share:hover { background: var(--accent); color: white; border-style: solid; }
-
-        /* === ACCORDION (Matrix) === */
-        .accordion-btn {
-            width: 100%; background: transparent; border: none;
-            color: var(--text-sub); font-weight: 600; padding: 20px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: color 0.2s;
-        }
-        .accordion-btn:hover { color: var(--text-main); }
-        
-        .full-chart {
-            display: none; background: var(--bg-card); padding: 20px;
-            border-radius: var(--radius-lg); margin-top: 10px;
-            box-shadow: var(--shadow-sm);
-            animation: fadeIn 0.3s;
-        }
-        .full-chart.open { display: block; }
-        
-        .chart-row { display: flex; height: 40px; margin-bottom: 10px; cursor: pointer; }
-        .chart-row:active { transform: scale(0.98); }
-        .lbl { width: 40px; display: flex; align-items: center; font-weight: 800; font-size: 13px; color: var(--text-sub); }
-        .bar { flex: 1; display: flex; border-radius: 8px; overflow: hidden; }
-        .cell { flex: 1; border-right: 1px solid rgba(255,255,255,0.1); transition: opacity 0.2s; }
-        .cell.on { background: var(--green); } 
-        .cell.off { background: var(--red); } 
-        .cell.maybe { background: var(--yellow); } 
-        .cell.u { background: var(--bg-input); }
+        .empty-state { text-align: center; color: var(--text-sub); padding: 40px 0; font-style: italic; width: 100%; }
 
         /* === FOOTER === */
         footer { margin-top: auto; padding-top: 40px; padding-bottom: 20px; text-align: center; color: var(--text-sub); font-size: 13px; line-height: 1.6; border-top: 1px solid rgba(0,0,0,0.05); }
         footer h2 { font-size: 14px; color: var(--text-main); margin-bottom: 8px; }
-        footer p { margin: 0 0 10px 0; max-width: 500px; margin-inline: auto; }
 
-        /* === WIZARD (SEARCH MODAL) === */
-        .wiz-overlay { 
-            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(0,0,0,0.4); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            z-index: 999; justify-content: center; align-items: center;
-            animation: fadeIn 0.2s;
-        }
-        .wiz-box { 
-            background: var(--bg-card); width: 90%; max-width: 450px; 
-            border-radius: 28px; overflow: hidden; 
-            box-shadow: var(--shadow-lg);
-            display: flex; flex-direction: column; 
-            max-height: 80vh; 
-            animation: fadeIn 0.3s;
-        }
-        .wiz-head { 
-            padding: 20px 24px; border-bottom: 1px solid var(--bg-input); 
-            font-weight: 800; font-size: 18px; 
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .wiz-close { cursor: pointer; padding: 5px; color: var(--text-sub); font-size: 24px; line-height: 0.5; }
-        
+        /* === WIZARD === */
+        .wiz-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); z-index: 999; justify-content: center; align-items: center; }
+        .wiz-box { background: var(--bg-card); width: 90%; max-width: 450px; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; max-height: 80vh; }
+        .wiz-head { padding: 20px 24px; border-bottom: 1px solid var(--bg-input); font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
         .wiz-body { padding: 20px; overflow-y: auto; }
-        
+        .wiz-inp { width: 100%; padding: 16px; padding-left: 44px; background: var(--bg-input); border-radius: 14px; border: 2px solid transparent; font-size: 16px; outline: none; }
+        .wiz-inp:focus { background: var(--bg-card); border-color: var(--accent); }
+        .wiz-item { padding: 14px 10px; border-bottom: 1px solid var(--bg-input); cursor: pointer; font-weight: 500; display: flex; justify-content: space-between; }
         .wiz-input-wrap { position: relative; margin-bottom: 15px; }
-        .wiz-inp { 
-            width: 100%; padding: 16px; padding-left: 44px;
-            background: var(--bg-input); border: 2px solid transparent; 
-            border-radius: 14px; font-size: 16px; color: var(--text-main); outline: none; 
-            transition: 0.2s;
-        }
-        .wiz-inp:focus { background: var(--bg-card); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
         .wiz-icon { position: absolute; left: 14px; top: 16px; opacity: 0.4; }
-        
-        .wiz-item { 
-            padding: 14px 10px; border-bottom: 1px solid var(--bg-input); 
-            cursor: pointer; font-weight: 500; font-size: 15px;
-            display: flex; justify-content: space-between;
-        }
-        .wiz-item:hover { background: var(--bg-input); border-radius: 8px; border-bottom-color: transparent; }
-        .wiz-item::after { content: '›'; color: var(--text-sub); font-weight: bold; }
-        
     </style>
 </head>
 <body>
 
 <div class="container">
     
+    <div class="top-bar">
+        <a href="matrix.html" class="btn-top">
+            📅 Повна таблиця
+        </a>
+
+        <a href="about.html" class="btn-top">
+            ℹ️ Про проєкт / Зворотній зв'язок
+        </a>
+    </div>
+
     <header>
         <h1>Графік відключення світла Тернопіль💡</h1>
         <div class="status-badge">
@@ -434,8 +230,7 @@
 
     <div class="scroller-container">
         <div class="group-track-wrapper">
-            <div class="group-track" id="groupTrack">
-                </div>
+            <div class="group-track" id="groupTrack"></div>
         </div>
         <div class="scroll-hint">(Гортайте вбік, щоб обрати групу)</div>
     </div>
@@ -466,28 +261,12 @@
 
         <button class="btn-share" onclick="share()">📤 Поділитися графіком</button>
     </div>
-
-    <button class="accordion-btn" onclick="toggleMatrix()">
-        <span>📅</span> Переглянути загальну таблицю (всі черги)
-    </button>
-    
-    <div id="matrix" class="full-chart">
-        <div style="display:flex; margin-bottom:10px; font-size:11px; color:var(--text-sub); padding-left:40px; font-weight:600;">
-            <span style="flex:1">00</span><span style="flex:1">06</span><span style="flex:1">12</span><span style="flex:1">18</span>
-        </div>
-        <div id="matrixContent"></div>
-    </div>
     
     <footer>
         <h2>Про сервіс</h2>
         <p>Цей веб-сайт надає найактуальніший графік погодинних відключень (ГПВ) електроенергії для споживачів ВАТ "Тернопільобленерго". Дані автоматично синхронізуються з офіційними джерелами та оновлюються в режимі реального часу.</p>
-        
-        <a href="about.html" style="display:inline-block; margin-top:15px; color:var(--accent); text-decoration:none; font-weight:700; border:1px solid var(--accent); padding:8px 16px; border-radius:20px; transition:0.2s;">
-            ℹ️ Про проєкт / Зворотній зв'язок
-        </a>
-
         <p style="margin-top:20px; font-size:11px;">© 2025 Grafik-Svitla-Ternopil. Дані мають інформаційний характер.</p>
-    </footer>>
+    </footer>
 
 </div>
 
@@ -544,15 +323,12 @@
 
     // === INIT ===
     async function init() {
-        // Init scroller immediately
         setupInfiniteScroller();
-
         try {
             const [sRes, aRes] = await Promise.all([
                 fetch(`${BASE_URL}/schedule.json${CACHE}`),
                 fetch(`${BASE_URL}/addresses.json${CACHE}`)
             ]);
-            
             if(aRes.ok) gAddr = await aRes.json();
             if(sRes.ok) {
                 const raw = await sRes.json();
@@ -563,18 +339,13 @@
             document.getElementById('updateTime').innerText = "Помилка оновлення";
             document.getElementById('statusDot').classList.add('error');
         }
-        
         if(currGroup) selectGroup(currGroup);
     }
 
-    // === INFINITE SCROLLER LOGIC (Tripled Buffer) ===
     function setupInfiniteScroller() {
         scrollerEl = document.getElementById('groupTrack');
         scrollerEl.innerHTML = '';
-        
-        // Render 3 sets: [Left Buffer] [Main Set] [Right Buffer]
         const tripleList = [...GROUPS, ...GROUPS, ...GROUPS];
-        
         tripleList.forEach(g => {
             const b = document.createElement('div');
             b.className = 'btn-group';
@@ -583,16 +354,11 @@
             b.onclick = () => selectGroup(g);
             scrollerEl.appendChild(b);
         });
-
-        // Initialize Physics & Loop Logic after style applied
         setTimeout(() => {
             if(scrollerEl.children.length > 0) {
-                const itemW = scrollerEl.children[0].offsetWidth + 12; // 56px + 12px gap
+                const itemW = scrollerEl.children[0].offsetWidth + 12;
                 singleSetWidth = itemW * GROUPS.length;
-                
-                // Start in the middle set
                 scrollerEl.scrollLeft = singleSetWidth;
-                
                 scrollerEl.addEventListener('scroll', handleLoopScroll);
                 enableMomentum(scrollerEl);
             }
@@ -602,8 +368,6 @@
     function handleLoopScroll() {
         if (!singleSetWidth) return;
         const current = scrollerEl.scrollLeft;
-        
-        // Loop Logic: If we scroll too far left/right, jump to center
         if (current < singleSetWidth / 2) {
             scrollerEl.scrollLeft += singleSetWidth;
         } else if (current > singleSetWidth * 1.5) {
@@ -612,98 +376,62 @@
     }
 
     function enableMomentum(el) {
-        let isDown = false;
-        let startX, scrollLeft;
-        let velX = 0;
-        let animationID;
-
+        let isDown = false, startX, scrollLeft, velX = 0, animationID;
         el.addEventListener('mousedown', e => {
-            isDown = true;
-            el.classList.add('active');
-            startX = e.pageX - el.offsetLeft;
-            scrollLeft = el.scrollLeft;
+            isDown = true; el.classList.add('active');
+            startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
             cancelAnimationFrame(animationID);
         });
         el.addEventListener('mouseleave', () => { isDown = false; el.classList.remove('active'); });
-        el.addEventListener('mouseup', () => { 
-            isDown = false; 
-            el.classList.remove('active');
-            requestAnimationFrame(inertia);
-        });
+        el.addEventListener('mouseup', () => { isDown = false; el.classList.remove('active'); requestAnimationFrame(inertia); });
         el.addEventListener('mousemove', e => {
-            if (!isDown) return;
-            e.preventDefault();
+            if (!isDown) return; e.preventDefault();
             const x = e.pageX - el.offsetLeft;
             const walk = (x - startX) * 1.5;
-            velX = (scrollLeft - walk) - el.scrollLeft; // Calc velocity
+            velX = (scrollLeft - walk) - el.scrollLeft;
             el.scrollLeft = scrollLeft - walk;
         });
-
         function inertia() {
             if (Math.abs(velX) < 0.1) return;
-            el.scrollLeft += velX;
-            velX *= 0.95; // Friction
-            handleLoopScroll(); // Ensure loop check during inertia
-            animationID = requestAnimationFrame(inertia);
+            el.scrollLeft += velX; velX *= 0.95;
+            handleLoopScroll(); animationID = requestAnimationFrame(inertia);
         }
     }
 
     function selectGroup(g) {
         currGroup = g;
         localStorage.setItem('myGroup', g);
-        
-        // Update URL
         const newUrl = `${window.location.pathname}?group=${g}`;
         window.history.pushState({path: newUrl}, '', newUrl);
-
-        // Highlight ALL instances of this group in the scroller
         document.querySelectorAll('.btn-group').forEach(b => {
             if(b.dataset.group === g) b.classList.add('active');
             else b.classList.remove('active');
         });
-
         renderCard();
     }
 
-    // === DATA PROCESSING ===
     function processData(raw) {
         const now = new Date();
         const dToday = fmtDateAPI(now);
         const dTom = fmtDateAPI(new Date(now.getTime() + 86400000));
-
-        gData.updated = raw.updated_at.split(' ')[1] || raw.updated_at;
+        gData.updated = raw.updated_at;
         
         if(raw.today?.date === dToday) gData.today = raw.today;
         else if(raw.today?.date === dTom) gData.tomorrow = raw.today;
-        
         if(raw.tomorrow?.date === dTom) gData.tomorrow = raw.tomorrow;
         else if(raw.tomorrow?.date === dToday && !gData.today) gData.today = raw.tomorrow;
 
-        // Display
         document.getElementById('updateTime').innerText = `Оновлено: ${gData.updated}`;
-        
-        // Date formatting dd.mm.yyyy
         document.getElementById('dateToday').innerText = gData.today ? fmtDateDisplay(gData.today.date) : fmtDateDisplay(dToday);
         document.getElementById('dateTomorrow').innerText = gData.tomorrow ? fmtDateDisplay(gData.tomorrow.date) : fmtDateDisplay(dTom);
-        
         if(!gData.tomorrow) document.getElementById('btnTomorrow').classList.add('disabled');
-        
-        if(currGroup) selectGroup(currGroup); // re-trigger render
+        if(currGroup) selectGroup(currGroup);
     }
 
-    // === MODIFIED FUNCTION TO SHOW TEXT INSTEAD OF ALERT ===
     function setDay(day) {
         const msg = document.getElementById('noDataMsg');
-        
-        if(day === 'tomorrow' && !gData.tomorrow) {
-            // Show message under buttons
-            msg.style.display = 'block';
-            return;
-        }
-
-        // Hide message if everything is OK
+        if(day === 'tomorrow' && !gData.tomorrow) { msg.style.display = 'block'; return; }
         msg.style.display = 'none';
-
         currDay = day;
         document.getElementById('btnToday').classList.toggle('active', day === 'today');
         document.getElementById('btnTomorrow').classList.toggle('active', day === 'tomorrow');
@@ -713,63 +441,25 @@
     function renderCard() {
         const display = document.getElementById('groupDisplay');
         const list = document.getElementById('scheduleContainer');
-        
         display.innerText = currGroup || '--';
-        
         if(!currGroup) return;
-
         const dayData = gData[currDay];
         if(!dayData || !dayData.data[currGroup]) {
-            list.innerHTML = `<div class="empty-state">Дані відсутні</div>`;
-            return;
+            list.innerHTML = `<div class="empty-state">Дані відсутні</div>`; return;
         }
-
         const ranges = calcRanges(dayData.data[currGroup]);
         let html = '';
         ranges.forEach(r => {
             let cls = 'on', statusText = 'СВІТЛО Є';
             if(r.type === 'off') { cls = 'off'; statusText = 'ВІДКЛЮЧЕННЯ'; }
             if(r.type === 'maybe') { cls = 'maybe'; statusText = 'МОЖЛИВО'; }
-            
-            html += `
-                <div class="row ${cls}">
-                    <div class="time-box">
-                        <div>${r.start}</div>
-                        <div style="font-size:10px; opacity:0.6; margin:2px 0;">↓</div>
-                        <div>${r.end}</div>
-                    </div>
-                    <div class="status-box">
-                        <div>
-                            <div>${statusText}</div>
-                            <div class="row-dur">${r.dur}</div>
-                        </div>
-                        <div style="font-size:20px">${r.type === 'off' ? '⚡️' : (r.type === 'maybe' ? '⚠️' : '💡')}</div>
-                    </div>
-                </div>`;
+            html += `<div class="row ${cls}"><div class="time-box"><div>${r.start}</div><div style="font-size:10px; opacity:0.6; margin:2px 0;">↓</div><div>${r.end}</div></div><div class="status-box"><div><div>${statusText}</div><div class="row-dur">${r.dur}</div></div><div style="font-size:20px">${r.type==='off'?'⚡️':(r.type==='maybe'?'⚠️':'💡')}</div></div></div>`;
         });
         list.innerHTML = html;
-        if(document.getElementById('matrix').classList.contains('open')) renderMatrix();
     }
 
-    // === UTILS ===
-    // Formats date for API check (DD.MM.YYYY)
-    function fmtDateAPI(d) {
-        return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
-    }
-    
-    // Formats date string to DD.MM.YYYY
-    function fmtDateDisplay(dateStr) {
-        // If API returns DD.MM.YYYY, return as is. If API differs, adjust here.
-        // Assuming API sends DD.MM.YYYY
-        if(!dateStr) return '--.--.----';
-        // Add Year if missing (fallback)
-        if(dateStr.length <= 5) {
-            const y = new Date().getFullYear();
-            return `${dateStr}.${y}`;
-        }
-        return dateStr;
-    }
-
+    function fmtDateAPI(d) { return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`; }
+    function fmtDateDisplay(d) { if(!d) return '--.--.----'; if(d.length<=5) return `${d}.${new Date().getFullYear()}`; return d; }
     function calcRanges(sched) {
         const times = Object.keys(sched).sort();
         let res = [], start = null, cur = null;
@@ -783,16 +473,13 @@
         if (cur) res.push({start, end:'24:00', type:cur, dur: getDur(start, '24:00')});
         return res;
     }
-
     function getDur(s, e) {
         const [h1, m1] = s.split(':').map(Number);
         const [h2, m2] = e.split(':').map(Number);
-        let min = (h2*60+m2) - (h1*60+m1);
-        if(min < 0) min += 1440;
+        let min = (h2*60+m2) - (h1*60+m1); if(min < 0) min += 1440;
         const h = Math.floor(min/60), m = min%60;
         return h>0 ? (m>0 ? `${h}г ${m}хв` : `${h} год`) : `${m} хв`;
     }
-
     function share() {
         if(!currGroup) return;
         const text = `Графік черги ${currGroup}. ${window.location.href}`;
@@ -800,37 +487,6 @@
         else { navigator.clipboard.writeText(window.location.href); alert('Посилання скопійовано'); }
     }
 
-    // === MATRIX & WIZARD ===
-    function renderMatrix() {
-        const div = document.getElementById('matrixContent');
-        const dayData = gData[currDay];
-        if(!dayData) { div.innerHTML = 'Дані відсутні'; return; }
-        
-        let h = '';
-        GROUPS.forEach(g => {
-            h += `<div class="chart-row" onclick="selectGroup('${g}')">
-                <div class="lbl" style="${g===currGroup?'color:var(--accent)':''}">${g}</div>
-                <div class="bar">`;
-            Object.keys(dayData.data[g]).sort().forEach(t => {
-                const s = dayData.data[g][t];
-                let c = 'u';
-                if(s==='on') c='on'; if(s==='off') c='off'; if(s==='maybe') c='maybe';
-                h += `<div class="cell ${c}"></div>`;
-            });
-            h += `</div></div>`;
-        });
-        div.innerHTML = h;
-    }
-    function toggleMatrix() {
-        const m = document.getElementById('matrix');
-        m.classList.toggle('open');
-        if(m.classList.contains('open')) {
-            renderMatrix();
-            m.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-    }
-    
-    // Search Wizard
     function openWiz() { 
         if(!gAddr) { alert('База завантажується...'); return; }
         document.getElementById('wiz').style.display = 'flex';
@@ -888,8 +544,5 @@
 
     init();
 </script>
-
 </body>
 </html>
-
-
