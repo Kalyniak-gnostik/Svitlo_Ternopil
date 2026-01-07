@@ -153,18 +153,6 @@
     </div>
 
     <div class="card">
-        <h2>☕️ Підтримати проєкт</h2>
-        <p>Сервіс безкоштовний і без реклами. Якщо він допомагає вам — можете пригостити мене кавою :)</p>
-        
-        <div class="mono-box">
-            <div class="mono-logo">monobank</div>
-            <div class="mono-text">Банка для донатів</div>
-            <div class="card-number" onclick="copyCard(this)">4874 1000 2398 1817 ❐</div>
-            <a href="https://send.monobank.ua/jar/6s9sG6PtBW" target="_blank" class="btn-donate">Перейти до Банки 🔗</a>
-        </div>
-    </div>
-
-    <div class="card">
         <h2>📬 Написати розробнику</h2>
         <p>Знайшли помилку? Є ідея? Напишіть мені.</p>
         
@@ -199,12 +187,7 @@
     // Наприклад: https://svitlo-feedback.kalyniak.workers.dev
     const WORKER_URL = "https://svitlo-feedback.kalyniak-o-sz.workers.dev"; 
 
-    function copyCard(el) {
-        navigator.clipboard.writeText("4874100023981817");
-        const original = el.innerText;
-        el.innerText = "Скопійовано! ✅";
-        setTimeout(() => el.innerText = original, 2000);
-    }
+    // Функцію copyCard видалено, оскільки HTML для неї більше немає
 
     async function sendFeedback(e) {
         e.preventDefault();
@@ -257,5 +240,4 @@
 </script>
 
 </body>
-
 </html>
