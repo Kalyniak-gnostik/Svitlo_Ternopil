@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DZW6D0LRN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6DZW6D0LRN');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Повний графік відключень | Світло Тернопіль</title>
+    
+    <style>
+        /* === DESIGN SYSTEM === */
+        :root {
+            --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-body: #f5f5f7;
+            --bg-card: #ffffff;
+            --bg-input: #f0f0f5;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --accent: #9b59b6; 
+            --accent-glow: rgba(155, 89, 182, 0.4);
+            --green: #34c759; 
+            --red: #ff3b30; 
+            --yellow: #ffcc00; 
+            --shadow-lg: 0 12px 30px rgba(0,0,0,0.08);
+            --radius-lg: 22px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #000000;
+                --bg-card: #1c1c1e;
+                --bg-input: #2c2c2e;
+                --text-main: #f5f5f7;
+                --text-sub: #98989d;
+                --shadow-lg: 0 12px 30px rgba(0,0,0,0.3);
+                --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            }
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; font-family: var(--font-main); 
+            background: var(--bg-body); color: var(--text-main); 
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        
+        .container { max-width: 640px; margin: 0 auto; padding: 20px 16px; width: 100%; flex: 1; }
+
+        /* === TOP NAV === */
+        .top-nav { 
+            display: flex; 
+            justify-content: space-between; /* Розміщує кнопки по краях */
+            align-items: center;
+            margin-bottom: 20px; 
+        }
+        .btn-back {
+            text-decoration: none; font-weight: 700; color: var(--accent);
+            display: inline-flex; align-items: center; gap: 5px; font-size: 15px;
+            padding: 10px 0;
+        }
+        
+        /* Стиль для кнопки Про проєкт */
+        .btn-about {
+            font-size: 13px; font-weight: 700; color: var(--accent);
+            text-decoration: none; background: var(--bg-card);
+            padding: 8px 14px; border-radius: 20px;
+            box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 6px;
+            transition: transform 0.2s;
+        }
+        .btn-about:active { transform: scale(0.95); }
+
+        /* === HEADER === */
+        header { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; text-align: center; }
+        h1 { margin: 12px 0 8px 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+        
+        .status-badge { 
+            background: var(--bg-card); padding: 8px 16px; border-radius: 30px; 
+            font-size: 13px; font-weight: 600; color: var(--text-sub); 
+            display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm);
+        }
+        .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); } }
+
+        /* === DAY SWITCH === */
+        .day-switch { background: var(--bg-input); padding: 5px; border-radius: 18px; display: flex; width: 100%; margin-bottom: 24px; }
+        .day-opt {
+            flex: 1; border: none; background: transparent; padding: 12px;
+            border-radius: 14px; font-weight: 700; font-size: 14px; color: var(--text-sub);
+            cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.2s;
+        }
+        .day-opt.active { background: var(--accent); color: white; box-shadow: 0 4px 12px var(--accent-glow); }
+        .day-opt span { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+        .day-opt.disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* === MATRIX CHART === */
+        .full-chart {
+            background: var(--bg-card); padding: 20px;
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.4s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .chart-row { display: flex; height: 40px; margin-bottom: 10px; }
+        .lbl { width: 40px; display: flex; align-items: center; font-weight: 800; font-size: 13px; color: var(--text-sub); }
+        .bar { flex: 1; display: flex; border-radius: 8px; overflow: hidden; }
+        .cell { flex: 1; border-right: 1px solid rgba(255,255,255,0.1); transition: opacity 0.2s; }
+        
+        .cell.on { background: var(--green); } 
+        .cell.off { background: var(--red); } 
+        .cell.maybe { background: var(--yellow); } 
+        .cell.u { background: var(--bg-input); }
+
+        .time-labels { display: flex; margin-bottom: 10px; font-size: 11px; color: var(--text-sub); padding-left: 40px; font-weight: 600; }
+        .time-labels span { flex: 1; }
+
+        .no-sched-msg { display: none; text-align: center; background: var(--bg-input); color: var(--text-sub); padding: 12px; border-radius: 14px; margin-bottom: 20px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-nav">
+        <a href="index.html" class="btn-back">← На головну</a>
+        <a href="about.html" class="btn-about">ℹ️ Про проєкт / Зворотній зв'язок</a>
+    </div>
+
+    <header>
+        <h1>Повний Графік відключення світла Тернопіль💡</h1>
+        <div class="status-badge">
+            <div id="statusDot" class="dot"></div>
+            <span id="updateTime">Завантаження...</span>
+        </div>
+    </header>
+
+    <div class="day-switch">
+        <button id="btnToday" class="day-opt active" onclick="setDay('today')">
+            СЬОГОДНІ
+            <span id="dateToday">--.--.--</span>
+        </button>
+        <button id="btnTomorrow" class="day-opt" onclick="setDay('tomorrow')">
+            ЗАВТРА
+            <span id="dateTomorrow">--.--.--</span>
+        </button>
+    </div>
+
+    <div id="noDataMsg" class="no-sched-msg">Графік на завтра ще не опубліковано</div>
+
+    <div class="full-chart">
+        <div class="time-labels">
+            <span>00</span><span>06</span><span>12</span><span>18</span>
+        </div>
+        <div id="matrixContent"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:30px; opacity:0.5; font-size:12px;">
+        © 2025 Grafik-Svitla-Ternopil.
+    </div>
+</div>
+
+<script>
+    const BASE_URL = 'https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main';
+    const CACHE = `?v=${Date.now()}`;
+    const GROUPS = ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2", "6.1", "6.2"];
+    let gData = { today: null, tomorrow: null, updated: '' };
+    let currDay = 'today';
+
+    async function init() {
+        try {
+            const res = await fetch(`${BASE_URL}/schedule.json${CACHE}`);
+            if(res.ok) {
+                const raw = await res.json();
+                processData(raw);
+            }
+        } catch(e) {
+            console.error(e);
+            document.getElementById('updateTime').innerText = "Помилка оновлення";
+        }
+    }
+
+    function processData(raw) {
+        const now = new Date();
+        const dToday = fmtDateAPI(now);
+        const dTom = fmtDateAPI(new Date(now.getTime() + 86400000));
+
+        gData.updated = raw.updated_at;
+        if(raw.today?.date === dToday) gData.today = raw.today;
+        else if(raw.today?.date === dTom) gData.tomorrow = raw.today;
+        
+        if(raw.tomorrow?.date === dTom) gData.tomorrow = raw.tomorrow;
+        else if(raw.tomorrow?.date === dToday && !gData.today) gData.today = raw.tomorrow;
+
+        document.getElementById('updateTime').innerText = `Оновлено: ${gData.updated}`;
+        document.getElementById('dateToday').innerText = gData.today ? fmtDateDisplay(gData.today.date) : fmtDateDisplay(dToday);
+        document.getElementById('dateTomorrow').innerText = gData.tomorrow ? fmtDateDisplay(gData.tomorrow.date) : fmtDateDisplay(dTom);
+        
+        if(!gData.tomorrow) document.getElementById('btnTomorrow').classList.add('disabled');
+        renderMatrix();
+    }
+
+    function setDay(day) {
+        const msg = document.getElementById('noDataMsg');
+        if(day === 'tomorrow' && !gData.tomorrow) { msg.style.display = 'block'; return; }
+        msg.style.display = 'none';
+        
+        currDay = day;
+        document.getElementById('btnToday').classList.toggle('active', day === 'today');
+        document.getElementById('btnTomorrow').classList.toggle('active', day === 'tomorrow');
+        renderMatrix();
+    }
+
+    function renderMatrix() {
+        const div = document.getElementById('matrixContent');
+        const dayData = gData[currDay];
+        if(!dayData) { div.innerHTML = '<div style="text-align:center; padding:20px; color:#86868b">Дані відсутні</div>'; return; }
+        
+        let h = '';
+        GROUPS.forEach(g => {
+            h += `<div class="chart-row">
+                <div class="lbl">${g}</div>
+                <div class="bar">`;
+            Object.keys(dayData.data[g]).sort().forEach(t => {
+                const s = dayData.data[g][t];
+                let c = 'u';
+                if(s==='on') c='on'; if(s==='off') c='off'; if(s==='maybe') c='maybe';
+                h += `<div class="cell ${c}"></div>`;
+            });
+            h += `</div></div>`;
+        });
+        div.innerHTML = h;
+    }
+
+    function fmtDateAPI(d) { return `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`; }
+    function fmtDateDisplay(d) { if(!d) return '--.--.----'; if(d.length<=5) return `${d}.${new Date().getFullYear()}`; return d; }
+
+    init();
+</script>
+
+</body>
+</html>
