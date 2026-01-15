@@ -67,10 +67,7 @@
 
         /* === TOP BAR === */
         .top-bar {
-            display: flex;
-            justify-content: space-between; /* Розносить кнопки по краях */
-            width: 100%;
-            margin-bottom: 10px;
+            display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;
         }
         .btn-top {
             font-size: 13px; font-weight: 700; color: var(--accent);
@@ -186,16 +183,62 @@
         footer { margin-top: auto; padding-top: 40px; padding-bottom: 20px; text-align: center; color: var(--text-sub); font-size: 13px; line-height: 1.6; border-top: 1px solid rgba(0,0,0,0.05); }
         footer h2 { font-size: 14px; color: var(--text-main); margin-bottom: 8px; }
 
-        /* === WIZARD === */
-        .wiz-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); z-index: 999; justify-content: center; align-items: center; }
-        .wiz-box { background: var(--bg-card); width: 90%; max-width: 450px; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-lg); display: flex; flex-direction: column; max-height: 80vh; }
-        .wiz-head { padding: 20px 24px; border-bottom: 1px solid var(--bg-input); font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
-        .wiz-body { padding: 20px; overflow-y: auto; }
-        .wiz-inp { width: 100%; padding: 16px; padding-left: 44px; background: var(--bg-input); border-radius: 14px; border: 2px solid transparent; font-size: 16px; outline: none; }
+        /* === WIZARD (SEARCH MODAL) === */
+        .wiz-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); z-index: 999; justify-content: center; align-items: flex-end; /* Mobile friendly: bottom sheet look on small screens if desired, or center */ }
+        
+        .wiz-box { 
+            background: var(--bg-card); width: 100%; max-width: 500px; height: 85vh; /* Fixed height for scrollable content */
+            border-top-left-radius: 28px; border-top-right-radius: 28px; 
+            box-shadow: var(--shadow-lg); display: flex; flex-direction: column; 
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        @media (min-width: 500px) {
+            .wiz-overlay { align-items: center; }
+            .wiz-box { height: 600px; border-radius: 28px; }
+        }
+
+        .wiz-head { 
+            flex: 0 0 auto; padding: 20px 24px; border-bottom: 1px solid var(--bg-input); 
+            font-weight: 800; font-size: 18px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card);
+        }
+        .wiz-close { font-size: 24px; padding: 10px; cursor: pointer; color: var(--text-sub); }
+
+        .wiz-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        
+        .step-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
+
+        .wiz-input-fixed { 
+            flex: 0 0 auto; padding: 16px 20px; background: var(--bg-card); 
+            border-bottom: 1px solid var(--bg-input); z-index: 10;
+        }
+        
+        .wiz-input-wrap { position: relative; }
+        .wiz-icon { position: absolute; left: 14px; top: 14px; opacity: 0.5; font-size: 18px; }
+        .wiz-inp { 
+            width: 100%; padding: 14px; padding-left: 44px; background: var(--bg-input); 
+            border-radius: 14px; border: 2px solid transparent; font-size: 16px; outline: none; font-family: inherit;
+        }
         .wiz-inp:focus { background: var(--bg-card); border-color: var(--accent); }
-        .wiz-item { padding: 14px 10px; border-bottom: 1px solid var(--bg-input); cursor: pointer; font-weight: 500; display: flex; justify-content: space-between; }
-        .wiz-input-wrap { position: relative; margin-bottom: 15px; }
-        .wiz-icon { position: absolute; left: 14px; top: 16px; opacity: 0.4; }
+
+        .wiz-list-scroll { 
+            flex: 1; overflow-y: auto; padding: 10px 0; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .wiz-item { 
+            padding: 16px 24px; border-bottom: 1px solid var(--bg-input); cursor: pointer; 
+            font-weight: 500; font-size: 15px; display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.1s;
+        }
+        .wiz-item:active { background: var(--bg-input); }
+        .wiz-item:last-child { border-bottom: none; }
+
+        .wiz-back { 
+            text-align: center; padding: 16px; color: var(--accent); font-weight: 600; font-size: 14px; 
+            cursor: pointer; border-top: 1px solid var(--bg-input); background: var(--bg-card);
+            flex: 0 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -203,13 +246,8 @@
 <div class="container">
     
     <div class="top-bar">
-        <a href="matrix.html" class="btn-top">
-            📅 Повна таблиця
-        </a>
-
-        <a href="about.html" class="btn-top">
-            ℹ️ Про проєкт / Зворотній зв'язок
-        </a>
+        <a href="matrix.html" class="btn-top">📅 Повна таблиця</a>
+        <a href="about.html" class="btn-top">ℹ️ Про проєкт</a>
     </div>
 
     <header>
@@ -266,8 +304,8 @@
     
     <footer>
         <h2>Про сервіс</h2>
-        <p>Цей веб-сайт надає найактуальніший графік погодинних відключень (ГПВ) електроенергії для споживачів ВАТ "Тернопільобленерго". Дані автоматично синхронізуються з офіційними джерелами та оновлюються в режимі реального часу.</p>
-        <p style="margin-top:20px; font-size:11px;">© 2025 Grafik-Svitla-Ternopil. Дані мають інформаційний характер.</p>
+        <p>Графік ГПВ ВАТ "Тернопільобленерго". Дані автоматично синхронізуються.</p>
+        <p style="margin-top:20px; font-size:11px;">© 2025 Grafik-Svitla-Ternopil.</p>
     </footer>
 
 </div>
@@ -279,39 +317,60 @@
             <span class="wiz-close" onclick="closeWiz()">×</span>
         </div>
         <div class="wiz-body">
-            <div id="step1">
-                <div class="wiz-input-wrap">
-                    <span class="wiz-icon">🏙</span>
-                    <input id="inpCity" class="wiz-inp" placeholder="Оберіть місто (напр. Тернопіль)">
+            
+            <div id="step1" class="step-container">
+                <div class="wiz-input-fixed">
+                    <div class="wiz-input-wrap">
+                        <span class="wiz-icon">🗺</span>
+                        <input id="inpDist" class="wiz-inp" placeholder="Оберіть район зі списку..." autocomplete="off">
+                    </div>
                 </div>
-                <div id="listCity"></div>
+                <div id="listDist" class="wiz-list-scroll"></div>
             </div>
-            <div id="step2" style="display:none">
-                <div class="wiz-input-wrap">
-                    <span class="wiz-icon">🛣</span>
-                    <input id="inpStreet" class="wiz-inp" placeholder="Введіть вулицю">
+
+            <div id="step2" class="step-container" style="display:none">
+                <div class="wiz-input-fixed">
+                    <div class="wiz-input-wrap">
+                        <span class="wiz-icon">🏙</span>
+                        <input id="inpCity" class="wiz-inp" placeholder="Введіть назву (напр. Гаї)" autocomplete="off">
+                    </div>
                 </div>
-                <div id="listStreet"></div>
-                <div onclick="closeWiz(); openWiz();" style="text-align:center; padding:15px; color:var(--text-sub); font-size:13px; cursor:pointer;">← Назад до вибору міста</div>
+                <div id="listCity" class="wiz-list-scroll"></div>
+                <div class="wiz-back" onclick="closeWiz(); openWiz()">← Назад до вибору району</div>
             </div>
-            <div id="step3" style="display:none">
-                <div class="wiz-input-wrap">
-                    <span class="wiz-icon">🏠</span>
-                    <input id="inpHouse" class="wiz-inp" placeholder="Номер будинку">
+
+            <div id="step3" class="step-container" style="display:none">
+                <div class="wiz-input-fixed">
+                    <div class="wiz-input-wrap">
+                        <span class="wiz-icon">🛣</span>
+                        <input id="inpStreet" class="wiz-inp" placeholder="Введіть вулицю" autocomplete="off">
+                    </div>
                 </div>
-                <div id="listHouse"></div>
-                <div onclick="setCity(selCity)" style="text-align:center; padding:15px; color:var(--text-sub); font-size:13px; cursor:pointer;">← Назад до вибору вулиці</div>
+                <div id="listStreet" class="wiz-list-scroll"></div>
+                <div class="wiz-back" onclick="backToStep(2)">← Назад до вибору міста</div>
             </div>
+
+            <div id="step4" class="step-container" style="display:none">
+                <div class="wiz-input-fixed">
+                    <div class="wiz-input-wrap">
+                        <span class="wiz-icon">🏠</span>
+                        <input id="inpHouse" class="wiz-inp" placeholder="Номер будинку" autocomplete="off">
+                    </div>
+                </div>
+                <div id="listHouse" class="wiz-list-scroll"></div>
+                <div class="wiz-back" onclick="backToStep(3)">← Назад до вибору вулиці</div>
+            </div>
+
         </div>
     </div>
 </div>
 
 <script>
     // === CONFIG ===
+    // Важливо: переконайтеся, що файл addresses.json на GitHub має параметр "d" (район)!
     const BASE_URL = 'https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main';
     const CACHE = `?v=${Date.now()}`;
     const GROUPS = ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2", "6.1", "6.2"];
-    const DEFAULT_CITIES = ['Тернопіль', 'Чортків', 'Кременець', 'Бережани', 'Збараж', 'Теребовля'];
 
     // === STATE ===
     let gData = { today: null, tomorrow: null, updated: '' };
@@ -319,6 +378,11 @@
     let currDay = 'today';
     let currGroup = new URLSearchParams(window.location.search).get('group') || localStorage.getItem('myGroup');
     
+    // Search State
+    let selDist = '';
+    let selCity = '';
+    let selStreet = '';
+
     // Infinite Scroll State
     let scrollerEl = null;
     let singleSetWidth = 0;
@@ -344,6 +408,7 @@
         if(currGroup) selectGroup(currGroup);
     }
 
+    // === SCROLLER LOGIC ===
     function setupInfiniteScroller() {
         scrollerEl = document.getElementById('groupTrack');
         scrollerEl.innerHTML = '';
@@ -366,7 +431,6 @@
             }
         }, 50);
     }
-
     function handleLoopScroll() {
         if (!singleSetWidth) return;
         const current = scrollerEl.scrollLeft;
@@ -376,7 +440,6 @@
             scrollerEl.scrollLeft -= singleSetWidth;
         }
     }
-
     function enableMomentum(el) {
         let isDown = false, startX, scrollLeft, velX = 0, animationID;
         el.addEventListener('mousedown', e => {
@@ -400,6 +463,7 @@
         }
     }
 
+    // === MAIN LOGIC ===
     function selectGroup(g) {
         currGroup = g;
         localStorage.setItem('myGroup', g);
@@ -489,63 +553,160 @@
         else { navigator.clipboard.writeText(window.location.href); alert('Посилання скопійовано'); }
     }
 
+    // === NEW WIZARD LOGIC (Multi-step Search) ===
+    
     function openWiz() { 
-        if(!gAddr) { alert('База завантажується...'); return; }
+        if(!gAddr) { alert('База адрес завантажується...'); return; }
         document.getElementById('wiz').style.display = 'flex';
-        renderList('listCity', DEFAULT_CITIES, setCity);
+        
+        // 1. Отримуємо райони
+        // УВАГА: Якщо тут порожньо, значить файл JSON ще старий (без "d").
+        const districts = [...new Set(gAddr.map(x => x.d).filter(Boolean))].sort();
+        
+        setupSearch('inpDist', 'listDist', () => districts, setDistrict);
+        renderList('listDist', districts, setDistrict);
+
+        // Якщо список порожній - спробуємо показати це
+        if(districts.length === 0) {
+            document.getElementById('listDist').innerHTML = '<div style="padding:20px; text-align:center; color:red">Помилка даних! <br> Файл адрес на сервері старий (без районів). <br> Завантажте новий addresses.json на GitHub.</div>';
+        }
     }
+    
     function closeWiz() { 
         document.getElementById('wiz').style.display = 'none'; 
-        document.getElementById('step1').style.display = 'block';
-        document.getElementById('step2').style.display = 'none';
-        document.getElementById('step3').style.display = 'none';
-        document.getElementById('inpCity').value = '';
+        backToStep(1); // Reset to first step
     }
+
+    function backToStep(n) {
+        ['step1','step2','step3','step4'].forEach(id => document.getElementById(id).style.display = 'none');
+        document.getElementById(`step${n}`).style.display = 'flex'; // Changed to flex for proper layout
+        
+        if(n <= 1) document.getElementById('inpDist').value = '';
+        if(n <= 2) document.getElementById('inpCity').value = '';
+        if(n <= 3) document.getElementById('inpStreet').value = '';
+        
+        let title = 'Пошук черги';
+        if(n===1) title = 'Оберіть район';
+        if(n===2) title = 'Оберіть місто';
+        if(n===3) title = 'Оберіть вулицю';
+        if(n===4) title = 'Оберіть будинок';
+        document.getElementById('wizTitle').innerText = title;
+
+        // Re-render lists for previous steps to ensure they are populated
+        if(n===2) {
+             const cities = [...new Set(gAddr.filter(x => x.d === selDist).map(x => x.c))].sort();
+             setupSearch('inpCity', 'listCity', () => cities, setCity);
+             renderList('listCity', cities, setCity);
+        }
+        if(n===3) {
+             const streets = [...new Set(gAddr.filter(x => x.d === selDist && x.c === selCity).map(x => x.s))].sort();
+             setupSearch('inpStreet', 'listStreet', () => streets, setStreet);
+             renderList('listStreet', streets, setStreet);
+        }
+    }
+
+    // Generic Search Setup
     function setupSearch(inpId, listId, dataFn, cb) {
-        document.getElementById(inpId).oninput = (e) => {
+        const inp = document.getElementById(inpId);
+        inp.oninput = (e) => {
             const v = e.target.value.toLowerCase();
             const list = dataFn().filter(x => x.toLowerCase().includes(v));
             renderList(listId, list, cb);
         };
+        // Trigger immediately just in case
+        const list = dataFn();
+        renderList(listId, list, cb);
     }
+
     function renderList(id, arr, cb) {
         const el = document.getElementById(id); el.innerHTML = '';
-        if(arr.length === 0) el.innerHTML = '<div style="padding:15px; color:var(--text-sub); font-style:italic">Нічого не знайдено</div>';
-        arr.slice(0,50).forEach(x => {
+        if(arr.length === 0) el.innerHTML = '<div style="padding:15px; color:var(--text-sub); font-style:italic; text-align:center;">Нічого не знайдено</div>';
+        
+        // Ліміт рендеру (швидкодія)
+        arr.slice(0, 200).forEach(x => {
             const d = document.createElement('div');
             d.className = 'wiz-item'; d.innerText = x;
             d.onclick = () => cb(x);
             el.appendChild(d);
         });
     }
-    let selCity = '';
-    function setCity(c) {
-        selCity = c; document.getElementById('inpCity').value = c;
+
+    // Step 1: District
+    function setDistrict(d) {
+        selDist = d;
+        document.getElementById('inpDist').value = d;
         document.getElementById('step1').style.display = 'none';
-        document.getElementById('step2').style.display = 'block';
-        document.getElementById('wizTitle').innerText = 'Вулиця';
-        const streets = gAddr.filter(x => x.c === c).map(x => x.s);
-        setupSearch('inpStreet', 'listStreet', () => [...new Set(streets)], setStreet);
-        renderList('listStreet', [...new Set(streets)].sort(), setStreet);
+        document.getElementById('step2').style.display = 'flex'; // Use flex for layout
+        document.getElementById('wizTitle').innerText = 'Введіть місто';
+        
+        const cities = [...new Set(gAddr.filter(x => x.d === selDist).map(x => x.c))].sort();
+        setupSearch('inpCity', 'listCity', () => cities, setCity);
+        renderList('listCity', cities, setCity);
     }
-    function setStreet(s) {
-        document.getElementById('inpStreet').value = s;
+
+    // Step 2: City
+    function setCity(c) {
+        selCity = c; 
+        document.getElementById('inpCity').value = c;
         document.getElementById('step2').style.display = 'none';
-        document.getElementById('step3').style.display = 'block';
+        document.getElementById('step3').style.display = 'flex';
+        document.getElementById('wizTitle').innerText = 'Вулиця';
+
+        const streets = [...new Set(gAddr.filter(x => x.d === selDist && x.c === selCity).map(x => x.s))].sort();
+        setupSearch('inpStreet', 'listStreet', () => streets, setStreet);
+        renderList('listStreet', streets, setStreet);
+    }
+
+    // Step 3: Street
+    function setStreet(s) {
+        selStreet = s;
+        document.getElementById('inpStreet').value = s;
+        document.getElementById('step3').style.display = 'none';
+        document.getElementById('step4').style.display = 'flex';
         document.getElementById('wizTitle').innerText = 'Будинок';
-        const houses = gAddr.filter(x => x.c === selCity && x.s === s);
-        if([...new Set(houses.map(x=>x.g))].length === 1) { finish(houses[0].g); return; }
-        setupSearch('inpHouse', 'listHouse', () => houses.map(x=>x.h), h => {
-            const f = houses.find(x => x.h === h); if(f) finish(f.g);
+
+        const rows = gAddr.filter(x => x.d === selDist && x.c === selCity && x.s === selStreet);
+        
+        let houseList = [];
+        rows.forEach(r => {
+            if(Array.isArray(r.h)) {
+                r.h.forEach(hNum => houseList.push({ num: hNum, grp: r.g }));
+            } else {
+                houseList.push({ num: r.h, grp: r.g });
+            }
         });
-        renderList('listHouse', houses.map(x=>x.h).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})), h => {
-            const f = houses.find(x => x.h === h); if(f) finish(f.g);
+
+        // Unique houses
+        const uniqueH = [...new Set(houseList.map(x => x.num))].sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+        
+        // Auto-select if only 1 option (e.g., "All")
+        if (uniqueH.length === 1 && (uniqueH[0] === 'всі' || uniqueH[0] === 'всі будинки')) {
+            finish(houseList[0].grp);
+            return;
+        }
+
+        setupSearch('inpHouse', 'listHouse', () => uniqueH, (hVal) => {
+            const match = rows.find(r => {
+                 if(Array.isArray(r.h)) return r.h.includes(hVal);
+                 return r.h === hVal;
+            });
+            if(match) finish(match.g);
+        });
+        renderList('listHouse', uniqueH, (hVal) => {
+             const match = rows.find(r => {
+                 if(Array.isArray(r.h)) return r.h.includes(hVal);
+                 return r.h === hVal;
+            });
+            if(match) finish(match.g);
         });
     }
-    function finish(g) { closeWiz(); selectGroup(g); }
+
+    function finish(g) { 
+        closeWiz(); 
+        selectGroup(g); 
+    }
 
     init();
 </script>
 </body>
 </html>
-
