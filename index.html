@@ -641,22 +641,42 @@
     }
 
     // Step 2: City
+// Step 2: City (ОНОВЛЕНО: додано авто-пропуск вулиці "Всі")
     function setCity(c) {
         selCity = c; 
         document.getElementById('inpCity').value = c;
         document.getElementById('step2').style.display = 'none';
+
+        // Отримуємо список вулиць
+        const streets = [...new Set(gAddr.filter(x => x.d === selDist && x.c === selCity).map(x => x.s))].sort();
+
+        // === ЛОГІКА АВТО-ПЕРЕХОДУ ДЛЯ ВУЛИЦЬ ===
+        // Якщо вулиця всього одна (наприклад "Всі")
+        if (streets.length === 1) {
+            const val = String(streets[0]).toLowerCase().trim();
+            // Перевіряємо чи це слово-тригер
+            const isAll = /^(всі|всi|bci|bcі|усі|усi|all|default|ввесь|whole)/i.test(val);
+            
+            if (isAll) {
+                // Одразу переходимо до функції вибору вулиці, пропускаючи візуальний крок
+                setStreet(streets[0]); 
+                return; 
+            }
+        }
+        // ========================================
+
         document.getElementById('step3').style.display = 'flex';
         document.getElementById('wizTitle').innerText = 'Вулиця';
 
-        const streets = [...new Set(gAddr.filter(x => x.d === selDist && x.c === selCity).map(x => x.s))].sort();
         setupSearch('inpStreet', 'listStreet', () => streets, setStreet);
         renderList('listStreet', streets, setStreet);
     }
 
-    // Step 3: Street (Фінальна версія з авто-вибором "Всі")
+    // Step 3: Street (ОНОВЛЕНО: авто-пропуск будинку "Всі")
     function setStreet(s) {
         selStreet = s;
         document.getElementById('inpStreet').value = s;
+        // Ховаємо попередній крок (якщо він був видимий)
         document.getElementById('step3').style.display = 'none';
         
         // 1. Знаходимо будинки
@@ -676,12 +696,10 @@
             a.toString().localeCompare(b.toString(), undefined, {numeric: true})
         );
         
-        // === ЛОГІКА АВТО-ПЕРЕХОДУ ===
+        // === ЛОГІКА АВТО-ПЕРЕХОДУ ДЛЯ БУДИНКІВ ===
         // Якщо у списку лише один пункт
         if (uniqueH.length === 1) {
             const val = String(uniqueH[0]).toLowerCase().trim();
-
-            // Регулярний вираз для "всі" (кирилиця/латиниця)
             const isAll = /^(всі|всi|bci|bcі|усі|усi|all|default|ввесь|whole)/i.test(val);
 
             if (isAll) {
@@ -721,3 +739,4 @@
 </script>
 </body>
 </html>
+
