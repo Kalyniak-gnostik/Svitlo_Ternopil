@@ -17,6 +17,8 @@
     <title>Графік відключення світла Тернопіль (ГПВ) | Оновлення наживо</title>
     <meta name="description" content="Актуальний графік погодинних відключень електроенергії (ГПВ) в Тернополі та області. Пошук черги за адресою. Прогноз на сьогодні та завтра. Всі групи.">
     
+    <link rel="canonical" href="https://grafik-svitla-ternopil.pp.ua/" />
+
     <style>
         /* === DESIGN SYSTEM === */
         :root {
@@ -240,7 +242,6 @@
             flex: 0 0 auto;
         }
     </style>
-	<link rel="canonical" href="https://grafik-svitla-ternopil.pp.ua/" />
 </head>
 <body>
 
@@ -368,7 +369,6 @@
 
 <script>
     // === CONFIG ===
-    // Важливо: переконайтеся, що файл addresses.json на GitHub має параметр "d" (район)!
     const BASE_URL = 'https://raw.githubusercontent.com/kalyniak-gnostik/Svitlo_Ternopil/main';
     const CACHE = `?v=${Date.now()}`;
     const GROUPS = ["1.1", "1.2", "2.1", "2.2", "3.1", "3.2", "4.1", "4.2", "5.1", "5.2", "6.1", "6.2"];
@@ -561,13 +561,11 @@
         document.getElementById('wiz').style.display = 'flex';
         
         // 1. Отримуємо райони
-        // УВАГА: Якщо тут порожньо, значить файл JSON ще старий (без "d").
         const districts = [...new Set(gAddr.map(x => x.d).filter(Boolean))].sort();
         
         setupSearch('inpDist', 'listDist', () => districts, setDistrict);
         renderList('listDist', districts, setDistrict);
 
-        // Якщо список порожній - спробуємо показати це
         if(districts.length === 0) {
             document.getElementById('listDist').innerHTML = '<div style="padding:20px; text-align:center; color:red">Помилка даних! <br> Файл адрес на сервері старий (без районів). <br> Завантажте новий addresses.json на GitHub.</div>';
         }
@@ -580,7 +578,7 @@
 
     function backToStep(n) {
         ['step1','step2','step3','step4'].forEach(id => document.getElementById(id).style.display = 'none');
-        document.getElementById(`step${n}`).style.display = 'flex'; // Changed to flex for proper layout
+        document.getElementById(`step${n}`).style.display = 'flex'; 
         
         if(n <= 1) document.getElementById('inpDist').value = '';
         if(n <= 2) document.getElementById('inpCity').value = '';
@@ -593,7 +591,6 @@
         if(n===4) title = 'Оберіть будинок';
         document.getElementById('wizTitle').innerText = title;
 
-        // Re-render lists for previous steps to ensure they are populated
         if(n===2) {
              const cities = [...new Set(gAddr.filter(x => x.d === selDist).map(x => x.c))].sort();
              setupSearch('inpCity', 'listCity', () => cities, setCity);
@@ -614,7 +611,6 @@
             const list = dataFn().filter(x => x.toLowerCase().includes(v));
             renderList(listId, list, cb);
         };
-        // Trigger immediately just in case
         const list = dataFn();
         renderList(listId, list, cb);
     }
@@ -623,7 +619,6 @@
         const el = document.getElementById(id); el.innerHTML = '';
         if(arr.length === 0) el.innerHTML = '<div style="padding:15px; color:var(--text-sub); font-style:italic; text-align:center;">Нічого не знайдено</div>';
         
-        // Ліміт рендеру (швидкодія)
         arr.slice(0, 200).forEach(x => {
             const d = document.createElement('div');
             d.className = 'wiz-item'; d.innerText = x;
@@ -637,7 +632,7 @@
         selDist = d;
         document.getElementById('inpDist').value = d;
         document.getElementById('step1').style.display = 'none';
-        document.getElementById('step2').style.display = 'flex'; // Use flex for layout
+        document.getElementById('step2').style.display = 'flex'; 
         document.getElementById('wizTitle').innerText = 'Введіть місто';
         
         const cities = [...new Set(gAddr.filter(x => x.d === selDist).map(x => x.c))].sort();
@@ -658,9 +653,7 @@
         renderList('listStreet', streets, setStreet);
     }
 
-    // Step 3: Street
-// Step 3: Street (Оновлена логіка з авто-вибором "Всі")
-// Step 3: Street (Фінальна версія з покращеним розпізнаванням "Всі")
+    // Step 3: Street (Фінальна версія з авто-вибором "Всі")
     function setStreet(s) {
         selStreet = s;
         document.getElementById('inpStreet').value = s;
@@ -688,9 +681,7 @@
         if (uniqueH.length === 1) {
             const val = String(uniqueH[0]).toLowerCase().trim();
 
-            // Цей регулярний вираз ловить:
-            // "всі", "всi" (латинська i), "bci" (все латиницею), 
-            // "усі", "all", "ввесь", "весь"
+            // Регулярний вираз для "всі" (кирилиця/латиниця)
             const isAll = /^(всі|всi|bci|bcі|усі|усi|all|default|ввесь|whole)/i.test(val);
 
             if (isAll) {
@@ -718,6 +709,12 @@
             });
             if(match) finish(match.g);
         });
+    }
+
+    // === ФУНКЦІЯ, ЯКОЇ НЕ ВИСТАЧАЛО ===
+    function finish(g) { 
+        closeWiz(); 
+        selectGroup(g); 
     }
 
     init();
