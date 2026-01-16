@@ -240,6 +240,7 @@
             flex: 0 0 auto;
         }
     </style>
+	<link rel="canonical" href="https://grafik-svitla-ternopil.pp.ua/" />
 </head>
 <body>
 
@@ -658,13 +659,14 @@
     }
 
     // Step 3: Street
+// Step 3: Street (Оновлена логіка з авто-вибором "Всі")
+// Step 3: Street (Фінальна версія з покращеним розпізнаванням "Всі")
     function setStreet(s) {
         selStreet = s;
         document.getElementById('inpStreet').value = s;
         document.getElementById('step3').style.display = 'none';
-        document.getElementById('step4').style.display = 'flex';
-        document.getElementById('wizTitle').innerText = 'Будинок';
-
+        
+        // 1. Знаходимо будинки
         const rows = gAddr.filter(x => x.d === selDist && x.c === selCity && x.s === selStreet);
         
         let houseList = [];
@@ -676,14 +678,30 @@
             }
         });
 
-        // Unique houses
-        const uniqueH = [...new Set(houseList.map(x => x.num))].sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+        // 2. Сортуємо унікальні
+        const uniqueH = [...new Set(houseList.map(x => x.num))].sort((a,b) => 
+            a.toString().localeCompare(b.toString(), undefined, {numeric: true})
+        );
         
-        // Auto-select if only 1 option (e.g., "All")
-        if (uniqueH.length === 1 && (uniqueH[0] === 'всі' || uniqueH[0] === 'всі будинки')) {
-            finish(houseList[0].grp);
-            return;
+        // === ЛОГІКА АВТО-ПЕРЕХОДУ ===
+        // Якщо у списку лише один пункт
+        if (uniqueH.length === 1) {
+            const val = String(uniqueH[0]).toLowerCase().trim();
+
+            // Цей регулярний вираз ловить:
+            // "всі", "всi" (латинська i), "bci" (все латиницею), 
+            // "усі", "all", "ввесь", "весь"
+            const isAll = /^(всі|всi|bci|bcі|усі|усi|all|default|ввесь|whole)/i.test(val);
+
+            if (isAll) {
+                finish(houseList[0].grp);
+                return; // Зупиняємо рендер списку
+            }
         }
+        // ============================
+
+        document.getElementById('step4').style.display = 'flex';
+        document.getElementById('wizTitle').innerText = 'Оберіть будинок';
 
         setupSearch('inpHouse', 'listHouse', () => uniqueH, (hVal) => {
             const match = rows.find(r => {
@@ -692,6 +710,7 @@
             });
             if(match) finish(match.g);
         });
+        
         renderList('listHouse', uniqueH, (hVal) => {
              const match = rows.find(r => {
                  if(Array.isArray(r.h)) return r.h.includes(hVal);
@@ -699,11 +718,6 @@
             });
             if(match) finish(match.g);
         });
-    }
-
-    function finish(g) { 
-        closeWiz(); 
-        selectGroup(g); 
     }
 
     init();
